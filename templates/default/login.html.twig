@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    {{ render(controller('App\\Controller\\Admin\\MetaController::getMeta', {'entity': 'login'})) }}
+{% endblock %}
+
+{% block open_graph %}
+    <meta property="og:url"                content="{{ app.request.uri }}" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="Trouvez {% if(type is defined) %} {{type}} {%else%} un appartement ou une maison {% endif %} en {% if(offre is defined) %}{{offre}}{%else%} vente ou en location {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}" />
+    <meta property="og:description"        content="Annonces immobilières en Tunisie {% if(type is defined) %} {{type}} {%else%} un appartement ou une maison {% endif %} en {% if(offre is defined) %}{{offre}}{%else%} vente ou en location {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}" />
+    <meta property="og:image"              content="{{ path('homepage') }}uploads/photos/12845.png" />
+{% endblock %}
+{% block body %}    
+    <section class="sign-up">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Connexion</span></li>
+            </ul><!-- .ht-breadcrumb -->
+            <div class="sign-up__container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="sign-up__header">
+                            <h1 class="sign-up__textcontent">Connexion</h1>
+                        </div><!-- .sign-up__header -->
+                        <div class="sign-up__main">
+                            <div class="sign-up__main">
+                                <form method="post">
+                                    {% if app.user %}
+                                        <div class="mb-3">
+                                            You are logged in as {{ app.user }}, <a href="{{ path('app_logout') }}">Logout</a>
+                                        </div>
+                                    {% endif %}
+                                    <div class="col-sm-9">
+                                        <div id="contact_nom" class="float-container form-group">
+                                            <input placeholder="Email" type="email" value="" name="email" id="inputEmail" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div id="contact_nom" class="float-container form-group">
+                                            <input placeholder="Mot de passe" type="password" name="password" id="inputPassword" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                                    
+                                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                                        See https://symfony.com/doc/current/security/remember_me.html
+                                
+                                        <div class="checkbox mb-3">
+                                            <label>
+                                                <input type="checkbox" name="_remember_me"> Remember me
+                                            </label>
+                                        </div>
+                                    
+                                    <div class="col-sm-9">
+                                        <div id="contact_nom" class="float-container form-group">
+                                            <button id="form_login" type="submit" class="button primary-bg btn-block">
+                                                Connexion
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-md-offset-4"></div>
+                </div><!-- .row -->
+            </div><!-- .sign-up__container -->
+        </div><!-- .container -->
+    </section>{# empty Twig template #}
+{% endblock %}

@@ -1,0 +1,16 @@
+fos_ck_editor:
+    configs:
+        my_config:
+            toolbar: "article_toolbar"
+    toolbars:
+        configs:
+            article_toolbar: [ "@basicstyles", "@paragraph", "@links", "@insert", "/", "@styles", "@colors" ]
+        items:
+            basicstyles: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat' ]
+            paragraph: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-' ]
+            links: [ 'Link', 'Unlink', 'Anchor' ]
+            insert: [ 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar' ]
+            styles: [ 'Styles', 'Format', 'Font', 'FontSize' ]
+            colors: [ 'TextColor', 'BGColor' ]
+    #filebrowserUploadRoute: "my_route"
+    #extraPlugins:           "wordcount"

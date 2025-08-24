@@ -1,0 +1,181 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Recherche index{% endblock %}
+
+{% block body %}
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b">
+                    <div class="card-header flex-wrap py-3">
+                        <div class="card-title">
+                            <h3 class="card-label">Listes des recherches</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div id="kt_datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="container my-4">
+                                        <div>
+                                            <div class="page-content page-container" id="page-content">
+                                                <div class="padding">
+                                                    <div class="row">
+                                                        <div class="container-fluid d-flex justify-content-center">
+                                                            <div class="col-sm-8 col-md-4">
+                                                                <div class="card">
+                                                                    <div class="card-header"><h6>Statistique par ville</h6></div>
+                                                                    <div class="card-body" style="height: 420px">
+                                                                        <div id="chart_12" class="d-flex justify-content-center"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-8 col-md-4">
+                                                                <div class="card">
+                                                                    <div class="card-header"><h6>Statistique par type</h6></div>
+                                                                    <div class="card-body" style="height: 420px">
+                                                                        <div id="chart_13" class="d-flex justify-content-center"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-8 col-md-4">
+                                                                <div class="card">
+                                                                    <div class="card-header"><h6>Statistique par offre</h6></div>
+                                                                    <div class="card-body" style="height: 420px">
+                                                                        <div id="chart_14" class="d-flex justify-content-center"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--end: Datatable-->
+                        </div>
+                    </div>
+                    <!--end::Card-->
+                </div>
+                <!--end::Container-->
+            </div>
+            <!--end::Entry-->
+        </div>
+    </div>
+    <script src="{{ asset('admin/js/apexcharts.js') }}"></script>     
+    <script>
+        
+        $(document).ready(function () {
+            var _demo12 = function () {
+                const apexChart = "#chart_12";
+                var options = {
+                    series: [{
+                    data: [{% for ville in countByVille %}
+                            '{{ville.nbr}}', 
+                        {% endfor %}]
+                  }],
+                    chart: {
+                    type: 'bar',
+                    height: 2500
+                  },
+                  plotOptions: {
+                    bar: {
+                      borderRadius: 4,
+                      horizontal: true,
+                    }
+                  },
+                  dataLabels: {
+                    enabled: false
+                  },
+                  xaxis: {
+                    categories: [{% for ville in countByVille %}
+                            '{{ville.label}}', 
+                        {% endfor %}],
+                  }
+                  };
+                var chart = new ApexCharts(document.querySelector(apexChart), options);
+                chart.render();
+            };
+            
+            var _demo13 = function () {
+                const apexChart = "#chart_13";
+                var options = {
+                    series: [
+                        {% for offre in countByOffre %}            
+                            {{offre.nbr}},
+                        {% endfor %}
+                        ],
+                    chart: {
+                        width: 380,
+                        type: 'pie',
+                    },
+                    labels: [
+                        {% for offre in countByOffre %}
+                            '{{offre.offre}} {{offre.nbr}}', 
+                        {% endfor %}        
+                    ],
+                    responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200
+                                },
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }],
+                    //colors: [primary, success, warning, danger, info]
+                };
+                var chart = new ApexCharts(document.querySelector(apexChart), options);
+                chart.render();
+            };
+            var _demo14 = function () {
+                const apexChart = "#chart_14";
+                var options = {
+                    series: [
+                        {% for type in countByType %}
+                            {{type.nbr}},
+                        {% endfor %}
+                        ],
+                    chart: {
+                        width: 380,
+                        type: 'pie',
+                    },
+                    labels: [
+                        {% for type in countByType %}
+                            '{{type.label}} {{type.nbr}}', 
+                        {% endfor %}        
+                    ],
+                    responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200
+                                },
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }],
+                    //colors: [primary, success, warning, danger, info]
+                };
+                var chart = new ApexCharts(document.querySelector(apexChart), options);
+                chart.render();
+            };
+            _demo12();
+            _demo13();
+            _demo14();
+        });
+    </script>
+{% endblock %}

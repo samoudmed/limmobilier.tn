@@ -1,0 +1,292 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    <title>Tunisie annonce immobilier {{user.agence}} page {{ page }}</title>
+    <meta name="description" content="Tunisie annonces immobilières vente ou en location un appartement, une maison ou un terrain {{user.agence}} page {{ page }}" />
+{% endblock %}
+{% block open_graph %}
+    <link rel="canonical" href="{{ path('liste_agence', {'label': user.agence|slugify, 'id': user.id, 'page': page} )  }}" />    
+    <meta property="og:url" content="{{ path('liste_agence', {'label': user.agence|slugify, 'id': user.id, 'page': page} ) }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{user.agence}}" />
+    <meta property="og:description" content="{{user.agence}} achat vente location de bien immobilier" />
+    <meta property="og:image" content="{{ asset('uploads/logos/' ~ user.logo) }}" />
+{% endblock %}
+{% block body %}
+    <section class="main-listing">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__page">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><a href="{{ path('liste-agences') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__page">Agences immobilière</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">{{user.agence}}</span></li>
+            </ul><!-- ht-breadcrumb -->
+        </div><!-- .container -->
+        <div class="property__header">
+            <div class="container">
+                <div class="property__header-container">
+                    <div class="single__avatar agents-single__avatar">
+                        {% if(user.logo  != NULL) %}
+                            <img src="{{ asset('uploads/logos/' ~ user.logo) }}" class="logo-agence" alt="{{ user.agence }}">
+                        {% else %}
+                            <div class="avatar75">{{ user.agence }}</div>
+                        {% endif %}
+                    </div><!-- .agents-single__avatar -->
+
+                    <div class="single__detail agents-single__detail">
+                        <h1 class="section__title section__title--b-margin-40">{{user.agence}}</h1>
+                        <ul class="famous-agents__contact agents-single__contact">
+                            <li class="famous-agents__phone"><i class="fa fa-phone fa-fw" aria-hidden="true"></i><a href="tel:+3104326507">{{user.telephone}}</a></li>
+                        </ul>
+                        <p class="agents-single__desc"></p>
+                    </div><!-- .agents-single__detail -->
+                </div><!-- .property__header-container -->
+            </div><!-- .container -->
+        </div><!-- .property__header -->
+        <div class="container">
+            <div class="agents-single__wrapper">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="single__inner agents-single__inner">
+
+                        </div><!-- agents-single__inner -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div>
+        </div><!-- .container -->
+
+        <div class="main-listing__main">
+            <div class="container">
+                <div class="row">
+                    <aside class="col-md-3">
+                        <section class="widget main-listing__widget displayNone">
+                            {% if(type is not defined) %}
+                                <div class="main-listing__wrapper">
+                                    <label class="main-listing__form-title">Type</label>
+                                    <div class="main-listing__form-select">
+                                        <input type="radio" name="property-type" id="propertyType1" class="main-listing__form-radio type" value="ALL" checked="checked" >
+                                        <label for="propertyType1" class="main-listing__form-label">Tout</label>
+                                        {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\DefaultController::countListing' ,{ 'offre': offre })) }})</span>{% endif %}
+                                    </div><!-- main-listing__form-select -->
+                                    <div class="main-listing__form-select">
+                                        <input type="radio" name="property-type" id="propertyType2" class="main-listing__form-radio type" value="1" {% if(type is defined) and (type =="Appartement") %} checked="checked" {% endif %}>
+                                        <label for="propertyType2" class="main-listing__form-label">Apartment</label>
+                                        {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '1' })) }})</span>{% endif %}
+                                    </div><!-- main-listing__form-select -->
+                                    <div class="main-listing__form-select">
+                                        <input type="radio" name="property-type" id="propertyType3" class="main-listing__form-radio type" value="2" {% if((type is defined)and (type =="Villa")) %} checked="checked" {% endif %}>
+                                        <label for="propertyType3" class="main-listing__form-label">Maison</label>
+                                        {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '2' })) }})</span>{% endif %}
+                                    </div><!-- main-listing__form-select -->
+                                    <div class="main-listing__form-select">
+                                        <input type="radio" name="property-type" id="propertyType4" class="main-listing__form-radio type" value="3" {% if(type is defined) and (type =="Terrain") %} checked="checked" {% endif %}>
+                                        <label for="propertyType4" class="main-listing__form-label">Terrain</label>
+                                        {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '3' })) }})</span>{% endif %}
+                                    </div><!-- main-listing__form-select -->
+                                    <div class="main-listing__form-select">
+                                        <input type="radio" name="property-type" id="propertyType5" class="main-listing__form-radio type" value="4" {% if((type is defined)and (type =="Projet neuf")) %} checked="checked" {% endif %}>
+                                        <label for="propertyType5" class="main-listing__form-label">Projet neuf</label>
+                                        {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '4' })) }})</span>{% endif %}
+                                    </div><!-- main-listing__form-select -->
+                                    <div class="main-listing__form-select">
+                                        <input type="radio" name="property-type" id="propertyType6" class="main-listing__form-radio type" value="5" {% if(type is defined) and (type =="Bureau") %} checked="checked" {% endif %}>
+                                        <label for="propertyType6" class="main-listing__form-label">Bureau</label>
+                                        {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '5' })) }})</span>{% endif %}
+                                    </div><!-- main-listing__form-select -->
+                                    <div class="main-listing__form-select">
+                                        <input type="radio" name="property-type" id="propertyType7" class="main-listing__form-radio type" value="6" {% if(type is defined) and (type =="Fond de commerce") %} checked="checked" {% endif %}>
+                                        <label for="propertyType7" class="main-listing__form-label">Commerce</label>
+                                        {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '6' })) }})</span>{% endif %}
+                                    </div><!-- main-listing__form-select -->
+                                    <div class="main-listing__form-select">
+                                        <input type="radio" name="property-type" id="propertyType8" class="main-listing__form-radio type" value="7" {% if(type is defined) and (type =="Industrie") %} checked="checked" {% endif %}>
+                                        <label for="propertyType8" class="main-listing__form-label">Industrie</label>
+                                        {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '7' })) }})</span>{% endif %}
+                                    </div><!-- main-listing__form-select -->
+                                    <div class="main-listing__form-select">
+                                        <input type="radio" name="property-type" id="propertyType9" class="main-listing__form-radio type" value="8" {% if(type is defined) and (type =="Depot") %} checked="checked" {% endif %}>
+                                        <label for="propertyType9" class="main-listing__form-label">Dépôt</label>
+                                        {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '8' })) }})</span>{% endif %}
+                                    </div><!-- main-listing__form-select -->
+                                    <div class="main-listing__form-select">
+                                        <input type="radio" name="property-type" id="propertyType10" class="main-listing__form-radio type" value="9" {% if(type is defined) and (type =="Vacances") %} checked="checked" {% endif %}>
+                                        <label for="propertyType10" class="main-listing__form-label">Vacances</label>
+                                        {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '9' })) }})</span>{% endif %}
+                                    </div>
+                                    <div class="main-listing__form-select">
+                                        <input type="radio" name="property-type" id="propertyType11" class="main-listing__form-radio type" value="10" {% if(type is defined) and (type =="Autre") %} checked="checked" {% endif %}>
+                                        <label for="propertyType11" class="main-listing__form-label">Autre</label>
+                                        {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '10' })) }})</span>{% endif %}
+                                    </div>
+                                </div><!-- .main-listing__wrapper -->
+                            {% else %}
+                                <div style="display:none">
+                                    <input type="radio" name="property-type" id="propertyType7" class="main-listing__form-radio type" name="property-type" value="{{type}}" checked="checked">
+                                    <label for="propertyType7" class="main-listing__form-label">{{type}}</label>
+                                </div>
+                            {% endif %}
+                            <div class="main-listing__wrapper">
+                                <label for="listing-city" class="main-listing__form-title">Gouvernorat</label>
+                                {{ render(controller('App\\Controller\\DefaultController::listingGouvernorat')) }}
+                            </div>
+                            <div class="main-listing__wrapper">
+                                <label for="listing-city" class="main-listing__form-title">Ville</label>
+                                {{ render(controller('App\\Controller\\DefaultController::listingDelegation')) }}
+                            </div>
+                            <div class="main-listing__wrapper">
+                                <label for="listing-city" class="main-listing__form-title">Région</label>
+                                <select name="city" id="listing-city" class="main-listing__form-field js-example-basic-single" data-dkcacheid="0" style="width: 100%;" required="required"></select>
+                            </div><!-- .main-listing__wrapper -->
+                            <div class="main-listing__wrapper">
+                                <label for="main-listing-keyword" class="main-listing__form-title">Mot clé</label>
+                                <input type="text" id="main-listing-keyword" class="main-listing__form-field" placeholder="Mot clé...">
+                            </div><!-- .main-listing__wrapper -->
+                            <div class="main-listing__wrapper">
+                                <label for="listing-bedroom" class="main-listing__form-title">Chambres</label>
+                                <select name="bedroom" id="listing-bedroom" class="ht-field main-listing__form-field" data-dkcacheid="1">
+                                    <option value="" selected="">Nombre de chambre</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select><!-- .main-listing__form-field -->
+                            </div><!-- .main-listing__wrapper -->
+
+                            <div class="main-listing__wrapper">
+                                <label for="min-area" class="main-listing__form-title">Surface (m<sup>2</sup>)</label>
+                                <div class="main-listing__form-container">
+                                    <select name="min-area" id="min-area" class="ht-field main-listing__form-field" data-dkcacheid="3">
+                                        <option value="" selected="">min</option>
+                                        <option value="100">100</option>
+                                        <option value="200">200</option>
+                                        <option value="300">300</option>
+                                        <option value="400">400</option>
+                                    </select><!-- .main-listing__form-field -->
+                                    <select name="max-area" id="max-area" class="ht-field main-listing__form-field" data-dkcacheid="4">
+                                        <option value="" selected="">max</option>
+                                        <option value="100">100</option>
+                                        <option value="200">200</option>
+                                        <option value="300">300</option>
+                                        <option value="400">400</option>
+                                    </select><!-- .main-listing__form-field -->
+                                </div><!-- .main-listing__form-container -->
+                            </div><!-- .main-listing__wrapper -->                            
+                        </section><!-- .widget -->
+                    </aside><!-- .col -->
+                    <main class="col-md-9">
+                        <div class="main-listing__tags">
+                        </div><!-- .main-listing__tags -->
+                        <div class="loading" style="display: none;text-align: center;">
+                            <img src="{{ asset('asset/images/load.gif') }}" alt="Loading">
+                        </div>
+                        <section class="main-listing-list row">
+                            {% for annonce in annonces %}
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                                    {% include 'default/__annonce.html.twig' %}
+                                </div><!-- .col -->
+                            {% endfor %}
+                            {{ knp_pagination_render(annonces) }}
+                        </section>
+                    </main><!-- .col -->
+                </div><!-- row -->
+            </div><!-- .container -->
+        </div><!-- .main-listing__main -->
+    </section>
+    <style>
+        .pagination .pagination--t-margin {
+            margin-bottom: 20px;
+        }
+
+        .first {
+            display: inline-block;
+            margin: 0 2px;
+        }
+        .pagination > li > a,
+        .pagination > li > span{
+            color: #BF3E26;
+
+        }
+
+        .pagination > li > a:hover,
+        .pagination > li > span:hover,
+        .pagination > li > a:focus,
+        .pagination > li > span:focus{
+            background-color: #98fb98;
+            color:#BF3E26;
+        }
+
+        .pagination > span {
+            display: inline-block;
+            color: #333333;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            transition: 0.5s all ease-out;
+        }
+
+        .pagination > .current {
+            background-color: #1fc341;
+            color: #ffffff;
+        }
+        .pagination > span:hover {
+            border: 1px solid #dddddd;
+        }
+        .pagination > .active > a,
+        .pagination > .active > span,
+        .pagination > .active > a:hover,
+        .pagination > .active > span:hover,
+        .pagination > .active > a:focus,
+        .pagination > .active > span:focus{
+            background-color: #1C8C42;
+            color: #ffffff;
+            border: 1px solid #dddddd;
+        }
+
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(":input").on("change", function () {
+            $(".main-listing-list").empty();
+            $(".pagination").empty();
+            $(".loading").show();
+            $.ajax({
+                type: 'POST', // Le type de la requête HTTP, ici devenu POST
+                data: 'user=' +   {{ user.id }} +'&offre=' + $('input[name$="offre-type"]:checked').val() + '&type=' + $('input[name$="property-type"]:checked').val() + '&ville=' + $('#listing-city').val() + '&chambres=' + $('#listing-bedroom').val() + '&surfaceMin=' + $('#min-area').val() + '&surfaceMax=' + $('#max-area').val() + '&keyWord=' + $('#main-listing-keyword').val() + '&sort=' + $('#sort-type').val(),
+                url: "{{ app.request.schemeAndHttpHost }}{{ path('search_list') }}",
+                dataType: 'json', // ** ensure you add this line **
+                success: function (data) { // code_html contient le HTML renvoyé
+                    var result = jQuery.parseJSON(JSON.stringify(data));
+
+                    if ($('#listing-city').val() != 'ALL') {
+                        $(".main-listing__tag_city").show();
+                        $(".main-listing__tag-value_City").html($('#listing-city').val());
+                    }
+
+                    $(".listing-sort__list").html(data.length + ' résultats');
+                    $(".loading").hide();
+                    jQuery.each(data, function (index, item) {
+                        var html = '<div class="col-md-4 item-grid__container"><div class="listing-homepage"><div class="item-grid__image-container style-hover-zoom clearfix"><a href="annonce-' + item.slug + '-' + item.id_1 + '.html"><div class="item-grid__image-overlay" style="background: url(\'/uploads/photos/263x175/' + item.photo + '\');width: 100%;height: 175px;background-position: 50% 50%;background-repeat: no-repeat;background-size: cover;"></div></a></div><div class="absolute"><ul class="property-status"><li class="property-status-item property-status-rent"><span>' + item.tlabel + '</span></li></ul><div class="property-group-label"><span class="label-featured label label-success">' + item.offre_2 + '</span></div></div><div class="item-grid__content-container"><div class="listing__content"><div class="listing__header"><div class="listing__header-primary"><div><h3 class="listing__title  h-70"><a href="annonce-' + item.slug + '-' + item.id_1 + '.html">' + item.label_2 + '</a></h3></div><span class="listing__type"><a href="#">' + item.delegation + '</a></span><div class="property-price"><p class="listing__price">' + item.prix_3 + ' DT</p></div></div></div><div class="flex-center space-beetween pb12 list-details"><div class="clearfix"><div class="property-meta"><ul class="property-meta-list list-inline">';
+                        if (item.nbrPieces) {
+                            html += '<li class="property-label-bedrooms" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pièces"><i class="icon-property-bedrooms"></i><span class="label-content">' + item.nbrPieces + ' pièces</span></li>';
+                        }
+                        if (item.surface_3) {
+                            html += '<li class="property-label-areasize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Surface" aria-describedby="tooltip386929"><i class="icon-property-areasize"></i><span class="label-content">' + item.surface_3 + ' m<sup>2</sup></span></li>';
+                        }
+                        html += '</ul></div></div><a href="#"><img itemprop="logo" src="/public/uploads/logos/' + item.logo + '" alt="" style="width: 50px;"></a></div></div></div></div></div>';
+
+                        $(".main-listing-list").prepend(html);
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

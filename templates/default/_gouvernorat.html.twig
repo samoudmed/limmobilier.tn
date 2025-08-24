@@ -1,0 +1,7 @@
+<select name="gouvernorat" id="listing-gouvernorat" class="select2-selection__rendered" data-dkcacheid="0" style="display: none" required="required">
+    <option value="ALL" selected="">Choisir une gouvernorat</option>
+    {% for gouvernorat in gouvernorats %}
+        <option value="{{gouvernorat.id}}">{{gouvernorat.label}}</option>
+    {% endfor %}
+</select><!-- .main-listing__form-field -->
+<div id="listing-gouvernorat-error"></div>

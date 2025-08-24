@@ -1,0 +1,523 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Annonces;
+use App\Entity\Photos;
+use App\Entity\Villes;
+use App\Entity\Gouvernorat;
+use App\Entity\Delegation;
+use App\Entity\Favorite;
+use App\Form\UserType;
+use App\Form\AnnoncesType;
+use Symfony\Component\Finder\SplFileInfo;
+use Knp\Component\Pager\PaginatorInterface;
+use App\Service\ResizePhoto;
+use App\Service\ManagePhoto;
+use App\Entity\Meta;
+use Cocur\Slugify\Slugify;
+
+class CompteController extends AbstractController {
+
+    /**
+     * @Route("/compte/ajouter-annonce.html", name="ajouter_annonce", methods={"POST", "GET"})
+     */
+    public function newAnnonce(Request $request) {
+
+        $annonce = new Annonces();
+        $slugify = new Slugify();
+        $ville = new Villes();
+        $form = $this->createForm(AnnoncesType::class, $annonce);
+
+        $form->handleRequest($request);
+        $gouvernorats = $this->getDoctrine()
+                ->getRepository(Gouvernorat::class)
+                ->findAll();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $typeOffre = $request->request->get('offre');
+            //$prix = $request->request->get('prix');
+            $file = $request->files->get('nom');
+
+            $ville = $this->getDoctrine()
+                    ->getRepository(Villes::class)
+                    ->findOneById($request->request->get('city'));
+
+            $gouvernorat = $this->getDoctrine()
+                    ->getRepository(Gouvernorat::class)
+                    ->findOneById($request->request->get('annonces')['gouvernorat']);
+
+            $delegation = $this->getDoctrine()
+                    ->getRepository(Delegation::class)
+                    ->findOneById($request->request->get('delegation'));
+
+            $em = $this->getDoctrine()->getManager();
+
+            $user = $this->getUser();
+            $annonce = $form->getData();
+            $annonce->setUser($user);
+            $annonce->setVille($ville);
+            $annonce->setGouvernorat($gouvernorat);
+            $annonce->setDelegation($delegation);
+            $annonce->setSlug($slugify->slugify($annonce->getLabel()));
+            $annonce->setUser($user);
+            $annonce->setCreatedAt(new \DateTime('now'));
+            $annonce->setUpdatedAt(new \DateTime('now'));
+            $annonce->setDescription(html_entity_decode($annonce->getDescription()));
+            $em->persist($annonce);
+
+
+
+            $expired_at = $request->request->get('annonces')['expired_at'];
+            $dateExpired = new \DateTime();
+            $dateExpired->modify('+' . $expired_at . ' days');
+            $dateExpired->format('Y-m-d H:i:s');
+            $annonce->setStatut($user->isVerified());
+
+            //$annonce->setPrix($prix);
+            //$annonce->setOffre($typeOffre);
+            $annonce->setUser($user);
+            //$annonce->setDisponibilite(new \DateTime('now'));
+            $annonce->setExpiredAt($dateExpired);
+
+            $annonce->setCreatedAt(new \DateTime('now'));
+            $annonce->setUpdatedAt(new \DateTime('now'));
+            $annonce->setPublished(1);
+            $annonce->setDeleted(0);
+            $annonce->setView(0);
+            $em->persist($annonce);
+            $em->flush();
+
+            //upload photos
+            if ($request->files->get('nom')) {
+                $this->savePhoto($request->files->get('nom'), 1, $annonce, $user);
+            }
+
+
+            if ($request->files->get('photos')) {
+                foreach ($request->files->get('photos') as $file2) {
+                    $this->savePhoto($file2, 0, $annonce, $user);
+                }
+            }
+
+            $meta = new Meta();
+            $meta->setIdEntity($annonce->getId());
+            $meta->setEntity('annonce');
+            $meta->setTitle($annonce->getLabel());
+            $meta->setDescription(substr(strip_tags($annonce->getDescription()), 0, 150));
+            mail('samoud.mohamed@gmail.com', 'annonce new ', 'annonce new');
+
+            $this->addFlash(
+                    'success', 'Votre Annonce a été ajoutée avec succès!'
+            );
+
+            return $this->redirectToRoute('mes_annonces');
+        }
+
+        return $this->render('default/compte/ajouter_annonce.html.twig', ['bien' => $annonce, 'form' => $form->createView(), 'gouvernorats' => $gouvernorats]);
+    }
+
+    /**
+     * @Route("/compte/modifier-annonce-{id}.html", name="annonce_update", methods={"GET", "POST"})
+     */
+    public function editAnnonce(Request $request, $id) {
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $slugify = new Slugify();
+        $annonce = $this->getDoctrine()
+                ->getRepository(Annonces::class)
+                ->findOneById($id);
+
+
+        $photos = $this->getDoctrine()
+                ->getRepository(Photos::class)
+                ->findByAnnonce($annonce);
+
+        if (!$annonce) {
+            throw $this->createNotFoundException('No guest found for id ' . $id);
+        }
+
+        $form = $this->createForm(AnnoncesType::class, $annonce);
+
+        $form->handleRequest($request);
+
+        $villes = $this->getDoctrine()
+                ->getRepository(Villes::class)
+                ->findAll();
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $annonce = $form->getData();
+                $user = $this->getUser();
+                $em = $this->getDoctrine()->getManager();
+
+                // The form should handle setting these values. If they are not part of the form,
+                // you need to fetch them differently. Assuming they are hidden fields or similar.
+                
+               
+                $annonce->setUser($user);
+                $annonce->setSlug($slugify->slugify($annonce->getLabel()));
+                $annonce->setCreatedAt(new \DateTime('now'));
+                $annonce->setUpdatedAt(new \DateTime('now'));
+
+                // The expiredAt field should be handled by the form if it's a date field.
+                // If it's a number of days, you would have a non-mapped field in your form.
+                // For this example, let's assume `expired_at` is a field on your Annonce entity.
+                // If not, you need to use a non-mapped field and set it manually.
+                // $expired_at = $annonce->getExpiredAt(); // Get the value from the form
+                // $dateExpired = new \DateTime();
+                // $dateExpired->modify('+' . $expired_at . ' days');
+                // $annonce->setExpiredAt($dateExpired);
+
+                $em->persist($annonce);
+                $em->flush();
+
+                // The file uploads need to be handled separately if they are not part of the form's data.
+                // However, it's better to manage them through a "FileType" in your form.
+                $nom = $request->files->get('nom');
+                $photos = $request->files->get('photos');
+
+                // upload photos
+                if ($nom) {
+                    $this->savePhoto($nom, 1, $annonce, $user);
+                }
+
+                if ($photos) {
+                    foreach ($photos as $file) {
+                        $this->savePhoto($file, 0, $annonce, $user);
+                    }
+                }
+
+                // The Meta entity creation is commented out. If it's part of the form submission,
+                // it should be handled differently, perhaps with a data transformer or event listener.
+                //
+                // $meta = new Meta();
+                // $meta->setIdEntity($annonce->getId());
+                // $meta->setEntity('annonce');
+                // $meta->setTitle($annonce->getLabel());
+                // $meta->setDescription(substr(strip_tags($annonce->getDescription()), 0, 150));
+                // ...
+                // $em->persist($meta);
+                // $em->flush();
+
+                $this->addFlash('success', 'Votre Annonce a été ajouté avec succès!');
+
+                // You should redirect after a successful form submission to prevent resubmission.
+                // return $this->redirectToRoute('some_route');
+            } else {
+                // If the form is submitted but not valid, handle the errors.
+                foreach ($form->getErrors(true) as $error) {
+                    
+                    $fieldName = $error->getCause() ? $error->getCause()->getPropertyPath() : 'global';
+                    $errorMessage = $error->getMessage();
+                    // You can now use $fieldName and $errorMessage to log or flash the errors.
+                    echo "Error on field '{$fieldName}': {$errorMessage}<br>";
+                }
+                dd($request->request);
+            }
+        }
+
+        $annonce = $this->getDoctrine()
+                ->getRepository(Annonces::class)
+                ->findOneById($id);
+
+
+        $photos = $this->getDoctrine()
+                ->getRepository(Photos::class)
+                ->findByAnnonce($annonce);
+
+        return $this->render('default/compte/modifier_annonce.html.twig', ['annonce' => $annonce, 'form' => $form->createView(), 'villes' => $villes, 'photos' => $photos]);
+    }
+
+    public function savePhoto($fichier, $featured, $annonce, $user) {
+        $em = $this->getDoctrine()->getManager();
+
+        // Validate the file
+        $filePath = $fichier->getPathname();
+
+        // Check if the file is a valid image
+        if (!@getimagesize($filePath)) {
+            throw new \Exception('The uploaded file is not a valid image.');
+        }
+
+        // Allowed MIME types
+        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $mimeType = $fichier->getMimeType();
+
+        if (!in_array($mimeType, $allowedMimeTypes)) {
+            throw new \Exception('The file MIME type is not allowed.');
+        }
+
+        // Check file size (max 2MB)
+        $maxFileSize = 2 * 1024 * 1024; // 2MB
+        if ($fichier->getSize() > $maxFileSize) {
+            throw new \Exception('The file exceeds the maximum allowed size of 2MB.');
+        }
+
+        // Recreate the image
+        $imageData = file_get_contents($filePath);
+        $image = imagecreatefromstring($imageData);
+
+        if (!$image) {
+            throw new \Exception('The file contains invalid image data.');
+        }
+
+        // Generate a unique name for the file
+        $extension = pathinfo($fichier->getClientOriginalName(), PATHINFO_EXTENSION);
+        $fileName = md5(uniqid('', true)) . '.' . $extension;
+
+        // Save the recreated image
+        $outputPath = $this->getParameter('photo_directory') . '/' . $fileName;
+
+        switch ($mimeType) {
+            case 'image/jpeg':
+                imagejpeg($image, $outputPath);
+                break;
+            case 'image/png':
+                imagepng($image, $outputPath);
+                break;
+            case 'image/gif':
+                imagegif($image, $outputPath);
+                break;
+            default:
+                throw new \Exception('Unsupported image format.');
+        }
+
+        // Clean up memory
+        imagedestroy($image);
+
+        // Save image details to the database
+        $photo = new Photos();
+        $photo->setNom($fileName);
+        $photo->setFeatured($featured);
+        $photo->setCreatedAt(new \DateTime('now'));
+        $photo->setAnnonce($annonce);
+        $photo->setUser($user);
+
+        $em->persist($photo);
+        $em->flush();
+
+        $this->generatePhoto($fileName);
+    }
+
+    public function generatePhoto($filename) {
+
+        $path_parts = pathinfo($this->getParameter('photo_directory') . '/' . $filename);
+        $managePhoto = new ResizePhoto($this->getParameter('photo_directory') . '/' . $filename);
+
+        $managePhoto->resizeImage(86, 50, 'crop');
+        $managePhoto->saveImage($this->getParameter('photo_directory') . '/86x50/' . $filename, 100);
+
+        $managePhoto->resizeImage(263, 175, 'crop');
+        $managePhoto->saveImage($this->getParameter('photo_directory') . '/263x175/' . $filename, 100);
+
+        $managePhoto->resizeImage(263, 175, 'crop');
+        $managePhoto->saveImage($this->getParameter('photo_directory') . '/263x175/webp/' . $filename . '.webp', 100);
+
+        $managePhoto->resizeImage(848, 682, 'crop');
+        $managePhoto->saveImage($this->getParameter('photo_directory') . '/848x682/' . $filename, 100);
+
+        $managePhoto->resizeImage(848, 682, 'crop');
+        $managePhoto->saveImage($this->getParameter('photo_directory') . '/848x682/webp/' . $filename . '.webp', 100);
+    }
+
+    /**
+     * @Route("/compte/delete-annonce-{id}.html", name="annonce_delete", methods={"GET"})
+     */
+    public function deleteAnnonce($id) {
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $em = $this->getDoctrine()->getManager();
+        $annonce = $this->getDoctrine()
+                ->getRepository(Annonces::class)
+                ->findOneById($id);
+
+        if (!$annonce) {
+            throw $this->createNotFoundException('No guest found for id ' . $id);
+        }
+        $annonce->setPublished(0);
+        $annonce->setDeleted(1);
+
+        $em->persist($annonce);
+        $em->flush();
+
+        return $this->redirectToRoute('mes_annonces');
+    }
+
+    /**
+     * @Route("/compte/publier-annonce-{id}-{statut}.html", name="annonce_published", methods={"GET"})
+     */
+    public function publishedAnnonced(Request $request, $id, $statut) {
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $annonce = $this->getDoctrine()
+                ->getRepository(Annonces::class)
+                ->findOneBy(array('user' => $this->getUser(), 'id' => $id), array('id' => 'DESC'));
+
+        if (!$annonce) {
+            throw $this->createNotFoundException('No guest found for id ' . $id);
+        }
+
+
+        $em = $this->getDoctrine()->getManager();
+        $published = ($statut == 1) ? 0 : 1;
+        $annonce->setPublished($published);
+        $annonce->setUpdatedAt(new \DateTime('now'));
+
+        $em->persist($annonce);
+        $em->flush();
+        $this->addFlash(
+                'success', 'Votre Annonce a été ajouté avec succès!'
+        );
+
+        //return $this->redirectToRoute('homepage');
+        $redirect = $request->headers->get('referer');
+        return $this->redirect($redirect);
+    }
+
+    /**
+     * @Route("/compte/mes-annonces-{page}.html", name="mes_annonces", methods={"GET", "POST"})
+     */
+    public function mesAnnonces(Request $request, PaginatorInterface $paginator, ManagePhoto $managePhoto, $page = 1) {
+
+        $key = $request->request->get('key');
+
+        if ($key) {
+            $allAnnonces = $this->getDoctrine()
+                    ->getRepository(Annonces::class)
+                    ->searchMyAds($this->getUser(), $key);
+        } else {
+            $allAnnonces = $this->getDoctrine()
+                    ->getRepository(Annonces::class)
+                    ->findBy(array('user' => $this->getUser(), 'deleted' => 0), array('id' => 'DESC'));
+        }
+
+        $annoncesList = $managePhoto->getFeaturedPhoto($allAnnonces);
+        $annonces = $paginator->paginate(
+                $annoncesList, /* query NOT result */
+                $request->query->getInt('page', $page), /* page number */
+                10 /* limit per page */
+        );
+
+        return $this->render('default/compte/mes_annonces.html.twig', ['annonces' => $annonces]);
+    }
+
+    /**
+     * @Route("/compte/delete-photo/{id}", name="photo_delete")
+     */
+    public function photoDelete(Request $request, $id) {
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $redirect = $request->headers->get('referer');
+        $em = $this->getDoctrine()->getManager();
+        $photo = $this->getDoctrine()
+                        ->getRepository(Photos::class)->findOneById($id);
+
+        if (!$photo) {
+            throw $this->createNotFoundException('No guest found for id ' . $id);
+        }
+
+        $em->remove($photo);
+        $em->flush();
+
+        return $this->redirect($redirect);
+    }
+
+    /**
+     * @Route("/favorite", name="favorite")
+     */
+    public function favoriteAction(Request $request) {
+        $id = $request->request->get('id');
+
+        $annonce = $this->getDoctrine()
+                ->getRepository(Annonces::class)
+                ->findOneById($id);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+        $favorite = new Favorite();
+        $favorite->setAnnonce($annonce);
+        $favorite->setUser($user);
+        $em->persist($favorite);
+
+        $em->flush();
+        return $this->json('succes');
+    }
+
+    /**
+     * @Route("/compte/mes-favoris-{page}.html", name="mes_favoris", methods={"GET"})
+     */
+    public function mesFavoris(Request $request, PaginatorInterface $paginator, ManagePhoto $managePhoto, $page = 1) {
+
+        $annoncesList = array();
+        $favoris = $this->getDoctrine()
+                ->getRepository(Favorite::class)
+                ->findByUser($this->getUser());
+
+        foreach ($favoris as $favori) {
+            $annoncesList[] = $favori->getAnnonce();
+        }
+
+        if (isset($annoncesList)) {
+            $annoncesList = $managePhoto->getFeaturedPhoto($annoncesList);
+        }
+
+        $annonces = $paginator->paginate(
+                $annoncesList, /* query NOT result */
+                $page, /* page number */
+                10 /* limit per page */
+        );
+
+        return $this->render('default/compte/favoris.html.twig', ['annonces' => $annonces]);
+    }
+
+    /**
+     * @Route("/compte/mon-profil.html", name="my_profile", methods={"GET", "POST"})
+     */
+    public function myProfil(Request $request) {
+
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $file stores the uploaded PDF file
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            $data = $form->getData();
+            if ($form->get('logo')->getData()) {
+
+                $file = $form->get('logo')->getData();
+                if (($file->guessExtension() == 'png') || ($file->guessExtension() == 'jpg') || ($file->guessExtension() == 'jpeg')) {
+                    $fileName = md5(date('Y-m-d H:i:s:u')) . '.' . $file->guessExtension();
+
+                    // moves the file to the directory where brochures are stored
+                    $file->move($this->getParameter('logo_directory'), $fileName);
+
+                    // updates the 'brochure' property to store the PDF file name
+                    // instead of its contents
+
+                    $data->setLogo($fileName);
+                } else {
+                    $data->setLogo('avatar.png');
+                }
+            } else {
+                $data->setLogo('avatar.png');
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($data);
+
+            $em->flush();
+            // ... persist the $product variable or any other work
+        }
+
+        return $this->render('default/compte/profil.html.twig', ['form' => $form->createView(), 'setting' => $user]);
+    }
+
+}

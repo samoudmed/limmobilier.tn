@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    <title>Tunisie annonce immobilier mon profil</title>
+    <meta name="description" content="Mon profil Annonces immobilières en Tunisie sur limmobilier.tn. Achat, vente et location de biens immobiliers en Tunisie. Trouvez votre maison, appartement ou terrain" />
+{% endblock %}
+{% block body %}
+    <section class="my-profile">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Mon Profil</span></li>
+            </ul><!-- ht-breadcrumb -->
+        </div>
+        <div class="container">
+            <!-- .ht-breadcrumb -->
+            <div class="my-profile__container">
+                <div class="row">
+                    <div class="col-md-3">
+                        {{ include("default/compte/_menuUser.html.twig") }}
+                    </div>
+                    <div class="col-md-9">
+                        {{ form_start(form) }}
+                        <div class="contact-form__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {% for label, messages in app.flashes %}
+                                        {% for message in messages %}
+                                            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                                                <strong>{{ message }}</strong>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="sign-up-nom" class="sign-up__label">Nom</label>
+                                {{ form_widget(form.nom, {'attr': {'class': 'sign-up__field'}}) }}
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="sign-up-nom" class="sign-up__label">Prénom</label>
+                                {{ form_widget(form.prenom, {'attr': {'class': 'sign-up__field'}}) }}
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="sign-up-nom" class="sign-up__label">Email</label>
+                                {{ form_widget(form.email, {'attr': {'class': 'sign-up__field'}}) }}
+                                <span class="help-block">{{ form_errors(form.email) }}</span>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="sign-up-nom" class="sign-up__label">Téléphone</label>
+                                {{ form_widget(form.telephone, {'attr': {'class': 'sign-up__field'}}) }}
+                                <span class="help-block">{{ form_errors(form.telephone) }}</span>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="sign-up-nom" class="sign-up__label">Mot de passe</label>
+                                {{ form_widget(form.plainPassword, {'attr': {'class': 'sign-up__field'}}) }}
+                                <span class="help-block">{{ form_errors(form.plainPassword) }}</span>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="sign-up-nom" class="sign-up__label">Agence</label>
+                                {{ form_widget(form.agence, {'attr': {'class': 'sign-up__field'}}) }}
+                                <span class="help-block">{{ form_errors(form.agence) }}</span>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                {% if(app.user.logo  != NULL) %}
+                                    <img src="{{ asset('uploads/logos/'~app.user.logo) }}" alt="{{app.user.agence}}" style="width:60px" >
+                                {% endif %}
+                                <br>
+                                {{ form_widget(form.logo, {'attr': {'class': 'ht-field profile-type', 'id': 'id="profile-type"'}}) }}
+                            </div>
+                            <div class="contact-form__footer">
+                                {{ form_row(form._token) }}
+                                <button class="g-recaptcha sign-up__submit" 
+                                        data-sitekey="6LePmP0UAAAAAIwb4vLi826OgAQTQIp5zuXMa6Z7"
+                                        data-callback='onSubmit' 
+                                        data-action='submit'>Envoyer</button>
+                            </div><!-- .contact-form__footer -->
+                        </div>    
+                        {{ form_end(form, {'render_rest': false}) }}    
+                    </div><!-- .contact-form__body -->
+                </div>
+            </div>
+            <!-- .row -->
+        </div>
+        <!-- .my-profile__container -->
+    </div>
+    <!-- .container -->
+</section>
+<script type="text/javascript">
+    $("#dk0-combobox").on("change", function () {
+        if ($('#profile-type').val() == 2) {
+            $("#pro").show("slow");
+        } else {
+            $("#pro").hide("slow");
+        }
+    });
+</script>
+{% endblock %}

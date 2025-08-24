@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    <title>Tunisie annonce immobilier mes messages</title>
+    <meta name="description" content="Mes messages immobilières en Tunisie sur limmobilier.tn. Achat, vente et location de biens immobiliers en Tunisie. Trouvez votre maison, appartement ou terrain" />
+{% endblock %}
+{% block body %}
+    <section class="bookmarked-listing">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Mes messages</span></li>
+            </ul><!-- ht-breadcrumb -->
+        </div>
+        <div class="container">
+            <div class="bookmarked-listing__container">
+                <div class="row">
+                    <div class="col-md-3">
+                        {{ include("default/compte/_menuUser.html.twig") }}
+                    </div>
+                    <div class="col-md-9">
+                        <main class="inbox">
+                            <ul class="messages">
+                                {% for message in messages %}
+                                    <li class="message {% if(message.statut == 1) %} unread {% endif %}">
+                                        <a href="{{ path('message_show', { 'id' : message.id }) }}">
+                                            <div class="header">
+                                                <span class="from">{{message.sender.nom}}</span>
+                                                <span class="date">
+                                                    <span class="fa fa-paper-clip"></span> {{message.createdAt|date("Y-m-d H:i:s") }}</span>
+                                            </div>
+                                            <div class="title">{{message.sujet}}</div>
+                                            <div class="description">
+                                                {{message.message}}
+                                            </div>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <p>Vous n'avez pas de message.</p>
+                                {% endfor %}
+                            </ul>
+                        </main>
+                    </div>
+                </div><!-- .row -->
+            </div><!-- .bookmarked-listing__container -->
+        </div><!-- .container -->
+    </section>
+{% endblock %}

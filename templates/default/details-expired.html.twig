@@ -1,0 +1,183 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    {{ render(controller('App\\Controller\\Admin\\MetaController::getMeta', {'idEntity' : annonce.id, 'entity': 'annonce'})) }}
+{% endblock %}
+{% block open_graph %}
+    <link rel="canonical" href="https://limmobilier.tn{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}" />
+    <meta property="og:url" content="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{annonce.label|capitalize}}" />
+    <meta property="og:description" content="{{annonce.description|html_entity| striptags|slice(0, 100)}}" />
+    {% if (annonce.photos|length) > 0 %}
+        <meta property="og:image" content="{{ asset('uploads/photos/'~annonce.photos[0]) }}" />
+    {% endif %}
+{% endblock %}
+{% block body %}
+    <section class="property">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><a href="{{ path('annonce_liste', {'offre': annonce.offre|lower, 'page': 1}) }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">{{annonce.offre}}</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type', {'offre': annonce.offre|lower, 'type': annonce.kind.label|slugify|lower, 'page': 1}) }}" class="ht-breadcrumbs__link">{{annonce.kind.label | capitalize}}</a></span></li>
+				<li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type_gouvernorat', {'offre': annonce.offre|lower, 'type': annonce.kind.label|slugify|lower, 'slug': annonce.gouvernorat.slug ,'page': 1}) }}" class="ht-breadcrumbs__link">{{annonce.gouvernorat | capitalize}}</a></span></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type_delegation', {'offre': annonce.offre|lower, 'type' : annonce.kind.label|slugify|lower, 'slug': annonce.delegation.label|lower|slugify, 'page': '1' }) }}" class="ht-breadcrumbs__link">{{annonce.delegation| capitalize}}</a></span></li>
+                {% if annonce.ville is not null %}<li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type_ville', {'offre': annonce.offre|lower, 'type' : annonce.kind.label|slugify|lower, 'ville': annonce.ville.label|lower|slugify, 'idVille': annonce.ville.id, 'page': '1' }) }}" class="ht-breadcrumbs__link">{{annonce.ville| capitalize}}</a></span></li>{% endif %}
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">{{annonce.label| capitalize}}</span></li>
+            </ul><!-- ht-breadcrumb -->
+        </div><!-- .container -->
+        <div class="property__container">
+            <div class="container">
+                <div class="row">
+                    <aside class="col-md-12">
+                        <div class="widget__container">
+                            <div class="property__feature">
+                                <h3 class="text-center">Nous sommes désolés, cette annonce n'est plus disponible.</h3>
+                            </div>
+                        </div><!-- .widget__container -->
+
+                        <div class="col-md-12 item-grid__container">
+                            <h1 class="widget__title">Découvrez des annonces immobilières</h1>
+                            {% if annonces|length > 0  %}
+                                <h2 class="widget__title">Les annonces immobilières dans la même catégorie : {{annonce.offre}} {{annonce.kind.label }} {{annonce.ville.label| capitalize}}</h2>
+                                {% for annonce in annonces %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col item-grid__container">
+                                        <div class="listing-homepage">
+                                            <div class="item-grid__image-container style-hover-zoom clearfix">
+                                                <a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">
+                                                    <div class="item-grid__image-overlay" style="background: url('{{  asset('uploads/photos/263x175/'~annonce.photo)}}');width: 100%;height: 175px;background-position: 50% 50%;background-repeat: no-repeat;background-size: cover;"></div><!-- .item-grid__image-overlay -->
+                                                </a>
+                                            </div><!-- .item-grid__image-container -->
+                                            <div class="absolute">
+                                                <ul class="property-status">
+                                                    <li class="property-status-item property-status-rent"><span>{{annonce.offre}}</span></li>
+                                                </ul>            
+                                                <div class="property-group-label"><span class="label-featured label label-success">{{annonce.kind}}</span></div>
+                                            </div>
+                                            <div class="item-grid__content-container">
+                                                <div class="listing__content">
+                                                    <div class="listing__header">
+                                                        <div class="listing__header-primary">
+                                                            <div>
+                                                                <h3 class="listing__title  h-70"><a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">{{annonce.label| slice(0, 49) | capitalize}} {{ (annonce.label| length) > 49 ? '...' }}</a></h3>
+                                                            </div>
+                                                            <span class="listing__type"><a href="{{ path('annonce_liste_delegation', {'slug': annonce.delegation.label|slugify, 'page': '1' }) }}">{{annonce.delegation.label}}</a></span>
+                                                            <div class="property-price">
+                                                                <p class="listing__price"> 
+                                                                    {% if(annonce.prix != 0) %}
+                                                                        {{annonce.prix|number_format(0, '.', ' ')}} DT
+                                                                    {% else %}
+                                                                        Contacter le propriétaire
+                                                                    {%endif%}
+                                                                </p>
+                                                            </div>
+                                                        </div><!-- .listing__header-primary -->
+                                                    </div><!-- .listing__header -->
+                                                    <div class="flex-center space-beetween pb12 list-details">
+                                                        <div class="clearfix">
+                                                            <div class="property-meta">
+                                                                <ul class="property-meta-list list-inline">
+                                                                    {% if(annonce.pieces is not null ) %}<li class="property-label-bedrooms" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pièces"><i class="icon-property-bedrooms"></i> <span class="label-content">{{annonce.pieces}} pièce{% if annonce.pieces > 1 %}s{% endif %}</span></li>{%endif%}
+                                                                    {% if(annonce.surface != 0) %}<li class="property-label-areasize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Surface"><i class="icon-property-areasize"></i> <span class="label-content">{{annonce.surface}} m<sup>2</sup></span></li>{%endif%}
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        {% if(annonce.user.agence  != NULL) %}
+                                                            <a href="{{ path('liste_agence', {'label': annonce.user.agence|slugify, 'id': annonce.user.id, 'page': 1} )  }} ">
+                                                                <img itemprop="logo" src="{{ asset('uploads/logos/'~annonce.user.logo) }}" title="{{annonce.user.logo}}" alt="{{annonce.user.logo}}" style="width: 50px;">
+                                                            </a>    
+                                                        {% endif %}        
+                                                    </div>
+                                                </div><!-- .listing-content -->
+                                            </div><!-- .item-grid__content-container -->
+                                        </div><!-- .listing -->
+                                    </div><!-- .col -->
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-12 item-grid__container">
+                            <h2 class="widget__title">Les annonces immobilières à {% if annonce.ville is not null %} {{annonce.ville.label| capitalize}} {% endif %} {{annonce.delegation| capitalize}}</h2>
+                            {% for annonce in annoncesInCity %}
+                                <div class="col-lg-3 col-md-4 col-sm-6 col item-grid__container">
+                                    <div class="listing-homepage">
+                                        <div class="item-grid__image-container style-hover-zoom clearfix">
+                                            <a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">
+                                                <div class="item-grid__image-overlay" style="background: url('{{  asset('uploads/photos/263x175/'~annonce.photo)}}');width: 100%;height: 175px;background-position: 50% 50%;background-repeat: no-repeat;background-size: cover;"></div><!-- .item-grid__image-overlay -->
+                                            </a>
+                                        </div><!-- .item-grid__image-container -->
+                                        <div class="absolute">
+                                            <ul class="property-status">
+                                                <li class="property-status-item property-status-rent"><span>{{annonce.offre}}</span></li>
+                                            </ul>            
+                                            <div class="property-group-label"><span class="label-featured label label-success">{{annonce.kind}}</span></div>
+                                        </div>
+                                        <div class="item-grid__content-container">
+                                            <div class="listing__content">
+                                                <div class="listing__header">
+                                                    <div class="listing__header-primary">
+                                                        <div>
+                                                            <h3 class="listing__title  h-70"><a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">{{annonce.label| slice(0, 49) | capitalize}} {{ (annonce.label| length) > 49 ? '...' }}</a></h3>
+                                                        </div>
+                                                        <span class="listing__type"><a href="{{ path('annonce_liste_delegation', {'slug': annonce.delegation.label|slugify, 'page': '1' }) }}">{{annonce.delegation.label}}</a></span>
+                                                        <div class="property-price">
+                                                            <p class="listing__price"> 
+                                                                {% if(annonce.prix != 0) %}
+                                                                    {{annonce.prix|number_format(0, '.', ' ')}} DT
+                                                                {% else %}
+                                                                    Contacter le propriétaire
+                                                                {%endif%}
+                                                            </p>
+                                                        </div>
+                                                    </div><!-- .listing__header-primary -->
+                                                </div><!-- .listing__header -->
+                                                <div class="flex-center space-beetween pb12 list-details">
+                                                    <div class="clearfix">
+                                                        <div class="property-meta">
+                                                            <ul class="property-meta-list list-inline">
+                                                                {% if(annonce.pieces is not null ) %}<li class="property-label-bedrooms" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pièces"><i class="icon-property-bedrooms"></i> <span class="label-content">{{annonce.pieces}} pièce{% if annonce.pieces > 1 %}s{% endif %}</span></li>{%endif%}
+                                                                {% if(annonce.surface != 0) %}<li class="property-label-areasize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Surface"><i class="icon-property-areasize"></i> <span class="label-content">{{annonce.surface}} m<sup>2</sup></span></li>{%endif%}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    {% if(annonce.user.agence  != NULL) %}
+                                                        <a href="{{ path('liste_agence', {'label': annonce.user.agence|slugify, 'id': annonce.user.id, 'page': 1} )  }} ">
+                                                            <img itemprop="logo" src="{{ asset('uploads/logos/'~annonce.user.logo) }}" title="{{annonce.user.logo}}" alt="{{annonce.user.logo}}" style="width: 50px;">
+                                                        </a>    
+                                                    {% endif %}        
+                                                </div>
+                                            </div><!-- .listing-content -->
+                                        </div><!-- .item-grid__content-container -->
+                                    </div><!-- .listing -->
+                                </div><!-- .col -->
+                            {% endfor %}
+                        </div>
+                    </aside>
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div>
+    </section><!-- .property -->
+    <script>
+        $("#favorite").on("click", function () {
+            $.ajax({
+                type: 'POST', // Le type de la requête HTTP, ici devenu POST
+                data: 'id=' + {{annonce.id}},
+                url: "{{ path('favorite') }}",
+                dataType: 'json', // ** ensure you add this line **
+                success: function (data) { // code_html contient le HTML renvoyé
+                    if (data == 'succes') {
+                        $.growl.notice({message: "Annonce ajouté a votre liste"});
+                    }
+                }
+            });
+        });
+
+        $(".calculator__submit").on("click", function () {
+            var c = $('#home-price').val();
+            var t = $('#annual-rate').val() / 100;
+            var d = $('#loan-term').val() * 12;
+            $(".mensualite").html(((c * (t / 12)) / (1 - (Math.pow((1 + (t / 12)), -d)))).toFixed(3) + ' DT');
+            $(".form-calculator__result").show('slow');
+        });
+    </script>
+
+{% endblock %}

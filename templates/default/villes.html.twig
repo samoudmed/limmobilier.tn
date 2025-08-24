@@ -1,0 +1,305 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    
+{% endblock %}
+{% block open_graph %}
+    <meta property="og:url"                content="https://limmobilier.tn/liste-villes-1.html" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="Trouvez un appartement ou une maison en vente ou en location en Tunisie" />
+    <meta property="og:description"        content="Annonces immobilières en Tunisie Trouvez un appartement, une maison, un terrain ou un fond de commerce en vente ou en location" />
+    <meta property="og:image"              content="{{ path('homepage') }}uploads/photos/12845.png" />
+{% endblock %}
+{% block body %}               
+
+    <section class="main-listing">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Délégations</span></li>
+            </ul><!-- ht-breadcrumb -->
+        </div><!-- .container -->
+        <div class="container">
+            <div class="new-listing__header">
+                <h2 class="section__title section__title--b-margin">{{'Annonces immobilières par gouvernorat'|trans}}</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'ariana', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--ariana-1 new-listing--large"></div><!-- .new-listing__child -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Ariana</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'beja', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--beja-1 new-listing--large"></div><!-- .new-listing__bg -->
+
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Béja</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div>
+                </div><!-- .new-listing__block -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'ben-arous', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--ben-arous-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Ben Arous</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'bizerte', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--bizerte-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Bizerte</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'gabes', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--gabes-1 new-listing--large"></div><!-- .new-listing__child -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Gabès</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'gafsa', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--gafsa-1 new-listing--large"></div><!-- .new-listing__bg -->
+
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Gafsa</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div>
+                </div><!-- .new-listing__block -->
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'jendouba', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--jendouba-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Jendouba</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'kairouan', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--kairouan-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Kairouan</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'kasserine', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--kasserine-1 new-listing--large"></div><!-- .new-listing__child -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Kasserine</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'kebili', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--kebili-1 new-listing--large"></div><!-- .new-listing__bg -->
+
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Kébili</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div>
+                </div><!-- .new-listing__block -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'kef', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--kef-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Kef</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'mahdia', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--mahdia-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Mahdia</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'manouba', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--la-manouba-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Manouba</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'medenine', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--medenine-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Médenine</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'monastir', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--monastir-1 new-listing--large"></div><!-- .new-listing__child -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Monastir</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'nabeul', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--nabeul-1 new-listing--large"></div><!-- .new-listing__bg -->
+
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Nabeul</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div>
+                </div><!-- .new-listing__block -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'sfax', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--sfax-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Sfax</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'sidi-bouzid', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--sidi-bouzid-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Sidi Bouzid</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'siliana', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--siliana-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Siliana</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'sousse', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--sousse-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Sousse</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'tataouine', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--tataouine-1 new-listing--large"></div><!-- .new-listing__child -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Tataouine</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'tozeur', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--tozeur-1 new-listing--large"></div><!-- .new-listing__bg -->
+
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Tozeur</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div>
+                </div><!-- .new-listing__block -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'tunis', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--tunis-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Tunis</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 pb-5">
+                    <div class="new-listing__block zoom-in-out-box">
+                        <a href="{{ path('annonce_liste_gouvernorat', {'slug': 'zaghouan', 'page': '1' }) }}">
+                            <div class="new-listing__bg new-listing__bg--zaghouan-1 new-listing--large"></div><!-- .new-listing__bg -->
+                            <div class="new-listing__content">  
+                                <h3 class="new-listing__title">Zaghouan</h3>
+                                <p class="new-listing__desc"></p>
+                            </div><!-- .new-listing__content -->
+                        </a>
+                    </div><!-- .new-listing__block -->
+                </div><!-- .col-md-6 -->
+            </div>                
+            <!-- .new-listing__parent -->
+        </div><!-- .container -->
+    </section>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="error">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="https://limmobilier.tn" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">404 Error</span></li>
+            </ul><!-- ht-breadcrumb -->
+
+            <div class="error-404__main">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="{{ asset('uploads/404.jpg') }}" alt="404">
+                    </div><!-- error-404__img -->
+
+                    <div class="col-md-6">
+                        <h3 class="error-404__title" style="font-size: 18px;padding-top: 172px;text-align: center;">La page que vous cherchiez est introuvable!</h3>
+                        <div class="error-404__detail">
+                            <p class="error-404__desc"></p>
+                        </div><!-- .error-404__detail -->
+                    </div><!-- .error-404__content -->
+                </div><!-- .row -->
+            </div><!-- .error-404__main -->
+        </div><!-- .container -->
+    </section>
+{% endblock %}

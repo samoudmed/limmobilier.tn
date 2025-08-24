@@ -1,0 +1,71 @@
+fos_elastica:
+    clients:
+        default:
+            url: 'https://localhost:9200'
+            username: 'elastic'
+            password: 'Q3_L7lygWKyy2SxjwRDN'
+            ssl: false
+
+    indexes:
+        annonces:
+            persistence:
+                driver: orm
+                model: App\Entity\Annonces
+                provider:
+                    query_builder_method: createIsSearchableQueryBuilder
+                finder: ~
+            properties:
+                label: ~
+                slug: ~
+                description: ~
+                adresse: ~
+                offre: ~
+                prix: ~
+                surface: ~
+                pieces: ~
+                orientation: ~
+                anneeConstruction: ~
+                climatiseur: ~
+                piscine: ~
+                parking: ~
+                chauffage: ~
+                capacite: ~
+                internet: ~
+                meuble: ~
+                salleBain: ~
+                securite: ~
+                ascenseur: ~
+                cheminee: ~
+                cuisineEquipe: ~
+                jacuzzi: ~
+                jardin: ~
+                electricite: ~
+                gaz: ~
+                telephone: ~
+                eau: ~
+                assainissement: ~
+                permisConstruction: ~
+                vue: ~
+                disponibilite: ~
+                statut: ~
+                published: ~
+                deleted: ~
+                archived: ~
+                etage: ~
+                expired_at: ~
+                ville:
+                    type: "object"
+                    properties:
+                        nom: ~
+                gouvernorat:
+                    type: "object"
+                    properties:
+                        nom: ~
+                delegation:
+                    type: "object"
+                    properties:
+                        nom: ~
+                kind:
+                    type: "object"
+                    properties:
+                        nom: ~        

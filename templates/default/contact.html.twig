@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    <title>Tunisie annonce immobilier contactez limmobilier.tn</title>
+    <meta name="description" content="Pour plus d'informations concernant les annonces immobilières contactez limmobilier.tn" />
+{% endblock %}
+{% block body %}
+    <section class="contact">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Contact</span></li>
+            </ul><!-- ht-breadcrumb -->
+
+            <div class="contact__main">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="vc_column-inner">
+                            <div class="wpb_wrapper">
+                                <div role="form" class="wpcf7" id="wpcf7-f8384-p24-o1" lang="en-US" dir="ltr">
+                                    <div class="screen-reader-response"></div>
+                                    <h1 class="contact__title">Contactez nous</h1>
+                                    <div class="contact__desc">
+                                        <p>Envoyez-nous votre question ou vos commentaires sur nos services ou votre plan, notre consultant résoudra le problème. Nous sommes impatients de servir vos idées!</p>
+                                    </div>
+                                    {{ form_start(form, {'attr': {'id': 'form_contact'}}) }}
+                                    {{ form_errors(form) }}
+                                    <div class="contact-form__body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                {% for label, messages in app.flashes %}
+                                                    {% for message in messages %}
+                                                        <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                                                            <strong>{{ message }}</strong>
+                                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <label for="sign-up-nom" class="sign-up__label">Nom</label>
+                                                {{ form_widget(form.nom, {'attr': {'class': 'sign-up__field'}}) }}
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <label for="sign-up-nom" class="sign-up__label">Prénom</label>
+                                                {{ form_widget(form.prenom, {'attr': {'class': 'sign-up__field'}}) }}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <label for="sign-up-nom" class="sign-up__label">Email</label>
+                                                {{ form_widget(form.email, {'attr': {'class': 'sign-up__field'}}) }}
+                                                <span class="help-block">{{ form_errors(form.email) }}</span>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <label for="sign-up-nom" class="sign-up__label">Téléphone</label>
+                                                {{ form_widget(form.telephone, {'attr': {'class': 'sign-up__field'}}) }}
+                                                <span class="help-block">{{ form_errors(form.telephone) }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-6 col-sm-12">
+                                                <label for="sign-up-nom" class="sign-up__label">Message</label>
+                                                {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
+                                                <span class="help-block">{{ form_errors(form.message) }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="contact-form__footer">
+                                            {{ form_row(form._token) }}
+                                            <button class="g-recaptcha sign-up__submit" 
+                                                    data-sitekey="6LePmP0UAAAAAIwb4vLi826OgAQTQIp5zuXMa6Z7"
+                                                    data-callback='onSubmit' 
+                                                    data-action='submit'>Envoyer</button>
+                                        </div><!-- .contact-form__footer -->
+                                    </div><!-- .contact-form__body -->
+                                    {{ form_end(form, {'render_rest': false}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .contact__main -->
+        </div>
+    </section>
+    <script>
+        function onSubmit(token) {
+            document.getElementById("form_contact").submit();
+        }
+    </script>
+{% endblock %}

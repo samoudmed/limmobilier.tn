@@ -1,0 +1,14 @@
+# app/config/config.yml
+
+liip_imagine:
+    filter_sets:
+        my_thumb_jpeg:
+            format: jpeg
+            quality: 80
+            filters:
+                thumbnail: { size: [223, 223], mode: inset }
+        my_thumb_webp:
+            format: webp
+            quality: 100
+            filters:
+                thumbnail: { size: [223, 223], mode: inset }

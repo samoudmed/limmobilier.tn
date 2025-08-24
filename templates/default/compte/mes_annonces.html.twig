@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block meta %}
+    <title>Tunisie annonce immobilier mes annonces</title>
+    <meta name="description" content="Mes Annonces immobilières en Tunisie sur limmobilier.tn. Achat, vente et location de biens immobiliers en Tunisie. Trouvez votre maison, appartement ou terrain" />
+{% endblock %}
+
+{% block body %}
+    <section class="my-property">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Mes annonces</span></li>
+            </ul><!-- ht-breadcrumb -->
+        </div>
+        <div class="container">
+            <div class="my-property__container">
+                <div class="row">
+                    <div class="col-md-3">
+                        {{ include("default/compte/_menuUser.html.twig") }}
+                    </div>
+                    <div class="col-md-9">
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                                    <strong>{{ message }}</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        <ul class="manage-list manage-list--my-property">
+                            {% for annonce in annonces %}
+                                <li class="manage-list__item row mb-4 p-3 rounded">
+                                    <!-- Colonne image -->
+                                    <div class="col-12 col-md-4  mb-2 mb-md-0">
+                                        <img src="{{ asset(annonce.photo is defined and annonce.photo ? 'https://limmobilier.tn/uploads/photos/263x175/' ~ annonce.photo : 'images/default.jpg') }}"
+                                             alt="Photo de l'annonce"
+                                             class="img-fluid rounded w-100 h-100 object-fit-cover"
+                                             style="min-height: 200px; object-fit: cover;">
+                                    </div>
+                                    <!-- Colonne détails + actions -->
+                                    <div class="col-12 col-md-8 d-flex flex-column justify-content-between">
+                                        <!-- Ligne d'information -->
+                                        <div class="mb-3">
+                                            <h5 class="mb-1"><a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">{{ annonce.label }}</a></h5>
+                                            <p class="mb-1 text-muted">
+                                                {{ annonce.kind }} à {{ annonce.ville }} — 
+                                                <strong>{{ annonce.prix|number_format(0, '.', ' ') }} TND</strong>
+                                            </p>
+                                            <p class="text-muted small mb-0">
+                                                Publiée jusqu'au : {{ annonce.expiredAt|date('Y-m-d') }}
+                                            </p>
+                                        </div>
+
+                                        <!-- Ligne actions -->
+                                        <div class="d-flex justify-content-between align-items-center flex-wrap mt-2">
+                                            {% if annonce.archived == 0 %}
+                                                <div class="btn-group mb-2" role="group">
+                                                    <a href="{{ path('annonce_update', { 'id' : annonce.id }) }}" class="btn btn-outline-primary btn-sm">
+                                                        <i class="fa fa-pencil fa-fw"></i> Modifier
+                                                    </a>
+                                                    <a href="{{ path('annonce_published', { 'id' : annonce.id, 'statut' : annonce.isPublished ? 1 : 0 }) }}"
+                                                       class="btn btn-outline-warning btn-sm">
+                                                        {% if annonce.isPublished == 0 %}
+                                                            <i class="fa fa-folder-open fa-fw"></i> Activer
+                                                        {% else %}
+                                                            <i class="fa fa-folder fa-fw"></i> Désactiver
+                                                        {% endif %}
+                                                    </a>
+                                                    <a href="{{ path('annonce_delete', { 'id' : annonce.id }) }}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?');">
+                                                        <i class="fa fa-trash fa-fw"></i> Supprimer
+                                                    </a>
+                                                </div>
+                                            {% else %}
+                                                <span class="badge badge-secondary">Archivé</span>
+                                            {% endif %}
+
+                                            <span class="text-muted small mb-2">
+                                                <i class="fa fa-eye fa-fw"></i> {{ annonce.view }} vues
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="text-center mt-4">{{ knp_pagination_render(annonces) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block body %}
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b">
+                    <div class="card-header flex-wrap py-3">
+                        <div class="card-title">
+                            <h3 class="card-label">Favorite</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div id="kt_datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h1>Settings</h1>
+
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th>Id</th>
+                                                <td>{{ setting.id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Logo</th>
+                                                <td>{{ setting.logo }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Agence</th>
+                                                <td>{{ setting.agence }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Telephone</th>
+                                                <td>{{ setting.telephone }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Adresse</th>
+                                                <td>{{ setting.adresse }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Type</th>
+                                                <td>{{ setting.type }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Map</th>
+                                                <td>{{ setting.map }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Site</th>
+                                                <td>{{ setting.site }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Facebook</th>
+                                                <td>{{ setting.facebook }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <a href="{{ path('settings_index') }}">back to list</a>
+
+                                            <a href="{{ path('settings_edit', {'id': setting.id}) }}"><i class="la la-edit"></i></a>
+                                        </div>   
+                                        <div class="col-lg-2 right">
+                                            {{ include('admin/settings/_delete_form.html.twig') }}
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end: Datatable-->
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Entry-->
+    </div>
+
+
+
+{% endblock %}

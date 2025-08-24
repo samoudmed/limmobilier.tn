@@ -1,0 +1,219 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Annonces{% endblock %}
+
+{% block body %}
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b">
+                    <div class="card-header flex-wrap py-3">
+                        <div class="card-title">
+                            <h3 class="card-label">Annonces</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div id="kt_datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th>Id</th>
+                                                <td>{{ annonce.id }} <a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}"><i class="la la-eye"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Label</th>
+                                                <td>{{ annonce.label }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Surface</th>
+                                                <td>{{ annonce.surface }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Adresse</th>
+                                                <td>{{ annonce.adresse }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>LocalisationMap</th>
+                                                <td>{{ annonce.localisationMap }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Description</th>
+                                                <td>{{ annonce.description|raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Offre</th>
+                                                <td>{{ annonce.offre }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Prix</th>
+                                                <td>{{ annonce.prix }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>View</th>
+                                                <td>{{ annonce.view }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Orientation</th>
+                                                <td>{{ annonce.orientation }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Climatiseur</th>
+                                                <td>{{ annonce.climatiseur ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>AnneeConstruction</th>
+                                                <td>{{ annonce.anneeConstruction }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Pieces</th>
+                                                <td>{{ annonce.pieces }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Piscine</th>
+                                                <td>{{ annonce.piscine ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Parking</th>
+                                                <td>{{ annonce.parking ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Chauffage</th>
+                                                <td>{{ annonce.chauffage ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Capacite</th>
+                                                <td>{{ annonce.capacite }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Internet</th>
+                                                <td>{{ annonce.internet ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Meuble</th>
+                                                <td>{{ annonce.meuble ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>SalleBain</th>
+                                                <td>{{ annonce.salleBain ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Securite</th>
+                                                <td>{{ annonce.securite ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Ascenseur</th>
+                                                <td>{{ annonce.ascenseur ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Chemine</th>
+                                                <td>{{ annonce.cheminee ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>CuisineEquipe</th>
+                                                <td>{{ annonce.cuisineEquipe ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Jacuzzi</th>
+                                                <td>{{ annonce.jacuzzi ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Jardin</th>
+                                                <td>{{ annonce.jardin ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Electricite</th>
+                                                <td>{{ annonce.electricite ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Gaz</th>
+                                                <td>{{ annonce.gaz ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Telephone</th>
+                                                <td>{{ annonce.telephone ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Eau</th>
+                                                <td>{{ annonce.eau ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Assainissement</th>
+                                                <td>{{ annonce.assainissement ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>PermisConstruction</th>
+                                                <td>{{ annonce.permisConstruction ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Vue</th>
+                                                <td>{{ annonce.vue ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Created_at</th>
+                                                <td>{{ annonce.createdAt ? annonce.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Expired_at</th>
+                                                <td>{{ annonce.expiredAt ? annonce.expiredAt|date('Y-m-d') : '' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Updated_at</th>
+                                                <td>{{ annonce.updatedAt ? annonce.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Disponibilite</th>
+                                                <td>{{ annonce.disponibilite ? annonce.disponibilite|date('Y-m-d') : '' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Statut</th>
+                                                <td>{{ annonce.statut ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Is_published</th>
+                                                <td>{{ annonce.isPublished ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Is_deleted</th>
+                                                <td>{{ annonce.isDeleted }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    {% for photo in annonce.photos %}
+                                                        <img src="{{  asset('uploads/photos/263x175/'~photo)}}" style="width: 300px">
+                                                    {% endfor %}    
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <a href="{{ path('app_annonces_index') }}" class="btn btn-primary font-weight-bold mr-2">Retour a la liste</a>
+
+                                            <a href="{{ path('app_annonces_edit', {'id': annonce.id}) }}" class="btn btn-primary font-weight-bold mr-2">Modifier</a>
+                                        </div>   
+                                        <div class="col-lg-2 right">
+                                            {{ include('admin/annonces/_delete_form.html.twig') }}
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end: Datatable-->
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Entry-->
+    </div>
+
+{% endblock %}

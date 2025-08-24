@@ -1,0 +1,209 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Annonces index{% endblock %}
+
+{% block body %}
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b">
+                    <div class="card-header flex-wrap py-3">
+                        <div class="card-title">
+                            <h3 class="card-label">Listes des annonces</h3>
+                        </div>
+                        <div class="card-toolbar">
+                            <!--begin::Dropdown-->
+                            <!--end::Dropdown-->
+                            <!--begin::Button-->
+                                <span class="svg-icon svg-icon-md">
+                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                            <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                        </g>
+                                    </svg>
+                                    <!--end::Svg Icon-->
+                                </span>
+                                Ajouter
+                            </a>
+                            <!--end::Button-->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div id="kt_datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form action="{{ path('app_annonces_index') }}" method="POST" class="form-example">
+                                        <table class="table table-separate table-head-custom dataTable dtr-inline">
+                                            <tr class="filter">
+                                                <th>
+                                                    <select name="statut" class="form-control form-control-sm form-filter datatable-input" title="Select" data-col-index="7" autocomplete="off">
+                                                        <option value="">Validé</option>
+                                                        <option value="1">Oui</option>
+                                                        <option value="0">Non</option>
+                                                    </select>
+                                                </th>
+                                                <th>
+                                                    <button type="submit" name="action" value="search" class="btn btn-primary kt-btn btn-sm kt-btn--icon d-block">
+                                                        <span>
+                                                            <i class="la la-search"></i>
+                                                            <span>Recherche</span>
+                                                        </span>
+                                                    </button>
+                                                    <button type="submit" name="action" value="cancel"  class="btn btn-secondary kt-btn btn-sm kt-btn--icon">
+                                                        <span>
+                                                            <i class="la la-close"></i>
+                                                            <span>Annuler</span>
+                                                        </span>
+                                                    </button>
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Titre</th>
+                                                <th>Utilisateur</th>
+                                                <th>Offre</th>
+                                                <th>Prix</th>
+                                                <th>Ville</th>
+                                                <th>Surface m<sup>2</sup></th>
+                                                <th>Affichage</th>
+                                                <th>Statut</th>
+                                                <th>Publié</th>
+                                                <th>Refus</th>
+                                                <th>Supprimé</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for annonce in annonces %}
+                                                <tr>
+                                                    <td>{{ annonce.id }}</td>
+                                                    <td>{{ annonce.label }}</td>
+                                                    <td><a href="{{ path('app_user_show', {'id': annonce.user.id}) }}">{{ annonce.user }}</a></td>
+                                                    <td>{{ annonce.offre }}</td>
+                                                    <td>{{ annonce.prix }}</td>
+                                                    <td>{{ annonce.ville }}</td>
+                                                    <td>{{ annonce.surface }}</td>
+                                                    <td>{{ annonce.view }} / {{ annonce.realView }}</td>
+                                                    <td>
+                                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                                            <input data-switch="true" data-entity="annonces" type="checkbox" {% if annonce.statut  %} checked="checked" {% endif %} data-id="{{ annonce.id }}" id="switcher{{ annonce.id }}" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {%  if annonce.published == 1  %}
+                                                            <span  class="label label-lg font-weight-bold label-light-success label-inline">Oui</span>
+                                                        {% else %}
+                                                            <span class="label label-lg font-weight-bold label-light-danger label-inline">Non</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <select name="motifRefus" id="motifRefus" class="select2-multiple2" multiple="multiple">
+                                                            <option>Refus</option>
+                                                            <option value="1">Photos non réelles</option>
+                                                            <option value="2">Annonce déjà publiée</option>
+                                                            <option value="3">Annonce non immobilière</option>
+                                                            <option value="4">Titre non conforme</option>
+                                                            <option value="5">Description non conforme</option>
+                                                            <option value="6">Prix non conforme</option>
+                                                            <option value="7">Autre motif de refus</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        {%  if annonce.deleted == 0  %}
+                                                            <span  class="label label-lg font-weight-bold label-light-success label-inline">Non</span>
+                                                        {% else %}
+                                                            <span class="label label-lg font-weight-bold label-light-danger label-inline">Oui</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ path('app_annonces_show', {'id': annonce.id}) }}"><i class="la la-eye"></i></a>
+                                                        <a href="{{ path('app_annonces_edit', {'id': annonce.id}) }}"><i class="la la-edit"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="43">no records found</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="kt_datatable_info" role="status" aria-live="polite">Afficher 1 à 10 de {{ annoncesAll|length }} annonces</div>
+                                </div>
+                                <div class="col-sm-12 col-md-7 dataTables_pager">
+                                    <div class="dataTables_length" id="kt_datatable_length">
+                                        <label>
+                                            Afficher 
+                                            <select name="kt_datatable_length" aria-controls="kt_datatable" class="custom-select custom-select-sm form-control form-control-sm">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="dataTables_paginate paging_simple_numbers" id="kt_datatable_paginate">
+                                        {{ knp_pagination_render(annonces) }}
+                                        <ul class="pagination">
+                                            <li class="paginate_button page-item previous disabled" id="kt_datatable_previous"><a href="#" aria-controls="kt_datatable" data-dt-idx="0" tabindex="0" class="page-link"><i class="ki ki-arrow-back"></i></a></li>
+                                            <li class="paginate_button page-item active"><a href="#" aria-controls="kt_datatable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="kt_datatable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="kt_datatable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="kt_datatable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="kt_datatable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
+                                            <li class="paginate_button page-item next" id="kt_datatable_next"><a href="#" aria-controls="kt_datatable" data-dt-idx="6" tabindex="0" class="page-link"><i class="ki ki-arrow-next"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end: Datatable-->
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Entry-->
+    </div>
+    <script>
+        function toggleWeather() {
+            alert("Checked Box select");
+        }
+        $("#switcher1609").click(function() {
+           alert("Checked Box select");
+        if($(this).prop('checked')) {
+            alert("Checked Box select");
+        } else {
+            alert("Checked Box deselect");
+        }
+        /*$.ajax({
+            type: 'POST', // Le type de la requête HTTP, ici devenu POST
+            data: 'id=' + $(this).data('id') + '&statut' + $(this).val('statut'),
+            url: "{# path('app_annonces_validate') #}",
+            dataType: 'json', // ** ensure you add this line **
+            success: function (data) { // code_html contient le HTML renvoyé
+
+            }
+        });*/
+    });
+    </script>
+{% endblock %}
+
+

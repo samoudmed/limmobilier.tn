@@ -1,0 +1,703 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    {{ render(controller('App\\Controller\\Admin\\MetaController::getMeta', {'idEntity' : 1, 'entity': 'favoris'})) }}
+{% endblock %}
+{% block body %}
+    <section class="submit-property">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Modifier une annonce</span></li>
+            </ul><!-- ht-breadcrumb -->
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    {{ include("default/compte/_menuUser.html.twig") }}
+                </div>
+                <div class="col-md-9">
+                    <div class="progress-indicator">
+                        <div class="progress-step active" data-step="1">Information</div>
+                        <div class="progress-step" data-step="2">Localisation</div>
+                        <div class="progress-step" data-step="3">Détails</div>
+                        <div class="progress-step" data-step="4">Médias</div>
+                        <div class="progress-step" data-step="5">Autres</div>
+                        <div class="progress-step" data-step="6">Disponibilité</div>
+                    </div>
+                    <form name="bien" method="post" enctype="multipart/form-data" id="multi-step-form" class="form-content" onSubmit="return fonction();">
+                        {{ form_errors(form) }}
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                                    <strong>{{ message }}</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        <div class="form-step active" data-step="1">
+                            <h3 class="form-section-title">Information</h3>
+                            <div class="row g-3">
+                                <div class="col-md-12 padding-15">
+                                    <label for="bien_label" class="form-label">Titre de l'annonce</label>
+                                    {{ form_widget(form.label, {'attr': {'class': 'form-field'}}) }}
+                                    <span class="error-message">{{ form_errors(form.label) }}</span>
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="bien_offre" class="form-label">Offre</label>
+                                        {{ form_widget(form.offre, {'attr': {'class': 'form-select'}}) }}
+                                        <span class="error-message">{{ form_errors(form.offre) }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="bien_kind" class="form-label">Type de bien</label>
+                                        {{ form_widget(form.kind, {'attr': {'class': 'form-select'}}) }}
+                                        <span class="error-message">{{ form_errors(form.kind) }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="bien_prix" class="form-label">Prix</label>
+                                        <div class="input-with-unit">
+                                            {{ form_widget(form.prix, {'attr': {'class': 'form-field'}}) }}
+                                            <span class="unit">DT</span>
+                                        </div>
+                                        <span class="error-message">{{ form_errors(form.prix) }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="bien_instalment" class="form-label">Paiement par</label>
+                                        {{ form_widget(form.instalment, {'attr': {'class': 'form-select'}}) }}
+                                        <span class="error-message">{{ form_errors(form.instalment) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="button next-step">Suivant</button>
+                            <button type="submit" class="button button-primary right">Enregistrer</button>
+                        </div>
+                        <div class="form-step" data-step="2">
+                            <h3 class="form-section-title">Localisation</h3>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="bien_gouvernorat" class="form-label">Gouvernorat</label>
+                                        {{ form_widget(form.gouvernorat, {'attr': {'class': 'form-select', 'placeholder': 'Sélectionner un gouvernorat'}}) }}
+                                        <span class="error-message" id="annonces_gouvernorat-error">{{ form_errors(form.gouvernorat) }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="listing-delegation" class="form-label">Ville</label>
+                                        {{ form_widget(form.delegation, {'attr': {'class': 'form-select', 'placeholder': 'Sélectionner une delegation'}}) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="listing-city" class="form-label">Région</label>
+                                        {{ form_widget(form.ville, {'attr': {'class': 'form-select', 'placeholder': 'Sélectionner un ville'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bien_adresse" class="form-label">Adresse</label>
+                                {{ form_widget(form.adresse, {'attr': {'class': 'form-field'}}) }}
+                                <span class="error-message">{{ form_errors(form.adresse) }}</span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bien_localisationMap" class="form-label">Google Map iframe</label>
+                                {{ form_widget(form.localisationMap, {'attr': {'class': 'form-field'}}) }}
+                            </div>
+                            <button type="button" class="button prev-step">Précédent</button>
+                            <button type="button" class="button next-step">Suivant</button>
+                            <button type="submit" class="button button-primary right">Enregistrer</button>
+                        </div>
+                        <div class="form-step" data-step="3">
+                            <h3 class="form-section-title">Détails du bien</h3>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="bien_surface" class="form-label">Surface</label>
+                                        <div class="input-with-unit">
+                                            {{ form_widget(form.surface, {'attr': {'class': 'form-field'}}) }}
+                                            <span class="unit">m<sup>2</sup></span>
+                                        </div>
+                                        <span class="error-message">{{ form_errors(form.surface) }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="bien_pieces" class="form-label">Pièces</label>
+                                        {{ form_widget(form.pieces, {'attr': {'class': 'form-field'}}) }}
+                                        <span class="error-message">{{ form_errors(form.pieces) }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="bien_capacite" class="form-label">Capacité</label>
+                                        {{ form_widget(form.capacite, {'attr': {'class': 'form-field'}}) }}
+                                        <span class="error-message">{{ form_errors(form.capacite) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="bien_etage" class="form-label">Étage</label>
+                                        {{ form_widget(form.etage, {'attr': {'class': 'form-select'}}) }}
+                                        <span class="error-message">{{ form_errors(form.etage) }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="bien_anneeConstruction" class="form-label">Année de construction</label>
+                                        {{ form_widget(form.anneeConstruction, {'attr': {'class': 'form-select'}}) }}
+                                        <span class="error-message">{{ form_errors(form.anneeConstruction) }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="bien_orientation" class="form-label">Orientation</label>
+                                        {{ form_widget(form.orientation, {'attr': {'class': 'form-select'}}) }}
+                                        <span class="error-message">{{ form_errors(form.orientation) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <label for="bien_description" class="form-label">Description *</label>
+                                {{ form_widget(form.description, {'attr': {'class': 'form-textarea', 'required': 'required'}}) }}
+                            </div>        
+                            <button type="button" class="button prev-step">Précédent</button>
+                            <button type="button" class="button next-step">Suivant</button>
+                            <button type="submit" class="button button-primary right">Enregistrer</button>
+                        </div>
+                        <!-- --- Styles --- -->
+                        <style>
+                            .media-preview-grid {
+                                display: grid;
+                                grid-template-columns: repeat(6, 1fr);
+                                gap: 10px;
+                                margin: 15px 0;
+                            }
+
+                            .preview {
+                                position: relative;
+                                cursor: grab;
+                            }
+
+                            .preview.dragging { opacity: 0.5; }
+
+                            .preview img {
+                                width: 100%;
+                                height: 100px;
+                                object-fit: cover;
+                                border-radius: 8px;
+                                border: 2px solid #ddd;
+                            }
+
+                            .remove-btn {
+                                position: absolute;
+                                top: 4px;
+                                right: 4px;
+                                background: rgba(0,0,0,0.6);
+                                color: #fff;
+                                border: none;
+                                border-radius: 50%;
+                                width: 22px;
+                                height: 22px;
+                                cursor: pointer;
+                                font-size: 14px;
+                                line-height: 20px;
+                                text-align: center;
+                            }
+
+                            .featured-badge {
+                                position: absolute;
+                                bottom: 4px;
+                                left: 4px;
+                                background: #3b82f6;
+                                color: #fff;
+                                font-size: 11px;
+                                padding: 2px 6px;
+                                border-radius: 6px;
+                            }
+
+                            .upload-area {
+                                border: 2px dashed #ccc;
+                                border-radius: 12px;
+                                padding: 20px;
+                                text-align: center;
+                                cursor: pointer;
+                                transition: border-color 0.3s ease;
+                            }
+                            .upload-area:hover { border-color: #3b82f6; }
+                            .upload-area.dragover { border-color: #16a34a; background: #f0fdf4; }
+                            .upload-input { display: none; }
+                            .upload-icon { font-size: 28px; display: block; margin-bottom: 8px; }
+                            .upload-text { font-size: 13px; color: #666; }
+                        </style>
+                        <div class="form-step active" data-step="4">
+                            <h3 class="form-section-title">Médias</h3>
+                            <div class="form-section form-section-media">
+                                <div class="media-preview-container">
+                                    <div id="previewMultiImage" class="media-preview-grid">
+                                        {% for photo in photos %}
+                                            <div class="preview" data-id="img_113qieq8j0qmenz5w2s">
+                                                <img itemprop="photo" src="{{ asset('https://limmobilier.tn/uploads/photos/263x175/'~photo.nom) }}" alt="" class="listing__img margin5">
+                                                {% if photo.featured %}<div class="featured-badge">Photo à la une</div>{% endif %}
+                                                <button type="button" class="remove-btn">×</button>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="upload-area" id="uploadArea">
+                                        <input type="file" multiple name="photos[]" id="multi_file" class="upload-input" accept="image/*">
+                                        <div class="upload-content">
+                                            <span class="upload-icon">➕</span>
+                                            <span class="upload-text">Déposer jusqu'à 12 images ou cliquer</span>
+                                        </div>
+                                    </div>
+                                    <!-- ordre (DOM) serialisé pour l'envoyer au serveur -->
+                                    <input type="hidden" name="photos_order" id="photos_order">
+                                </div>
+                            </div>
+                            <button type="button" class="button prev-step">Précédent</button>
+                            <button type="button" class="button next-step">Suivant</button>
+                            <button type="submit" class="button button-primary right">Enregistrer</button>
+                        </div>
+
+                        <!-- SortableJS (très léger, précis et compatible mobile) -->
+                        <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+
+                        <script>
+                        const previewContainer = document.getElementById("previewMultiImage");
+                        const multiInput = document.getElementById("multi_file");
+                        const uploadArea = document.getElementById("uploadArea");
+                        const orderField = document.getElementById("photos_order");
+                        let imageCount = 0;
+                        const maxImages = 12;
+                        const maxSize = 2 * 1024 * 1024; // 2 Mo
+
+                        // Mise à jour du badge "Photo à la une"
+                        function updateFeaturedBadge() {
+                            [...previewContainer.querySelectorAll(".featured-badge")].forEach(b => b.remove());
+                            const first = previewContainer.querySelector(".preview");
+                            if (first) {
+                                const badge = document.createElement("div");
+                                badge.className = "featured-badge";
+                                badge.textContent = "Photo à la une";
+                                first.appendChild(badge);
+                            }
+                        }
+
+                        // Sérialise l'ordre dans le champ caché
+                        function updateOrderField() {
+                            const ids = [...previewContainer.querySelectorAll(".preview")]
+                                    .map(p => p.dataset.id);
+                            orderField.value = JSON.stringify(ids);
+                        }
+
+                        // Génère un ID unique local
+                        function uid() {
+                            return 'img_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+                        }
+
+                        // Ajoute une vignette d'aperçu
+                        function addImagePreview(file) {
+                            if (!file.type.startsWith("image/")) {
+                                alert("Seules les images sont acceptées.");
+                                return;
+                            }
+                            if (file.size > maxSize) {
+                                alert(`"${file.name}" est trop grande (${(file.size / 1024 / 1024).toFixed(2)} Mo). Max = 2 Mo`);
+                                return;
+                            }
+                            if (imageCount >= maxImages) {
+                                alert("Vous pouvez télécharger au maximum 12 images.");
+                                return;
+                            }
+
+                            const id = uid();
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                                const wrapper = document.createElement("div");
+                                wrapper.className = "preview";
+                                wrapper.dataset.id = id;
+                                const img = document.createElement("img");
+                                img.src = e.target.result;
+                                img.alt = file.name;
+                                const btn = document.createElement("button");
+                                btn.type = "button";
+                                btn.className = "remove-btn";
+                                btn.textContent = "×";
+                                btn.addEventListener("click", (ev) => {
+                                    ev.stopPropagation();
+                                    wrapper.remove();
+                                    imageCount--;
+                                    updateFeaturedBadge();
+                                    updateOrderField();
+                                });
+                                wrapper.appendChild(img);
+                                wrapper.appendChild(btn);
+                                previewContainer.appendChild(wrapper);
+                                imageCount++;
+                                updateFeaturedBadge();
+                                updateOrderField();
+                            };
+                            reader.readAsDataURL(file);
+                        }
+
+                        // Sélection via input
+                        multiInput.addEventListener("change", (e) => {
+                            Array.from(e.target.files).forEach(file => addImagePreview(file));
+                        });
+                        // Drag & drop fichiers dans la zone
+                        uploadArea.addEventListener("click", () => multiInput.click());
+                        uploadArea.addEventListener("dragover", (e) => {
+                            e.preventDefault();
+                            uploadArea.classList.add("dragover");
+                        });
+                        uploadArea.addEventListener("dragleave", () => {
+                            uploadArea.classList.remove("dragover");
+                        });
+                        uploadArea.addEventListener("drop", (e) => {
+                            e.preventDefault();
+                            uploadArea.classList.remove("dragover");
+                            Array.from(e.dataTransfer.files).forEach(file => addImagePreview(file));
+                        });
+                        // --- Réorganisation ultra précise avec SortableJS ---
+                        const sortable = new Sortable(previewContainer, {
+                            animation: 150,
+                            ghostClass: "dragging",
+                            forceFallback: true, // meilleur rendu multi-navigateurs et mobile
+                            filter: ".remove-btn", // éviter le drag quand on clique sur supprimer
+                            onEnd: () => {
+                                updateFeaturedBadge();
+                                updateOrderField();
+                            }
+                        });</script>
+                        <div class="form-step" data-step="5">
+                            <h3 class="form-section-title">Intérieur & Extérieur</h3>
+                            <div class="form-section">
+                                <h3 class="form-section-title">Intérieur</h3>
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.climatiseur, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_climatiseur" class="submit-property__label submit-property__feature">Climatiseur</label>
+                                        <span class="help-block">{{ form_errors(form.climatiseur) }}</span>
+                                    </div>    
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.chauffage, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_chauffage" class="submit-property__label submit-property__feature">Chauffage</label>
+                                        <span class="help-block">{{ form_errors(form.chauffage) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.internet, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_internet" class="submit-property__label submit-property__feature">Internet</label>
+                                        <span class="help-block">{{ form_errors(form.internet) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.meuble, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_meuble" class="submit-property__label submit-property__feature">Meuble</label>
+                                        <span class="help-block">{{ form_errors(form.meuble) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.salleBain, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_salleBain" class="submit-property__label submit-property__feature">Salle de bain</label>
+                                        <span class="help-block">{{ form_errors(form.salleBain) }}</span>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.ascenseur, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_ascenseur" class="submit-property__label submit-property__feature">Ascenseur</label>
+                                        <span class="help-block">{{ form_errors(form.ascenseur) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.cheminee, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_chemine" class="submit-property__label submit-property__feature">Cheminée</label>
+                                        <span class="help-block">{{ form_errors(form.cheminee) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.cuisineEquipe, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_cuisineEquipe" class="submit-property__label submit-property__feature">Cuisine équipée</label>
+                                        <span class="help-block">{{ form_errors(form.cuisineEquipe) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.jacuzzi, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_jacuzzi" class="submit-property__label submit-property__feature">Jacuzzi</label>
+                                        <span class="help-block">{{ form_errors(form.jacuzzi) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <h3 class="form-section-title">Extérieur</h3>
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.piscine, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_piscine" class="submit-property__label submit-property__feature">Piscine</label>
+                                        <span class="help-block">{{ form_errors(form.piscine) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.parking, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_parking" class="submit-property__label submit-property__feature">Parking</label>
+                                        <span class="help-block">{{ form_errors(form.parking) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.securite, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_securite" class="submit-property__label submit-property__feature">Securite</label>
+                                        <span class="help-block">{{ form_errors(form.securite) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.jardin, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_jardin" class="submit-property__label submit-property__feature">Jardin</label>
+                                        <span class="help-block">{{ form_errors(form.jardin) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.vue, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_vue" class="submit-property__label submit-property__feature">Vue mer ou dégagée</label>
+                                        <span class="help-block">{{ form_errors(form.vue) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="button prev-step">Précédent</button>
+                            <button type="button" class="button next-step">Suivant</button>
+                            <button type="submit" class="button button-primary right">Enregistrer</button>
+                        </div>       
+                        <div class="form-step" data-step="6">
+                            <h3 class="form-section-title">Disponibilité</h3>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="bien_disponibilite" class="form-label">Date de disponibilité</label>
+                                        {{ form_widget(form.disponibilite, {'attr': {'class': 'form-field'}}) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="bien_expired_at" class="form-label">Date d'expiration</label>
+                                        {{ form_widget(form.expired_at, {'attr': {'class': 'form-field'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+                            {{ form_row(form._token) }}
+                            <button type="button" class="button prev-step">Précédent</button>
+                            <button type="submit" class="button button-primary right">Enregistrer</button>
+                        </div>            
+                        <!-- .submit-property__block -->
+                    </form>
+                </div><!-- .row -->
+            </div>
+        </div><!-- .container -->
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function fonction() {
+
+            var ville = $('#annonces_ville').val();
+            var gouvernorat = $('#annonces_gouvernorat').val();
+            var delegation = $('#annonces_delegation').val();
+            //var description = $('#bien_description').val();
+            //console.log($('#bien_description').trumbowyg('html'));
+            //alert(description);
+
+            if (gouvernorat == '') {
+                $('#listing-gouvernorat-error').text('Merci de choisir un gouvernorat');
+                $('#annonces_gouvernorat').css('border', 'border: 1px solid #ff0000;');
+                return false;
+            } else {
+                return true;
+            }
+
+            if (delegation == 'ALL') {
+                $('#annonces_delegation-error').text('Merci de choisir une delegation');
+                $(this).css('border', 'border: 1px solid #ff0000;');
+                return false;
+            } else {
+                return true;
+            }
+
+            if (ville == 'ALL') {
+                $('#annonces_ville-error').text('Merci de choisir une ville');
+                $('#annonces_ville').css('border', 'border: 1px solid #ff0000;');
+                return false;
+            } else {
+                return true;
+            }
+        }
+        $('#annonces_gouvernorat').change(function () {
+            $.ajax({
+                type: 'POST', // Le type de la requête HTTP, ici devenu POST
+                data: 'gouvernorat=' + $('#annonces_gouvernorat').val(),
+                url: "{{ path('listingDelegationByGouvernorat') }}",
+                dataType: 'json', // ** ensure you add this line **
+                success: function (data) { // code_html contient le HTML renvoyé
+                    $('#annonces_delegation').empty();
+                    $('#annonces_ville').empty();
+                    $.each(data.delegations, function (i, item) {
+                        $('#annonces_delegation').append($('<option>', {
+                            value: item.id,
+                            text: item.label
+                        }));
+                    });
+
+                    $.each(data.villes, function (i, item) {
+                        $('#annonces_ville').append($('<option>', {
+                            value: item.id,
+                            text: item.label
+                        }));
+                    });
+                }
+            });
+        });
+        $('#annonces_delegation').change(function () {
+            $.ajax({
+                type: 'POST', // Le type de la requête HTTP, ici devenu POST
+                data: 'delegation=' + $('#annonces_delegation').val(),
+                url: "{{ path('listingDelegationByDelegation') }}",
+                dataType: 'json', // ** ensure you add this line **
+                success: function (data) { // code_html contient le HTML renvoyé
+                    $('#annonces_ville').empty();
+                    $.each(data, function (i, item) {
+                        $('#annonces_ville').append($('<option>', {
+                            value: item.id,
+                            text: item.label
+                        }));
+                    });
+                }
+            });
+        });
+
+        $("form").submit(function (e) {
+            var data = CKEDITOR.instances["annonces_description"].getData().replace(/<[^>]*>/gi, '').length;
+
+            if (data == 0) {
+                $('#cke_annonces_description').css("border", "1px #3c3 solid");
+                e.preventDefault();
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select all form steps and progress indicator elements
+            const form = document.getElementById('multi-step-form');
+            const steps = form.querySelectorAll('.form-step');
+            const progressSteps = document.querySelectorAll('.progress-step');
+            let currentStepIndex = 0; // Use an index instead of a step number for array access
+
+            // Function to show a specific step
+            const showStep = (stepIndex) => {
+                steps.forEach((step, index) => {
+                    step.classList.toggle('active', index === stepIndex);
+                });
+                updateProgressIndicator(stepIndex);
+                currentStepIndex = stepIndex;
+            };
+
+            // Function to update the progress bar and step indicators
+            const updateProgressIndicator = (stepIndex) => {
+                progressSteps.forEach((pStep, index) => {
+                    pStep.classList.toggle('active', index <= stepIndex);
+                });
+                const progressPercentage = (stepIndex / (steps.length - 1)) * 100;
+                document.documentElement.style.setProperty('--progress-width', `${progressPercentage}%`);
+            };
+
+            // Main event listener for form navigation
+            form.addEventListener('click', (e) => {
+                if (e.target.classList.contains('next-step')) {
+                    // Your existing validation logic, adapted for the current step
+                    const currentStep = steps[currentStepIndex];
+                    const isStepValid = validateStep(currentStep);
+
+                    if (isStepValid) {
+                        if (currentStepIndex < steps.length - 1) {
+                            showStep(currentStepIndex + 1);
+                        }
+                    } else {
+                        e.preventDefault(); // Stop form from proceeding if validation fails
+                    }
+                } else if (e.target.classList.contains('prev-step')) {
+                    if (currentStepIndex > 0) {
+                        showStep(currentStepIndex - 1);
+                    }
+                }
+            });
+
+            // Event listener for progress bar clicks
+            progressSteps.forEach((pStep, index) => {
+                pStep.addEventListener('click', () => {
+                    if (index <= currentStepIndex) { // Only allow going back
+                        showStep(index);
+                    }
+                });
+            });
+
+            // Initial form display
+            showStep(currentStepIndex);
+        });
+// Example validation function
+        function validateStep(stepElement) {
+            const stepNumber = parseInt(stepElement.dataset.step);
+            let isValid = true;
+
+            // Reset error messages and borders
+            stepElement.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+            stepElement.querySelectorAll('.form-field, .form-select, .form-textarea, .upload-area').forEach(el => {
+                el.style.borderColor = '';
+            });
+
+            switch (stepNumber) {
+                case 1:
+                    // Correct way to validate: check for existence before calling trim()
+                    const labelField = $('#bien_label');
+                    if (labelField.length && labelField.val() && labelField.val().trim() === '') {
+                        labelField.css("border-color", "red");
+                        isValid = false;
+                    }
+                    const offreField = $('#bien_offre');
+                    if (offreField.length && offreField.val() === '') {
+                        offreField.css("border-color", "red");
+                        isValid = false;
+                    }
+                    break;
+
+                case 2:
+                    // Check existence and value for all fields
+                    const gouvernoratField = $('#annonces_gouvernorat');
+                    if (gouvernoratField.length && gouvernoratField.val() === '') {
+                        gouvernoratField.css('border-color', 'red');
+                        $('#annonces_gouvernorat-error').text('Merci de choisir un gouvernorat');
+                        isValid = false;
+                    }
+                    const delegationField = $('#listing-delegation');
+                    if (delegationField.length && (delegationField.val() === null || delegationField.val() === 'ALL')) {
+                        delegationField.css('border-color', 'red');
+                        isValid = false;
+                    }
+                    break;
+
+                case 3:
+                    // Validation for Description and Media
+                    // Note: The CKEditor instance might not exist or be ready
+                    if (typeof CKEDITOR !== 'undefined' && CKEDITOR.instances["annonces_description"]) {
+                        const descriptionLength = CKEDITOR.instances["annonces_description"].getData().replace(/<[^>]*>/gi, '').length;
+                        if (descriptionLength === 0) {
+                            $('#cke_annonces_description').css("border-color", "red");
+                            isValid = false;
+                        }
+                    } else {
+                        console.error("CKEditor instance not found.");
+                        isValid = false;
+                    }
+                    break;
+            }
+            return isValid;
+        }
+    </script>
+{% endblock %}

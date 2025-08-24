@@ -1,0 +1,169 @@
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%" role="presentation">
+    <tbody>
+        <tr class="">
+            <td height="1" style="height:1px;max-height:1px;font-size:1px;line-height:1px">
+                <span style="display:block;width:640px;min-width:640px">&nbsp;</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color:#eff2f7">
+                <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin:auto;background-color:#ffffff;width:640px" class="">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span style="display:none;font-size:0px;line-height:0px;max-height:0px;max-width:0px;opacity:0;overflow:hidden">Votre alerte du</span>
+                                <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin:auto;width:640px" class="">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin:auto;clear:both;width:640px" class="" role="presentation">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td height="10" style="height:10px;font-size:10px;line-height:10px">
+                                                                &nbsp;
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table cellpadding="0" cellspacing="0" border="0" width="256" align="center" style="margin:auto;width:256px" class="" role="presentation">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="text-align:center">
+                                                                <a href="https://limmobilier.tn" style="color:#000000;outline:none;border:none" title="limmobilier.tn" target="_blank" >
+                                                                    <img src="https://limmobilier.tn/{{ asset('asset/images/logo-dark.png') }}" alt="Limmobilier.tn">
+                                                                </a>
+                                                                <img src="#" alt="" width="1" height="1" border="0" style="height:1px!important;width:1px!important;border-width:0!important;margin-top:0!important;margin-bottom:0!important;margin-right:0!important;margin-left:0!important;padding-top:0!important;padding-bottom:0!important;padding-right:0!important;padding-left:0!important" class="">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table cellpadding="0" cellspacing="0" border="0" width="608" align="center" style="margin:auto;clear:both;width:608px" class="" role="presentation">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td height="20" style="height:20px;font-size:20px;line-height:20px;vertical-align:bottom">
+                                                                <table cellpadding="0" cellspacing="0" border="0" width="100%" align="center" style="width:100%;clear:both">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td style="border-top:1px solid #ececec;height:9px;font-size:9px;line-height:9px">&nbsp;</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin:auto;background-color:#ffffff;width:640px" class="">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin:auto;clear:both;width:640px" class="" role="presentation">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td height="10" style="height:10px;font-size:10px;line-height:10px">
+                                                                &nbsp;
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table cellpadding="0" cellspacing="0" border="0" width="576" align="center" style="margin:auto;width:576px" class="">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <table cellpadding="0" cellspacing="0" border="0" width="576" align="center" style="margin:auto;width:576px" class="" role="presentation">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td style="font-family:Helvetica,sans-serif;font-weight:bold;color:#333333;text-align:center;font-size:20px;padding-top:5px;vertical-align:middle;line-height:24px" class="">
+                                                                                {{ annonces|length }} nouvelles offres
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table style="font-family:Helvetica,sans-serif;width: 100%; border-collapse: collapse;">
+                                    {% for annonce in annonces %}
+                                        {% if loop.index0 is divisible by(2) %}
+                                        <tr index="{{ loop.index0 }}">
+                                        {% endif %}
+                                            <td style="width: 50%; padding: 10px; border: 1px solid #ddd; text-align: center;">
+                                                <a href="https://limmobilier.tn{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">
+                                                    <div style="background: url('https://limmobilier.tn/{{ asset('uploads/photos/263x175/'~annonce.photo) }}'); 
+                                                         background-size: cover; 
+                                                         height: 175px;">
+                                                    </div>
+                                                </a>
+                                                <h3 style="font-size: 18px; margin: 10px 0;height: 40px;">{{ annonce.label|slice(0, 30)|capitalize }}</h3>
+                                                <p>{{ annonce.delegation.label }}</p>
+                                                
+                                                {% if annonce.user.agence is not null %}
+                                                    <a href="https://limmobilier.tn{{ path('liste_agence', { 'label': annonce.user.agence|slugify, 'id': annonce.user.id, 'page': 1 }) }}">
+                                                        <img src="https://limmobilier.tn/{{ asset('uploads/logos/'~annonce.user.logo) }}" alt="{{ annonce.user.agence }}" style="width: 50px; height: 34px;">
+                                                    </a>
+                                                {% endif %}
+                                            </td>
+                                        {% if loop.index is divisible by(2) %}
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </table>                                             
+                                <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin:auto;background-color:#ffffff;width:640px" class="">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <table cellspacing="0" cellpadding="0" width="640" align="center" border="0" style="font-family:Helvetica,sans-serif;margin:auto;width:640px">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <table width="640" class="" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#F2F2F2">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td align="center" style="color:#999999;font-family:Helvetica,sans-serif;font-size:12px;line-height:16px;text-align:center">
+                                                                                <table align="center" cellpadding="0" cellspacing="0">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td style="padding:10px 10px 10px 0px">
+                                                                                                <a href="https://www.facebook.com/limmobilier.tn" target="_blank" >
+                                                                                                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                                                                                                </a>
+                                                                                            </td>
+                                                                                            <td style="padding:10px 0px 10px 10px">
+                                                                                                <a href="#" target="_blank" >
+                                                                                                    <i class="fa fa-linkedin" aria-hidden="true"></i>
+                                                                                                </a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                                <p>
+                                                                                    Si ce service ne correspond pas à vos attentes, vous pouvez <a href="https://limmobilier.tn{{ path('unsubscribe', {'id' : id}) }}" style="color:#999999" target="_blank" >vous désabonner</a> à tout moment.<br>
+                                                                                </p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,116 @@
+<aside class="col-md-3 fixed-aside">
+    <section class="widget main-listing__widget displayNone">
+        {% if(type is not defined) %}
+            <div class="main-listing__wrapper">
+                <label class="main-listing__form-title">Type</label>
+                <div class="main-listing__form-select">
+                    <input type="radio" name="property-type" id="propertyType1" class="main-listing__form-radio type" value="ALL" checked="checked" >
+                    <label for="propertyType1" class="main-listing__form-label">Tout</label>
+                    {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\DefaultController::countListing' ,{ 'offre': offre })) }})</span>{% endif %}
+                </div><!-- main-listing__form-select -->
+                <div class="main-listing__form-select">
+                    <input type="radio" name="property-type" id="propertyType2" class="main-listing__form-radio type" value="1" {% if(type is defined) and (type =="Appartement") %} checked="checked" {% endif %}>
+                    <label for="propertyType2" class="main-listing__form-label">Apartment</label>
+                    {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '1' })) }})</span>{% endif %}
+                </div><!-- main-listing__form-select -->
+                <div class="main-listing__form-select">
+                    <input type="radio" name="property-type" id="propertyType3" class="main-listing__form-radio type" value="2" {% if((type is defined)and (type =="Villa")) %} checked="checked" {% endif %}>
+                    <label for="propertyType3" class="main-listing__form-label">Maison</label>
+                    {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '2' })) }})</span>{% endif %}
+                </div><!-- main-listing__form-select -->
+                <div class="main-listing__form-select">
+                    <input type="radio" name="property-type" id="propertyType4" class="main-listing__form-radio type" value="3" {% if(type is defined) and (type =="Terrain") %} checked="checked" {% endif %}>
+                    <label for="propertyType4" class="main-listing__form-label">Terrain</label>
+                    {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '3' })) }})</span>{% endif %}
+                </div><!-- main-listing__form-select -->
+                <div class="main-listing__form-select">
+                    <input type="radio" name="property-type" id="propertyType5" class="main-listing__form-radio type" value="4" {% if((type is defined)and (type =="Projet neuf")) %} checked="checked" {% endif %}>
+                    <label for="propertyType5" class="main-listing__form-label">Projet neuf</label>
+                    {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '4' })) }})</span>{% endif %}
+                </div><!-- main-listing__form-select -->
+                <div class="main-listing__form-select">
+                    <input type="radio" name="property-type" id="propertyType6" class="main-listing__form-radio type" value="5" {% if(type is defined) and (type =="Bureau") %} checked="checked" {% endif %}>
+                    <label for="propertyType6" class="main-listing__form-label">Bureau</label>
+                    {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '5' })) }})</span>{% endif %}
+                </div><!-- main-listing__form-select -->
+                <div class="main-listing__form-select">
+                    <input type="radio" name="property-type" id="propertyType7" class="main-listing__form-radio type" value="6" {% if(type is defined) and (type =="Fond de commerce") %} checked="checked" {% endif %}>
+                    <label for="propertyType7" class="main-listing__form-label">Commerce</label>
+                    {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '6' })) }})</span>{% endif %}
+                </div><!-- main-listing__form-select -->
+                <div class="main-listing__form-select">
+                    <input type="radio" name="property-type" id="propertyType8" class="main-listing__form-radio type" value="7" {% if(type is defined) and (type =="Industrie") %} checked="checked" {% endif %}>
+                    <label for="propertyType8" class="main-listing__form-label">Industrie</label>
+                    {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '7' })) }})</span>{% endif %}
+                </div><!-- main-listing__form-select -->
+                <div class="main-listing__form-select">
+                    <input type="radio" name="property-type" id="propertyType9" class="main-listing__form-radio type" value="8" {% if(type is defined) and (type =="Depot") %} checked="checked" {% endif %}>
+                    <label for="propertyType9" class="main-listing__form-label">Dépôt</label>
+                    {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '8' })) }})</span>{% endif %}
+                </div><!-- main-listing__form-select -->
+                <div class="main-listing__form-select">
+                    <input type="radio" name="property-type" id="propertyType10" class="main-listing__form-radio type" value="9" {% if(type is defined) and (type =="Vacances") %} checked="checked" {% endif %}>
+                    <label for="propertyType10" class="main-listing__form-label">Vacances</label>
+                    {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '9' })) }})</span>{% endif %}
+                </div>
+                <div class="main-listing__form-select">
+                    <input type="radio" name="property-type" id="propertyType11" class="main-listing__form-radio type" value="10" {% if(type is defined) and (type =="Autre") %} checked="checked" {% endif %}>
+                    <label for="propertyType11" class="main-listing__form-label">Autre</label>
+                    {% if(offre is defined) %}<span class="main-listing__form-desc">({{ render(controller('App\\Controller\\SearchController::countListingType' ,{ 'offre': offre, 'type': '10' })) }})</span>{% endif %}
+                </div>
+            </div><!-- .main-listing__wrapper -->
+        {% else %}
+            <div style="display:none">
+                <input type="radio" name="property-type" id="propertyType7" class="main-listing__form-radio type" name="property-type" value="{{type.id}}" checked="checked">
+                <label for="propertyType7" class="main-listing__form-label">{{type}}</label>
+            </div>
+        {% endif %}
+        <div class="main-listing__wrapper">
+            <label for="listing-city" class="main-listing__form-title">Gouvernorat</label>
+            {{ render(controller('App\\Controller\\DefaultController::listingGouvernorat')) }}
+        </div>
+        <div class="main-listing__wrapper">
+            <label for="listing-city" class="main-listing__form-title">Ville</label>
+            <select name="delegation" id="listing-delegation" class="select2-selection__rendered" data-dkcacheid="0" style="display: none" required="required"></select>
+        </div>
+        <div class="main-listing__wrapper">
+            <label for="listing-city" class="main-listing__form-title">Région</label>
+            <select name="city" id="listing-city" class="select2-selection__rendered" data-dkcacheid="0" style="display: none" required="required"></select>
+        </div><!-- .main-listing__wrapper -->
+        <div class="main-listing__wrapper">
+            <label for="min-prix" class="main-listing__form-title">Prix</label>
+            <div class="main-listing__form-container">
+                <input placeholder="min" type="text" name="min-prix" id="min-prix" class="main-listing__form-field">
+                <input placeholder="max" type="text" name="max-prix" id="max-prix" class="main-listing__form-field"><!-- .main-listing__form-field -->
+            </div><!-- .main-listing__form-container -->
+        </div>
+        <div class="main-listing__wrapper">
+            <label for="listing-bedroom" class="main-listing__form-title">Chambres</label>
+            <select name="bedroom" id="listing-bedroom" class="select2-selection__rendered" data-dkcacheid="1" style="display: none">
+                <option value="" selected="">Nombre de chambre</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select><!-- .main-listing__form-field -->
+        </div><!-- .main-listing__wrapper -->
+        <div class="main-listing__wrapper">
+            <label for="min-area" class="main-listing__form-title">Surface (m<sup>2</sup>)</label>
+            <div class="main-listing__form-container">
+                <input placeholder="min" type="text" name="min-area" id="min-area" class="main-listing__form-field">
+                <input placeholder="max" type="text" name="max-area" id="max-area" class="main-listing__form-field">
+                <!-- .main-listing__form-field --><!-- .main-listing__form-field -->
+            </div><!-- .main-listing__form-container -->
+        </div><!-- .main-listing__wrapper --> 
+        <div class="main-listing__wrapper">
+            <label for="main-listing-keyword" class="main-listing__form-title">Mot clé</label>
+            <input type="text" id="main-listing-keyword" class="main-listing__form-field" placeholder="Mot clé...">
+        </div><!-- .main-listing__wrapper -->
+    </section><!-- .widget -->
+</aside><!-- .col -->

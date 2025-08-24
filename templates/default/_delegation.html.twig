@@ -1,0 +1,7 @@
+<select name="delegation" id="listing-delegation" class="select2-selection__rendered" data-dkcacheid="0" style="width: 100%;" required="required">
+    <option value="ALL" selected="">Choisir une délégation</option>
+    {% for delegation in delegations %}
+        <option value="{{delegation.id}}">{{delegation.label|capitalize}}</option>
+    {% endfor %}
+</select><!-- .main-listing__form-field -->
+<div id="listing-delegation-error"></div>

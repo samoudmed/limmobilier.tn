@@ -1,0 +1,26 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <h1>Connexion</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ connexion.id }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ connexion.createdAt ? connexion.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_connexion_index') }}">back to list</a>
+
+    <a href="{{ path('app_connexion_edit', {'id': connexion.id}) }}">edit</a>
+
+    {{ include('connexion/_delete_form.html.twig') }}
+{% endblock %}

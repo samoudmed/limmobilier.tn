@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    <title>Tunisie annonce immobilier mon profil</title>
+    <meta name="description" content="Mon profil Annonces immobilières en Tunisie sur limmobilier.tn. Achat, vente et location de biens immobiliers en Tunisie. Trouvez votre maison, appartement ou terrain" />
+{% endblock %}
+{% block body %}
+    <section class="my-profile">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Mon Profile</span></li>
+            </ul>
+            <!-- .ht-breadcrumb -->
+            <div class="my-profile__container">
+                <div class="row">
+                    {{ include("default/compte/_menuUser.html.twig") }}<!-- .col -->
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    {{ form_row(form._token) }}
+                    <div class="col-md-4">
+                        <label for="profile-agence" class="my-profile__label">Nom</label>
+                        {{ form_widget(form.nom, {'attr': {'class': 'my-profile__field'}}) }}
+                        <label for="profile-agence" class="my-profile__label">Prénom</label>
+                        {{ form_widget(form.prenom, {'attr': {'class': 'my-profile__field'}}) }}
+                        <label for="profile-agence" class="my-profile__label">Email</label>
+                        {{ form_widget(form.email, {'attr': {'class': 'my-profile__field'}}) }}
+                        <label for="profile-agence" class="my-profile__label">Mot de passe</label>
+                        {{ form_widget(form.password, {'attr': {'class': 'my-profile__field'}}) }}
+                        <label for="profile-number" class="my-profile__label">Téléphone</label>
+                        {{ form_widget(form.telephone, {'attr': {'class': 'my-profile__field'}}) }}
+                        <label for="profile-type" class="my-profile__label">Type</label>
+                        {{ form_widget(form.type, {'attr': {'class': 'ht-field profile-type', 'id': 'id="profile-type"'}}) }}
+                        <label for="profile-avatar" class="my-profile__label">Logo</label>
+                        {% if(app.user.logo  != NULL) %}
+                            <img src="{{ asset('uploads/logos/'~app.user.logo) }}" alt="{{app.user.agence}}" style="width:60px" >
+                        {% endif %}
+                        <br>
+                        {{ form_widget(form.logo, {'attr': {'class': 'ht-field profile-type', 'id': 'id="profile-type"'}}) }}
+                        <div class="my-profile__wrapper">
+                            <span><i class="ion-image"></i> Télécharger logo</span>
+                        </div>
+                        <div class="submit-property__block col-md-12">
+                            <div class="submit-property__block">
+                                <button type="submit" id="bien_save" name="bien[save]" class="submit-property__submit btn">Enregistrer </button>
+                            </div>
+                        </div>       
+                    </div>
+                    <!-- .col -->
+                    </form>
+                </div>
+                <!-- .row -->
+            </div>
+            <!-- .my-profile__container -->
+        </div>
+        <!-- .container -->
+    </section>
+    <script type="text/javascript">
+        $("#dk0-combobox").on("change", function () {
+            if ($('#profile-type').val() == 2) {
+                $("#pro").show("slow");
+            } else {
+                $("#pro").hide("slow");
+            }
+        });
+    </script>
+{% endblock %}

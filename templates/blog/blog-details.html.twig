@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    <title>{{ article.titre }}</title>
+    <meta name="description" content="Blog limmobilier.tn Tunisie immobilier {{ article.titre }}" />
+{% endblock %}
+{% block open_graph %}
+    <meta property="og:url"                content="{{path('blog-details', {slug: article.titre|slugify, 'id': article.id})}}" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="{{ article.titre }}" />
+    <meta property="og:description"        content="{{ article.texte| striptags | slice(0, 250) }}" />
+    <meta property="og:image"              content="{{ asset('uploads/articles/'~article.photo)}}" />
+{% endblock %}
+{% block body %}
+    <section class="about-us">
+        <main class="site-content-single-post has-sidebar">
+            <div class="container clearfix">
+                <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding">
+                    <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                    <li class="ht-breadcrumbs__item"><a href="{{ path('blog', {'page':1}) }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Blog</span></a></li>
+                    <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">{{ article.titre }}</span></li>
+                </ul>
+                <div class="row clearfix">
+                    <div class="site-content-archive-inner col-md-9">
+                        <div class="blog-wrap">
+                            <div class="blog-inner clearfix">
+                                <article id="post-2183" class="clearfix post-2183 post type-post status-publish format-standard has-post-thumbnail hentry category-specific-instruction tag-real-estate">
+                                    <div class="entry-post-meta-wrap">
+                                        <div class="single-post-entry-meta">
+                                            <div class="entry-meta-info">
+                                                <h1 class="entry-title">
+                                                    {{ article.titre }}
+                                                </h1>
+                                                <div class="meta-wrap">
+                                                    <ul class="entry-meta">
+                                                        <li class="entry-meta-author">
+                                                            Par <a href="{{ path('homepage') }}">Limmobilier.tn</a>
+                                                        </li>
+                                                        <li class="entry-meta-date">
+                                                            {{ article.publishedOn|date("d M Y", "Europe/Paris") }} 
+                                                        </li>
+                                                    </ul>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="entry-thumbnail-wrap">
+                                        <img width="770" height="500" src="{{  asset('uploads/articles/'~article.photo)}}" class="attachment-full size-full wp-post-image" alt="{{ article.titre }}" decoding="async" srcset="{{  asset('uploads/articles/'~article.photo)}} 770w, {{  asset('uploads/articles/'~article.photo)}} 300w, {{  asset('uploads/articles/'~article.photo)}} 768w" sizes="(max-width: 770px) 100vw, 770px"> 
+                                    </div>
+                                    <div class="entry-content-wrap">
+                                        <div class="entry-content clearfix">
+                                            {{ article.texte | raw }}
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar right-sidebar col-md-3 col-sm-12 col-xs-12 sidebar-large">
+                        {{ render(controller('App\\Controller\\DefaultController::random' ,{ 'offre': 'location', 'type': 'vacances' })) }}
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+{% endblock %}{# empty Twig template #}

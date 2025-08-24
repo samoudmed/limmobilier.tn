@@ -1,0 +1,85 @@
+<div class="listing-homepage">
+    <div class="item-grid__image-container style-hover-zoom clearfix">
+        <a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">
+            <picture>
+                <source data-srcset="https://limmobilier.tn{{ asset('uploads/photos/263x175/webp/' ~ annonce.photo ~ '.webp') }}" type="image/webp">
+                <img src="https://limmobilier.tn{{ asset('asset/images/lg.gif') }}" data-src="https://limmobilier.tn{{ asset('uploads/photos/263x175/' ~ annonce.photo) }}" alt="Image annonce" width="263" height="175" class="delayed-load">
+            </picture>
+        </a>
+    </div><!-- .item-grid__image-container -->
+    <div class="absolute">
+        <ul class="property-status">
+            <li class="property-status-item property-status-rent"><span>{{annonce.offre}}</span></li>
+        </ul>            
+        <div class="property-group-label"><span class="label-featured label label-success">{{annonce.kind}}</span></div>
+    </div>
+    <div class="item-grid__content-container">
+        <div class="listing__content">
+            <div class="listing__header">
+                <div class="listing__header-primary">
+                    <div>
+                        <h3 class="listing__title  h-70"><a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">{{annonce.label| slice(0, 49) | capitalize}} {{ (annonce.label| length) > 49 ? '...' }}</a></h3>
+                    </div>
+                    <span class="listing__type"><a href="{{ path('annonce_liste_delegation', {'slug': annonce.delegation.label|slugify , 'page': '1' }) }}">{{annonce.delegation.label}}</a></span>
+                    <div class="property-price">
+                        <p class="listing__price"> 
+                            {% if(annonce.prix != 0) %}
+                                {{annonce.prix|number_format(0, '.', ' ')}} DT
+                                {% if annonce.instalment is defined %}
+                                    {% if annonce.instalment == 'j' %}
+                                        / Jour
+                                    {% elseif annonce.instalment == 's' %}
+                                        / Semaine
+                                    {% elseif annonce.instalment == 'm' %}
+                                        / Mois
+                                    {% elseif annonce.instalment == 'a' %}   
+                                        / Année
+                                    {% endif %}
+                                {% endif %}
+                            {% else %}
+                                Contacter le propriétaire
+                            {%endif%}
+                        </p>
+                    </div>
+                </div><!-- .listing__header-primary -->
+            </div><!-- .listing__header -->
+            <div class="flex-center space-beetween pb12 list-details">
+                <div class="clearfix">
+                    <div class="property-meta">
+                        <ul class="property-meta-list list-inline">
+                            {% if(annonce.pieces is not null ) %}<li class="property-label-bedrooms" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pièces"><i class="icon-property-bedrooms"></i> <span class="label-content">{{annonce.pieces}} pièce{% if annonce.pieces > 1 %}s{% endif %}</span></li>{%endif%}
+                            {% if(annonce.surface != 0) %}<li class="property-label-areasize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Surface"><i class="icon-property-areasize"></i> <span class="label-content">{{annonce.surface}} m2</span></li>{%endif%}
+                        </ul>
+                    </div>
+                </div>
+                {% if(annonce.user.agence  != NULL) %}
+                    <a href="{{ path('liste_agence', {'label': annonce.user.agence|slugify, 'id': annonce.user.id, 'page': 1} )  }} ">
+                        {% if(annonce.user.logo  != NULL) %}
+                            <div itemscope itemtype="https://schema.org/Organization">
+                                <img src="https://limmobilier.tn{{ asset('uploads/logos/' ~ annonce.user.logo) }}" alt="{{ annonce.user.agence }}" loading="lazy" width="50" height="50" itemprop="logo" style="width: 50px; height: 50px; object-fit: contain;">
+                            </div>
+                        {% else %}
+                            <div class="avatar50">{{ annonce.user.agence }}</div>
+                        {% endif %}
+                    </a>    
+                {% endif %}        
+            </div>
+        </div><!-- .listing-content -->
+    </div><!-- .item-grid__content-container -->
+</div><!-- .listing -->
+<script>
+window.addEventListener("load", function () {
+    document.querySelectorAll("picture").forEach(picture => {
+        const source = picture.querySelector("source");
+        const img = picture.querySelector("img");
+
+        if (source && source.dataset.srcset) {
+            source.srcset = source.dataset.srcset;
+        }
+
+        if (img && img.dataset.src) {
+            img.src = img.dataset.src;
+        }
+    });
+});
+</script>

@@ -1,0 +1,9 @@
+<div class="settings-block">
+    <h2 class="bookmarked-listing__headline">Bonjour, <strong> {{ app.user.prenom }}!</strong></h2>
+    <ul class="settings">
+        <li class="setting"><a href="{{ path('mes_annonces') }}" class="setting__link"><i class="fa fa-list fa-fw" aria-hidden="true"></i> Annonces</a></li>
+        <li class="setting"><a href="{{ path('mes_messages') }}" class="setting__link"><i class="fa fa-envelope fa-fw"></i> Messages</a></li>
+        <li class="setting"><a href="{{ path('my_profile') }}" class="setting__link"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profil</a></li>
+        <li class="setting"><a href="{{ path('app_logout') }}" class="setting__link"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Déconnexion</a></li>
+    </ul>
+</div>

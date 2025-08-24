@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    {{ render(controller('App\\Controller\\Admin\\MetaController::getMeta', {'idEntity' : 1, 'entity': 'favoris'})) }}
+{% endblock %}
+{% block body %}
+<section class="bookmarked-listing">
+    <div class="container">
+        <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+            <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+            <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Mes biens</span></li>
+        </ul><!-- .ht-breadcrumb -->
+        <div class="bookmarked-listing__container">
+            <div class="row">
+                {{ include("default/compte/_menuUser.html.twig") }}<!-- .col -->
+                <div class="email-app mb-4">
+                    <nav>
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('mes_messages') }}">
+                                    <i class="fa fa-inbox"></i> Reçus
+                                    <span class="badge badge-danger">4</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('mes_messages_envoyes') }}">
+                                    <i class="fa fa-rocket"></i> Envoyés
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <main class="inbox">
+
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class="message {% if(message.statut==1) %} unread {% endif %}">
+                                <a href="{{ path('message_show', { 'id' : message.id }) }}">{{message.sujet}}
+                                    <div class="actions">
+                                        <span class="action">
+                                            <i class="fa fa-square-o"></i>
+                                        </span>
+                                        <span class="action">
+                                            <i class="fa fa-star-o"></i>
+                                        </span>
+                                    </div>
+                                    <div class="header">
+                                        <span class="from">{{message.sender.username}}</span>
+                                        <span class="date">
+                                            <span class="fa fa-paper-clip"></span> {{message.createdAt|date("Y-m-d H:i:s") }}</span>
+                                    </div>
+                                    <div class="title">{{message.sujet}}</div>
+                                    <div class="description">
+                                        {{message.message}}
+                                    </div>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </main>
+                </div>
+            </div><!-- .row -->
+        </div><!-- .bookmarked-listing__container -->
+    </div><!-- .container -->
+</section>
+{% endblock %}

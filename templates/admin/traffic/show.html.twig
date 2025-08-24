@@ -1,0 +1,221 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Traffic{% endblock %}
+
+{% block body %}
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b">
+                    <div class="card-header flex-wrap py-3">
+                        <div class="card-title">
+                            <h3 class="card-label">Favorite</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div id="kt_datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h1>Traffic</h1>
+
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th>Id</th>
+                                                <td>{{ traffic.id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Argv</th>
+                                                <td>{{ traffic.argv }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Argc</th>
+                                                <td>{{ traffic.argc }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>GatewayInterface</th>
+                                                <td>{{ traffic.gatewayInterface }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ServerAddr</th>
+                                                <td>{{ traffic.serverAddr }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ServerName</th>
+                                                <td>{{ traffic.serverName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ServerSoftware</th>
+                                                <td>{{ traffic.serverSoftware }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ServerProtocol</th>
+                                                <td>{{ traffic.serverProtocol }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>RequestMethod</th>
+                                                <td>{{ traffic.requestMethod }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>RequestTime</th>
+                                                <td>{{ traffic.requestTime }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>RequestTime_float</th>
+                                                <td>{{ traffic.requestTimeFloat }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>QueryString</th>
+                                                <td>{{ traffic.queryString }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>DocumentRoot</th>
+                                                <td>{{ traffic.documentRoot }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>HttpAccept</th>
+                                                <td>{{ traffic.httpAccept }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>HttpAcceptCharset</th>
+                                                <td>{{ traffic.httpAcceptCharset }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>HttpAcceptEncoding</th>
+                                                <td>{{ traffic.httpAcceptEncoding }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>HttpAcceptLanguage</th>
+                                                <td>{{ traffic.httpAcceptLanguage }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>HttpConnection</th>
+                                                <td>{{ traffic.httpConnection }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>HttpHost</th>
+                                                <td>{{ traffic.httpHost }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>HttpReferer</th>
+                                                <td>{{ traffic.httpReferer }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>HttpUserAgent</th>
+                                                <td>{{ traffic.httpUserAgent }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Https</th>
+                                                <td>{{ traffic.https }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>RemoteAddr</th>
+                                                <td>{{ traffic.remoteAddr }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>HostName</th>
+                                                <td>{{ traffic.hostName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>RemoteHost</th>
+                                                <td>{{ traffic.remoteHost }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>RemotePort</th>
+                                                <td>{{ traffic.remotePort }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>RemoteUser</th>
+                                                <td>{{ traffic.remoteUser }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>RedirectRemoteUser</th>
+                                                <td>{{ traffic.redirectRemoteUser }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ScriptFilename</th>
+                                                <td>{{ traffic.scriptFilename }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ServerAdmin</th>
+                                                <td>{{ traffic.serverAdmin }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ServerPort</th>
+                                                <td>{{ traffic.serverPort }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ServerSignature</th>
+                                                <td>{{ traffic.serverSignature }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>PathTranslated</th>
+                                                <td>{{ traffic.pathTranslated }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ScriptName</th>
+                                                <td>{{ traffic.scriptName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>RequestUri</th>
+                                                <td>{{ traffic.requestUri }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>PhpAuthDigest</th>
+                                                <td>{{ traffic.phpAuthDigest }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>PhpAuthUser</th>
+                                                <td>{{ traffic.phpAuthUser }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>PhpAuthPw</th>
+                                                <td>{{ traffic.phpAuthPw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>AuthType</th>
+                                                <td>{{ traffic.authType }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>PathInfo</th>
+                                                <td>{{ traffic.pathInfo }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>OrigPathInfo</th>
+                                                <td>{{ traffic.origPathInfo }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ConnectedAt</th>
+                                                <td>{{ traffic.connectedAt ? traffic.connectedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <a href="{{ path('traffic_index') }}">back to list</a>
+
+                                            <a href="{{ path('traffic_edit', {'id': traffic.id}) }}"><i class="la la-edit"></i></a>
+                                        </div>   
+                                        <div class="col-lg-2 right">
+                                            {{ include('admin/traffic/_delete_form.html.twig') }}
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end: Datatable-->
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Entry-->
+    </div>
+{% endblock %}

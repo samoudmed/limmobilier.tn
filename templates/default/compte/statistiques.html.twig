@@ -1,0 +1,207 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+{{ render(controller('App\\Controller\\Admin\\MetaController::getMeta', {'idEntity' : 1, 'entity': 'favoris'})) }}
+{% endblock %}
+{% block body %}
+<section class="my-property">
+   <div class="container">
+      <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+         <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+         <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Mes annonces</span></li>
+      </ul>
+      <!-- .ht-breadcrumb -->
+      <div class="my-property__container">
+         <div class="row">
+            {{ include("default/compte/_menuUser.html.twig") }}<!-- .col -->
+            <div class="col-md-9">
+               <form action="" method="post" class="listing-search__form">
+                  <div class="listing-sort listing-sort--main-listing col-md-12">
+                     <div class="listing-sort__inner col-md-3">
+                        <p class="listing-sort__sort">
+                        <div class="dk-select ht-field listing-sort__field" id="dk5-sort-type">{{ render(controller('App\\Controller\\DefaultController::listingVille')) }}</div>
+                        </p><!-- .listing-sort__sort -->
+                     </div>
+                     <!-- .listing-sort__inner -->
+                     <div class="listing-sort__inner col-md-3">
+                        <button type="submit" class="newsletter__submit" id="newsletter_submit"><span class="ion-ios-arrow-right"></span></button>
+                     </div>
+                  </div>
+               </form>
+               <section class="sidebar__group">
+                  <div data-fetch-key="0">
+                     <h2 qa-webelement="pricemap-sidebar_price_block-text-subregion_country" class="price-map-table__title">
+                        <span>
+                        
+                        </span>
+                     </h2>
+                      <h1 class="packages__headline col-md-12">Prix au m² par ville en Tunisie</strong></h1>
+                     <div class="price-map-table">
+                        <table qa-webelement="pricemap-sidebar_price_block-table-subregion_country">
+                           <thead>
+                              <tr>
+                                 <th class="price-map-table__cell">
+                                    Ville
+                                 </th>
+                                 <th class="price-map-table__cell">
+                                    Appartement
+                                    prix moyen au m²
+                                 </th>
+                                 <th class="price-map-table__cell">
+                                    Maison
+                                    prix moyen au m²
+                                 </th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td class="price-map-table__cell"><a href="/fr/region-flamande-3/anvers-5" class="price-map-table__link">
+                                    Anvers
+                                    </a>
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    2 724&nbsp;€
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    2 266&nbsp;€
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="price-map-table__cell"><a href="/fr/region-flamande-3/brabant-flamand-6" class="price-map-table__link">
+                                    Brabant Flamand
+                                    </a>
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    3 035&nbsp;€
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    2 379&nbsp;€
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="price-map-table__cell"><a href="/fr/region-wallonne-4/brabant-wallon-7" class="price-map-table__link">
+                                    Brabant Wallon
+                                    </a>
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    3 055&nbsp;€
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    2 250&nbsp;€
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="price-map-table__cell"><a href="/fr/region-de-bruxelles-capitale-2/bruxelles-15" class="price-map-table__link">
+                                    Bruxelles
+                                    </a>
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    3 478&nbsp;€
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    3 162&nbsp;€
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="price-map-table__cell"><a href="/fr/region-flamande-3/flandre-occidentale-8" class="price-map-table__link">
+                                    Flandre Occidentale
+                                    </a>
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    3 475&nbsp;€
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    1 945&nbsp;€
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="price-map-table__cell"><a href="/fr/region-flamande-3/flandre-orientale-9" class="price-map-table__link">
+                                    Flandre Orientale
+                                    </a>
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    2 694&nbsp;€
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    2 143&nbsp;€
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="price-map-table__cell"><a href="/fr/region-wallonne-4/hainaut-10" class="price-map-table__link">
+                                    Hainaut
+                                    </a>
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    1 810&nbsp;€
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    1 381&nbsp;€
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="price-map-table__cell"><a href="/fr/region-wallonne-4/liege-11" class="price-map-table__link">
+                                    Liège
+                                    </a>
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    2 208&nbsp;€
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    1 640&nbsp;€
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="price-map-table__cell"><a href="/fr/region-flamande-3/limbourg-12" class="price-map-table__link">
+                                    Limbourg
+                                    </a>
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    2 475&nbsp;€
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    1 768&nbsp;€
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="price-map-table__cell"><a href="/fr/region-wallonne-4/luxembourg-13" class="price-map-table__link">
+                                    Luxembourg
+                                    </a>
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    2 231&nbsp;€
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    1 634&nbsp;€
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="price-map-table__cell"><a href="/fr/region-wallonne-4/namur-14" class="price-map-table__link">
+                                    Namur
+                                    </a>
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    2 368&nbsp;€
+                                 </td>
+                                 <td class="price-map-table__cell">
+                                    1 588&nbsp;€
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <p class="field__annotation-text price-map-table__footer"><span>Estimation de prix au m² Immoweb au 1 novembre 2022. Prix nets demandés par les vendeurs.</span> <button class="price-map-table__info"><span class="button__label">
+                           Plus d'infos
+                           </span>
+                           </button>
+                        </p>
+                     </div>
+                  </div>
+               </section>
+            </div>
+            <!-- .col -->
+         </div>
+         <!-- .row -->
+      </div>
+      <!-- .my-property__container -->
+   </div>
+   <!-- .container -->
+</section>
+{% endblock %}

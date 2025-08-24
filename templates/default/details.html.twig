@@ -1,0 +1,365 @@
+{% extends 'base.html.twig' %}
+{% block meta %}{{ render(controller('App\\Controller\\Admin\\MetaController::getMeta', {'idEntity' : annonce.id, 'entity': 'annonce'})) }}{% endblock %}
+{% block open_graph %}
+    <link rel="canonical" href="https://limmobilier.tn{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}" />
+    <meta property="og:url" content="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{annonce.label|capitalize}}" />
+    {% if annonce.photos|length > 0 %}
+        <meta property="og:image" content="{{ asset('uploads/photos/'~annonce.photo) }}" />
+    {% endif %}
+{% endblock %}
+{% block body %}
+
+    <section class="property">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border col-md-12">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><a href="{{ path('annonce_liste', {'offre': annonce.offre|lower, 'page': 1}) }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">{{annonce.offre}}</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type', {'offre': annonce.offre|lower, 'type': annonce.kind.label|slugify|lower, 'page': 1}) }}" class="ht-breadcrumbs__link">{{annonce.kind.label | capitalize}}</a></span></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type_gouvernorat', {'offre': annonce.offre|lower, 'type': annonce.kind.label|slugify|lower, 'slug': annonce.gouvernorat.slug|lower ,'page': 1}) }}" class="ht-breadcrumbs__link">{{annonce.gouvernorat | capitalize}}</a></span></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type_delegation', {'offre': annonce.offre|lower, 'type' : annonce.kind.label|slugify|lower, 'slug': annonce.delegation.slug|lower, 'page': '1' }) }}" class="ht-breadcrumbs__link">{{annonce.delegation| capitalize}}</a></span></li>
+                {% if annonce.ville is not null %}<li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type_ville', {'offre': annonce.offre|lower, 'type' : annonce.kind.label|slugify|lower, 'ville': annonce.ville.label|lower|slugify, 'idVille': annonce.ville.id, 'page': '1' }) }}" class="ht-breadcrumbs__link">{{annonce.ville| capitalize}}</a></span></li>{% endif %}
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">{{annonce.label| capitalize}}</span></li>
+            </ul><!-- ht-breadcrumb -->
+        </div><!-- .container -->
+        <div class="property__header">
+            <div class="container">
+                <div class="property__header-container">
+                    <ul class="property__main">
+                        <li class="property__title property__main-item">
+                            <div class="property__meta">
+                                <span class="property__offer">{{annonce.offre}} / {{annonce.kind.label}} </span>
+                            </div><!-- .property__meta -->
+                            <h1 class="property__name">{{annonce.label| capitalize}}</h1>
+                            <span class="property__address"><i class="ion-ios-location-outline property__address-icon"></i>{{annonce.adresse| capitalize}} {{annonce.gouvernorat| capitalize}}, {{annonce.delegation}}, {{annonce.ville}}</span>
+                        </li>
+                        {% if(annonce.surface != 0) and (annonce.pieces != 0) %}
+                            <li class="property__details property__main-item">
+                                <ul class="property__stats">
+                                    {% if (annonce.surface != 0) %}
+                                        <li class="property__stat">
+                                            <span class="property__figure">
+                                                {{annonce.surface}} m<sup>2</sup>
+                                            </span> 
+                                        </li>
+                                    {% endif %}    
+                                    {% if (annonce.pieces != 0) %}<li class="property__stat"><span class="property__figure">{{ annonce.pieces }} pièces</span></li>{%endif%}
+                                </ul><!-- .listing__stats -->
+                            </li>
+                        {%endif%}
+                        <li class="property__price property__main-item">
+                            <h4 class="property__price-primary">
+
+                                {% if(annonce.prix != 0) %}
+                                    {{annonce.prix|number_format(0, '.', ' ')}} DT
+                                    {% if annonce.instalment is defined %}
+                                        {% if annonce.instalment == 'j' %}
+                                            / Jour
+                                        {% elseif annonce.instalment == 's' %}
+                                            / Semaine
+                                        {% elseif annonce.instalment == 'm' %}
+                                            / Mois
+                                        {% elseif annonce.instalment == 'a' %}   
+                                            / Année
+                                        {% endif %}
+                                    {% endif %}
+                                {%else%}
+                                    Prix : Contactez le vendeur
+                                {%endif%}
+                            </h4>
+                        </li>
+                    </ul><!-- .property__main -->
+                </div><!-- .property__header-container -->
+
+            </div><!-- .container -->
+        </div><!-- .property__header -->
+        <div class="property__container">
+            <div class="container">
+                <div class="row">
+                        <main class="col-md-9">
+                            {% if annonce.photos|length > 0 %}
+                                <div class="main_img">
+                                    <div class="product-images demo-gallery">
+                                        <div class="main-img-slider">
+                                            {% for photo in annonce.photos %}
+                                                <div class="property__slider-image">
+                                                    <a data-fancybox="gallery" href="{{ asset('https://limmobilier.tn/uploads/photos/848x682/webp/'~photo) }}.webp">
+                                                        <picture>
+                                                            <img src="{{ asset('https://limmobilier.tn/uploads/photos/848x682/webp/'~photo) }}.webp" title="{{annonce.offre}} {{annonce.kind.label}}" alt="{{annonce.offre}} {{annonce.kind.label}}" class="img-fluid">
+                                                        </picture>
+                                                    </a>
+                                                </div><!-- .property__slider-image -->
+                                            {% endfor %}
+                                        </div>
+                                        <ul class="thumb-nav">
+                                            {% for photo in annonce.photos %}
+                                                <li><img src="{{ asset('https://limmobilier.tn/uploads/photos/848x682/webp/'~photo) }}.webp" title="{{annonce.offre}} {{annonce.kind.label}}" alt="{{annonce.offre}} {{annonce.kind.label}}" class="img-fluid"></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                        {% endif %}    
+                        <div class="property__feature-container">
+                            {% if( (annonce.description|striptags) !='') %}
+                                <div class="property__feature">
+                                    <h3 class="property__feature-title property__feature-title--b-spacing">Description</h3>
+                                    <p itemprop="description">{{annonce.description | raw}}</p>
+                                </div><!-- .property__feature -->
+                            {% endif %}
+                            <div class="property__feature">
+                                <h3 class="property__feature-title property__feature-title--b-spacing">Commodités</h3>
+                                <ul class="property__features-list">
+                                        {% if annonce.anneeConstruction != 0 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-calendar"></i></span> Année de construction {{annonce.anneeConstruction}}</li>
+                                        {% endif %}
+                                        {% if annonce.capacite > 0 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-users"></i></span>  Capacité : {{  annonce.capacite }} personnes</li>
+                                        {% endif %}
+                                        {% if annonce.salleBain == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-bath"></i></span> Salle de bain </li>
+                                        {% endif %}
+                                        {% if annonce.jacuzzi == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-tint"></i></span> Jacuzzi</li>
+                                        {% endif %}
+                                        {% if annonce.cuisineEquipe == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-cutlery"></i></span> Cuisine équipée</li>
+                                        {% endif %}
+                                        {% if annonce.chauffage == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-fire"></i></span> Chauffage</li>
+                                        {% endif %}
+                                        {% if annonce.cheminee == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-fire-extinguisher"></i></span> Cheminée</li>
+                                        {% endif %}
+                                        {% if annonce.meuble == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-bed"></i></span> Meuble</li>
+                                        {% endif %}
+                                        {% if annonce.parking == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-car"></i></span> Parking</li>
+                                        {% endif %}
+                                        {% if annonce.ascenseur == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-sort-asc"></i></span> Ascenseur</li>
+                                        {% endif %}
+                                        {% if annonce.internet == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-wifi"></i></span> Internet</li>
+                                        {% endif %}
+                                        {% if annonce.securite == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-lock"></i></span> Sécurisé</li>
+                                        {% endif %}
+                                        {% if annonce.piscine == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-life-ring"></i></span> Piscine</li>
+                                        {% endif %}
+                                        {% if annonce.jardin == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-tree"></i></span> Jardin</li>
+                                        {% endif %}
+                                        {% if annonce.climatiseur == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-thermometer-three-quarters"></i></span> Climatiseur</li>
+                                        {% endif %}
+                                        {% if annonce.vue == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-eye"></i></span> Vue mer / dégagée</li>
+                                        {% endif %}
+                                        {% if annonce.orientation != 0 %}
+                                            <li class="property__features-item">
+                                                {% if annonce.orientation == 1 %}
+                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Nord
+                                                {% elseif annonce.orientation == 2 %}
+                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Nord-Est
+                                                {% elseif annonce.orientation == 3 %}
+                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Est
+                                                {% elseif annonce.orientation == 4 %}
+                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Sud-Est
+                                                {% elseif annonce.orientation == 5 %}
+                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Sud
+                                                {% elseif annonce.orientation == 6 %}
+                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Sud-Ouest
+                                                {% elseif annonce.orientation == 7 %}
+                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Ouest
+                                                {% elseif annonce.orientation == 8 %}
+                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Nord-Ouest
+                                                {% endif %}
+                                            </li>
+                                        {% endif %}    
+                                    {% if annonce.disponibilite %}
+                                        <li class="property__features-item">
+                                            <span class="property__features-icon"><i class="fa fa-calendar-plus-o"></i></span>Date de disponibilité {{annonce.disponibilite|date('Y-m-d')}}
+                                        </li>
+                                    {% endif %}
+                                    {% if annonce.etage is not null and annonce.etage >= 0 %}
+                                        <li class="property__features-item">
+                                            <span class="property__features-icon"><i class="fa fa-building-o"></i></span> 
+                                            {% if annonce.etage == 0 %} 
+						RDC
+                                            {% elseif annonce.etage == 1 %}
+                                                1er étage
+                                            {% elseif annonce.etage == 2 %}
+                                                2ème étage
+                                            {% elseif annonce.etage == 3 %}
+                                                3ème étage
+                                            {% elseif annonce.etage == 4 %}
+                                                4ème étage
+                                            {% elseif annonce.etage == 5 %}
+                                                5ème étage
+                                            {% elseif annonce.etage == 6 %}
+                                                6ème étage
+                                            {% elseif annonce.etage == 7 %}
+                                                7ème étage
+                                            {% elseif annonce.etage == 8 %}
+                                                8ème étage
+                                            {% elseif annonce.etage == 9 %}
+                                                9ème étage
+                                            {% elseif annonce.etage == 10 %}
+                                                10ème étage
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
+                                </ul><!-- .property__features-list -->
+                            </div><!-- .property__feature -->
+                            {% if(annonce.localisationMap!='') %}
+                                <div class="property__feature">
+                                    <h3 class="property__feature-title property__feature-title--b-spacing">Localisation</h3>
+                                    <div class="property__accordion">
+                                        {{  annonce.localisationMap | raw }}
+                                    </div><!-- .property__accordion -->
+                                </div>
+                            {% endif %} 
+                        </div><!-- .property__feature-container -->
+                    </main>
+
+                    <aside class="col-md-3">
+                        <div class="widget__container">
+                            <section class="property__feature opalestate-box property-agent-section">
+
+                                <div class="contact-form__header">
+                                    <div class="contact-form__header-container">
+                                        {% if(annonce.user.logo  != NULL) %}
+                                            <img itemprop="logo" src="{{ asset('uploads/logos/'~annonce.user.logo) }}" alt="{{annonce.user.agence}}" style="width: 70px;margin: 10px;">
+                                        {% else %}
+                                            <div class="avatar75">{{ annonce.user.prenom }}</div>
+                                        {% endif %}
+                                        <div class="contact-info">
+                                            <h3 class="contact-name">
+                                                {% if annonce.user.agence != NULL %}
+                                                    <a href="{{ path('liste_agence', {'label': annonce.user.agence|slugify, 'id': annonce.user.id, 'page': 1} )  }} ">{{annonce.user.agence}}</a>
+                                                {% endif %}
+                                            </h3>
+                                            <a itemprop="telephone" href="tel:{{annonce.user.telephone}}" class="contact-number">Tél : {{annonce.user.telephone}}</a>
+                                        </div><!-- .contact-info -->
+                                    </div><!-- .contact-form__header-container -->
+                                </div><!-- .contact-form__header -->
+                                <form name="appbundle_messages" method="post" action="{{ path('send_message') }}">
+                                    <div class="contact-form__body">
+
+                                        {{ form_errors(formMessage) }}
+                                        {{ form_row(formMessage._token) }}
+                                        <input type="text" class="contact-form__field" placeholder="Nom" name="name" required value="">
+                                        <input type="email" class="contact-form__field" placeholder="Email" name="email" required value="">
+                                        <input type="tel" class="contact-form__field" placeholder="Téléphone" name="phone" value="">
+                                        {{ form_widget(formMessage.sujet, {'attr': {'class': 'contact-form__field', 'placeholder':'Sujet'}}) }}
+                                        {{ form_widget(formMessage.message, {'attr': {'class': 'contact-form__field contact-form__comment', 'placeholder':'Message'}}) }}
+                                        <input type="hidden" name="id_annonce" value="{{annonce.id}}">
+                                        <input type="hidden" name="form" value="message">
+                                        <button class="contact-form__submit btn" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>  Processing" type="submit" name="contact-form">Envoyer</button>
+                                    </div><!-- .contact-form__body -->
+
+                                    <div class="contact-form__footer">
+
+                                    </div><!-- .contact-form__footer -->
+                                </form>
+                                <!-- .contact-form -->
+                            </section><!-- .widget -->
+
+                            <section class="widget widget--white widget--padding-20">
+                                <h3 class="widget__title">Annonces immobilières similaires</h3>
+                                {{ render(controller('App\\Controller\\DefaultController::similar' ,{ 'offre': annonce.offre, 'type': annonce.kind, 'ville': annonce.ville , 'except': annonce.id })) }}
+                                <!-- .similar-home -->
+                            </section><!-- .widget -->
+
+                            {% if ((annonce.offre == 'Vente') and (annonce.prix != 0)) %}
+                                <section class="widget widget--white widget--padding-20">
+                                    <h3 class="widget__title">Simulateur de crédit</h3>
+                                    <form class="form-calculator">
+                                        <div class="form-calculator__group">
+                                            <label for="home-price" class="form-calculator__label">Montant de l'emprunt</label>
+                                            <span class="form-calculator__icon form-calculator__currency">DT</span>
+                                            <input id="home-price" type="text" class="form-calculator__field" required value="{{annonce.prix}}">
+                                        </div><!-- .form-calculator__group --> 
+
+                                        <div class="form-calculator__group">
+                                            <label for="annual-rate" class="form-calculator__label">Taux d'intérêt</label>
+                                            <span class="form-calculator__icon form-calculator__percent">%</span>
+                                            <input id="annual-rate" type="text" class="form-calculator__field" required value="10.5">
+                                        </div><!-- .form-calculator__group -->
+
+                                        <div class="form-calculator__group">
+                                            <label for="loan-term" class="form-calculator__label">Durée de remboursement(ans)</label>
+                                            <select id="loan-term" class="ht-field" required>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="13">13</option>
+                                                <option value="14">14</option>
+                                                <option value="15">15</option>
+                                                <option value="16">16</option>
+                                                <option value="17">17</option>
+                                                <option value="18">18</option>
+                                                <option value="19">19</option>
+                                                <option value="20" selected>20</option>
+                                            </select>
+                                        </div><!-- .form-calculator__group -->
+
+                                        <input type="button" class="calculator__submit" value="Calculer">
+
+                                        <div class="form-calculator__result">
+                                            <h3 class="mortgage-payment">Paiement mensuel: <span class="mensualite"></span></h3>
+                                        </div>
+                                    </form><!-- .form-calculator -->
+
+                                </section><!-- .widget -->
+                            {% endif %}
+                        </div><!-- .widget__container -->
+                    </aside>
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .property__container -->
+    </section><!-- .property -->
+    
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('asset/js/jquery.fancybox.min.js') }}"></script>
+    <script src="{{ asset('asset/js/slick.min.js') }}"></script>
+    <script src="{{ asset('asset/js/slick-config.js') }}"></script>
+    <script>
+        $("#favorite").on("click", function () {
+            $.ajax({
+                type: 'POST', // Le type de la requête HTTP, ici devenu POST
+                data: 'id=' + {{annonce.id}},
+                url: "{{ path('favorite') }}",
+                dataType: 'json', // ** ensure you add this line **
+                success: function (data) { // code_html contient le HTML renvoyé
+                    if (data == 'succes') {
+                        $.growl.notice({message: "Annonce ajouté a votre liste"});
+                    }
+                }
+            });
+        });
+
+        $(".calculator__submit").on("click", function () {
+            var c = $('#home-price').val();
+            var t = $('#annual-rate').val() / 100;
+            var d = $('#loan-term').val() * 12;
+            $(".mensualite").html(((c * (t / 12)) / (1 - (Math.pow((1 + (t / 12)), -d)))).toFixed(3) + ' DT');
+            $(".form-calculator__result").show('slow');
+        });
+    </script>
+{% endblock %}

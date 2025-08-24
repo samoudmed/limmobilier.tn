@@ -1,0 +1,103 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Message{% endblock %}
+
+{% block body %}
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b">
+                    <div class="card-header flex-wrap py-3">
+                        <div class="card-title">
+                            <h3 class="card-label">Message</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div id="kt_datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card-body p-0">
+                                        <!--begin::Header-->
+                                        <div class="d-flex align-items-center justify-content-between flex-wrap card-spacer-x py-5">
+                                            <!--begin::Title-->
+                                            <div class="d-flex align-items-center mr-2 py-2">
+                                                <div class="font-weight-bold font-size-h3 mr-3">{{ message.sujet }}</div>
+                                            </div>
+                                            <!--end::Title-->
+                                            <!--begin::Toolbar-->
+                                            <!--end::Toolbar-->
+                                        </div>
+                                        <!--end::Header-->
+                                        <!--begin::Messages-->
+                                        <div class="mb-3">
+                                            <div class="cursor-pointer shadow-xs toggle-on" data-inbox="message">
+                                                <div class="d-flex align-items-center card-spacer-x py-6">
+                                                    <div class="d-flex flex-column flex-grow-1 flex-wrap mr-2">
+                                                        <div class="d-flex">
+                                                            <a href="#" class="font-size-lg font-weight-bolder text-dark-75 text-hover-primary mr-2">{{ message.sender }}</a>
+                                                            <div class="font-weight-bold text-muted">
+                                                                <span class="label label-success label-dot mr-2"></span>1 Day ago</div>
+                                                        </div>
+                                                        <div class="d-flex flex-column">
+                                                            <div class="toggle-off-item">
+                                                                <span class="font-weight-bold text-muted cursor-pointer" data-toggle="dropdown">to {{ message.receiver }}
+                                                            </div>
+                                                            <div class="text-muted font-weight-bold toggle-on-item" data-inbox="toggle">With resrpect, i must disagree with Mr.Zinsser. We all know the most part of important part....</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="font-weight-bold text-muted mr-2">{{ message.createdAt ? message.createdAt|date('Y-m-d H:i:s') : '' }}</div>
+                                                        <div class="d-flex align-items-center" data-inbox="toolbar">
+                                                            <span class="btn btn-clean btn-sm btn-icon mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Star">
+                                                                <i class="flaticon-star icon-1x"></i>
+                                                            </span>
+                                                            <span class="btn btn-clean btn-sm btn-icon mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark as important">
+                                                                <i class="flaticon-add-label-button icon-1x"></i>
+                                                            </span>
+                                                            <span class="btn btn-clean btn-sm btn-icon mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reply">
+                                                                <i class="flaticon2-reply-1 icon-1x"></i>
+                                                            </span>
+                                                            <span class="btn btn-clean btn-sm btn-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="Settings">
+                                                                <i class="flaticon-more icon-1x"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-spacer-x py-3 toggle-off-item">
+                                                    {{ message.message }}
+                                                </div>
+                                            </div>
+                                            
+                                           
+                                        </div>
+                                        <!--end::Messages-->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <a href="{{ path('app_message_index') }}">back to list</a>
+
+                                            <a href="{{ path('app_message_edit', {'id': message.id}) }}"><i class="la la-edit"></i></a>
+                                        </div>   
+                                        <div class="col-lg-2 right">
+                                            {{ include('admin/message/_delete_form.html.twig') }}
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end: Datatable-->
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Entry-->
+    </div>
+{% endblock %}

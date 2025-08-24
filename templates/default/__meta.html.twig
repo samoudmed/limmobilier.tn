@@ -1,0 +1,2 @@
+<title>{% if meta.title is defined %}{{ meta.title|html_entity }}{% else %}{% endif %}</title>
+<meta name="description" content="{% if meta.description is defined %}{{ meta.description|replace({"\n": "", "\r": "", "\t": ""})|html_entity }}{% else %}{% endif %}" />

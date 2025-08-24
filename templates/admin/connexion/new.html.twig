@@ -1,0 +1,11 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}New Connexion{% endblock %}
+
+{% block body %}
+    <h1>Create new Connexion</h1>
+
+    {{ include('admin/connexion/_form.html.twig') }}
+
+    <a href="{{ path('app_connexion_index') }}">back to list</a>
+{% endblock %}

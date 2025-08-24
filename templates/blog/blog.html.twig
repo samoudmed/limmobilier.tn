@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    <title>Blog limmobilier.tn Tunisie immobilier</title>
+    <meta name="description" content="Blog limmobilier.tn Tunisie immobilier" />
+{% endblock %}
+{% block body %}
+    <section class="about-us">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Blog</span></li>
+            </ul>
+            <!-- ht-breadcrumb -->
+            <div class="about-us__main">
+                <div class="row">
+                    <div class="row clearfix">
+                        <div class="site-content-archive-inner col-md-9">
+                            <div class="blog-wrap layout-container large-image">
+                                <div class="blog-inner clearfix blog-style-large-image blog-paging-default blog-style-list">
+                                    <h1 class="about-us__title">Limmobilier.tn Blog <br> Trouvez les informations pour votre projet immobilier</h1>
+                                    {% for article in articles %}
+                                        <article id="post-2183" class="col-md-6 clearfix post-2183 post type-post status-publish format-standard has-post-thumbnail hentry category-specific-instruction tag-real-estate">
+                                            <div class="post-item">
+                                                <div class="entry-wrap">
+                                                    <div class="entry-thumbnail-wrap">
+                                                        <div class="entry-thumbnail">
+                                                            <a title="{{ article.titre }}" class="entry-thumbnail_overlay" href="{{path('blog-details', {slug: article.titre|slugify, 'id': article.id})}}">
+                                                                <img class="img-responsive" src="{{  asset('uploads/articles/'~article.photo)}}" alt="{{ article.titre }}">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="entry-content-wrap">
+                                                        <div class="entry-detail">
+                                                            <div class="heading-content">
+                                                                <h3 class="entry-title p-font">
+                                                                    <a href="{{path('blog-details', {slug: article.titre|slugify, 'id': article.id})}}" rel="bookmark" title="{{ article.titre }}">{{ article.titre }}</a>
+                                                                </h3>
+                                                                <div class="entry-post-meta-wrap">
+                                                                    <ul class="entry-meta">
+                                                                        <li class="entry-meta-date">
+                                                                            {{ article.publishedOn|date("d M Y", "Europe/Paris") }}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <p class="noo-content">{{ article.texte| striptags | slice(0, 250) }}...</p>
+                                                                <a class="readmore" href="{{path('blog-details', {slug: article.titre|slugify, 'id': article.id})}}">
+                                                                    Lire la suite
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    {% endfor %}
+                                </div>
+                                <!--<div class="blog-paging-wrapper blog-paging-default text-right">
+                                   <ul class="pagination">
+                                      <li><span aria-current="page" class="page-numbers current">1</span></li>
+                                      <li><a class="page-numbers" href="https://wp.nootheme.com/palazzo/blog/page/2/">2</a></li>
+                                      <li><a class="page-numbers" href="https://wp.nootheme.com/palazzo/blog/page/3/">3</a></li>
+                                      <li><a class="next page-numbers" href="https://wp.nootheme.com/palazzo/blog/page/2/"><i class="fa fa-angle-double-right"></i></a></li>
+                                   </ul>
+                                </div>-->
+                            </div>
+                        </div>
+                        <div class="sidebar right-sidebar col-md-3 col-sm-12 col-xs-12 sidebar-large">
+                            {{ render(controller('App\\Controller\\DefaultController::random' ,{ 'offre': 'location', 'type': 'vacances' })) }}
+                        </div>
+                    </div>
+                    <!-- .col -->
+                </div>
+                <!-- .row -->
+            </div>
+            <!-- .about-us__main -->
+        </div>
+        <!-- .container -->
+    </section>
+{% endblock %}

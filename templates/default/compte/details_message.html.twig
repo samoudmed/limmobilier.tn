@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    {{ render(controller('App\\Controller\\Admin\\MetaController::getMeta', {'idEntity' : message.id, 'entity': 'detail_message'})) }}
+{% endblock %}
+{% block body %}
+    <section class="bookmarked-listing">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Mes biens</span></li>
+            </ul><!-- .ht-breadcrumb -->
+            <div class="bookmarked-listing__container">
+                <div class="row">
+                    {{ include("default/compte/_menuUser.html.twig") }}<!-- .col -->
+                    <div class="email-app mb-4">
+                        <main class="message">
+                            <div class="details">
+                                <div class="title">Sujet : {{ message.sujet}}</div>
+                                <div class="content-sender">
+                                    <p>
+                                        {{ message.message}}
+                                    </p>
+                                </div>
+                                <div class="header">
+                                    <div class="from">
+                                        <span>{{message.sender.nom}}</span>
+                                        <span>{{message.sender.telephone}}</span>
+                                    </div>
+                                    <div class="date">{{message.createdAt|date("Y-m-d") }},
+                                        <b>{{message.createdAt|date("H:i:s") }}</b>
+                                    </div>
+                                </div>
+                                {% for response in responses %}
+                                    <div class="content-responder">
+                                        <p>
+                                            {{ response.message}}
+                                        </p>
+                                    </div>
+                                    <div class="header">
+                                        <div class="from">
+                                            <span>{{response.sender.nom}} {{response.sender.prenom}}</span>
+                                        </div>
+                                        <div class="date">{{response.createdAt|date("Y-m-d") }},
+                                            <b>{{response.createdAt|date("H:i:s") }}</b>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <form method="post" action="" style="padding-top: 60px;">
+                                    <div class="form-group">
+                                        {{ form_widget(form.message, {'attr': {'class': 'contact-form__field contact-form__comment', 'placeholder':'Message'}}) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_widget(form._token, {'attr': {'class': 'form-control'}}) }}
+                                        <button class="newsletter__submit" tabindex="3" type="submit">Envoyer</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </main>
+                    </div>
+
+                </div>
+            </div><!-- .row -->
+        </div><!-- .bookmarked-listing__container -->
+        <!-- .container -->
+    </section>
+{% endblock %}

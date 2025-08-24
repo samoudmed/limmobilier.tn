@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    {{ render(controller('App\\Controller\\Admin\\MetaController::getMeta', {'idEntity' : 1, 'entity': 'favoris'})) }}
+{% endblock %}
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> Enoyer un message
+                        </div>
+                        <div class="card-body">
+                            <div class="email-app">
+                                <main>
+                                    {{ form_start(form) }}
+                                    {{ form_errors(form) }}
+                                    {{ form_row(form._token) }}
+                                    <div class="form-row mb-3">
+                                        <label class="col-3 col-sm-1 col-form-label" for="to">To:</label>
+                                        <div class="col-10 col-sm-11">
+                                            {{ contact.nom}} {{ contact.prenom}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        {{ form_label(form.sujet, null, {'label_attr': {'class': 'col-sm-1 col-form-label'}}) }}
+                                        <div class="col-md-9">{{ form_widget(form.sujet, {'attr': {'class': 'form-control'}}) }}</div>
+                                        <span class="help-block">{{ form_errors(form.sujet) }}</span>
+                                    </div>
+                                    <div class="form-group row">
+                                        {{ form_label(form.message, null, {'label_attr': {'class': 'col-sm-1 col-form-label'}}) }}
+                                        <div class="col-sm-11 ml-auto">
+                                            <div class="form-group mt-4">
+                                                {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
+                                                <span class="help-block">{{ form_errors(form.sujet) }}</span>
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                {{ form_widget(form.save, {'attr': {'class': 'btn btn-sm btn-primary'}}) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </main>
+                            </div>
+                        </div>
+                        <!-- /.row-->
+                    </div>
+                </div>
+                </main>
+            </div>
+        {% endblock %}

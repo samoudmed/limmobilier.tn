@@ -1,0 +1,29 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Edit Photos{% endblock %}
+
+{% block body %}
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <div class="card card-custom example example-compact">
+                    <div class="card-header">
+                        <h3 class="card-title">Modifier photo</h3>
+                    </div>
+
+                    {{ include('admin/photos/_form.html.twig', {'button_label': 'Update'}) }}
+
+                    <a href="{{ path('photos_index') }}">back to list</a>
+
+                    {{ include('admin/photos/_delete_form.html.twig') }}
+                </div>
+            </div>
+            <!--end::Card-->
+        </div>
+        <!--end::Container-->
+    </div>
+{% endblock %}

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>        
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        {% block meta %}
+            <title>Tunisie annonce immobilier Vente Location Immobilier Tunisie</title>
+            <meta name="description" content="tunisie annonce immobilier sur limmobilier.tn achat, vente et location de biens immobiliers en Tunisie. Trouvez votre maison, appartement ou terrain" />
+        {% endblock %}
+
+        {% block open_graph %}
+            <meta property="og:url"                content="https://limmobilier.tn/" />
+            <meta property="og:type"               content="article" />
+            <meta property="og:title"              content="Tunisie annonce immobilier annonces immobilières en Tunisie" />
+            <meta property="og:description"        content="Immobilier Tunisie annonce immobilière gratuite Tunisie Achat vente maisons location appartements en Tunisie, locations vacances, vente de terrain" />
+            <meta property="og:image"              content="{{ asset('asset/images/affiche.png') }}" />
+        {% endblock %}
+        <link rel="icon" href="{{ asset('asset/images/favicon.png') }}" type="image/x-icon">
+        <!-- Mobile specific meta -->
+        <meta name="viewport" content="width=device-width">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="format-detection" content="telephone-no">
+        {% block jquery %}
+            <script src="{{ asset('asset/js/jquery.min.js') }}"></script>
+        {% endblock %}
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-C9CZ21NDMW"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'G-C9CZ21NDMW');
+        </script>
+        <script type="text/javascript">
+            var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+            (function () {
+                var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src = 'https://embed.tawk.to/67a20cd2825083258e0fe65d/1ij8g46af';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s0.parentNode.insertBefore(s1, s0);
+            })();
+        </script>
+        <!--End of Tawk.to Script-->
+        <script type="application/ld+json">
+            {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Limmobilier.tn",
+            "alternateName": "Limmobilier.tn",
+            "url": "https://limmobilier.tn/",
+            "logo": "https://limmobilier.tn/asset/images/logo.png",
+            "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "",
+            "contactType": "customer service",
+            "contactOption": "TollFree",
+            "areaServed": "TN",
+            "availableLanguage": ["fr","Arabic"]
+            },
+            "sameAs": [
+            "https://www.facebook.com/limmobilier.tn",
+            "https://www.linkedin.com/company/limmobilier-tn"
+            ]
+            }
+        </script>
+    </head>
+    <body>
+        <!-- .page-loader -->
+        {% block header %}
+            <header id="pbr-masthead" class="site-header" role="banner">
+                <div class="container">
+                    <div class="header-main">
+                        <div class="logo-wrapper">
+                            <a href="{{ path('homepage') }}" class="logo pbr-logo">
+                                <img src="{{ asset('asset/images/logo.png') }}" alt="Limmobilier.tn">
+                            </a>
+                        </div>
+                        <div class="nav-actions-container">
+                            <nav id="pbr-mainmenu" class="pbr-mainmenu">
+                                <ul id="primary-menu" class="nav">
+                                    <li class="{% if app.request.get('_route') == 'homepage' %} active {% endif %} level-0">
+                                        <a href="{{ path('homepage') }}">{{ 'Accueil'|trans }}</a>
+                                    </li>
+                                    <li class="{% if(offre is defined and offre == 'location') %} active {% endif %} dropdown level-0">
+                                        <a href="{{ path('annonce_liste', {'offre': 'location', 'page': '1'}) }}" class="dropdown-toggle" data-hover="dropdown">{{ 'Location'|trans }} <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            {% set types_location = ['appartement', 'villa', 'vacances', 'commerce', 'bureau', 'industrie', 'depot', 'autre'] %}
+                                            {% for type in types_location %}
+                                                <li class="level-1">
+                                                    <a href="{{ path('annonce_liste_type', {'offre': 'location', 'type': type, 'page': '1'}) }}">{{ type|capitalize|trans }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                    <li class="{% if(offre is defined and offre == 'vente') %} active {% endif %} dropdown level-0">
+                                        <a href="{{ path('annonce_liste', {'offre': 'vente', 'page': '1'}) }}" class="dropdown-toggle" data-hover="dropdown">{{ 'Vente'|trans }} <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            {% set types_vente = ['appartement', 'villa', 'projet-neuf', 'commerce', 'terrain', 'bureau', 'industrie', 'depot', 'autre'] %}
+                                            {% for type in types_vente %}
+                                                <li class="level-1">
+                                                    <a href="{{ path('annonce_liste_type', {'offre': 'vente', 'type': type, 'page': '1'}) }}">{{ type|replace({'projet-neuf':'Projet neuf','depot':'Dépôt'})|capitalize|trans }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                    <li class="{% if app.request.get('_route') == 'blog' %} active {% endif %} level-0">
+                                        <a href="{{ path('blog', {'page': 1}) }}">{{ 'Blog'|trans }}</a>
+                                    </li>
+                                    <li class="{% if app.request.get('_route') == 'contact' %} active {% endif %} level-0">
+                                        <a href="{{ path('contact') }}">{{ 'Contact'|trans }}</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <div class="user-actions">
+                                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <div class="info-topbar">
+                                        <a href="{{ path('app_login') }}"> {{ 'Connexion'|trans }}</a>
+                                        <a href="{{ path('app_register') }}"> {{ 'Inscription'|trans }}</a>
+                                    </div>
+                                {% endif %}
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <div class="header__logo-name-menu">
+                                        <div class="header__logo-name">
+                                            {% if app.user.logo %}
+                                                <img itemprop="logo" src="https://limmobilier.tn/uploads/logos/bc5ebf731a7cdf0c2413bb34333c613a.png" alt="{{ app.user.logo }}" class="header__logo" style="width: 30px; margin: 10px;">
+                                            {% else %}
+                                                <img itemprop="logo" src="{{ asset('uploads/logos/avatar.png') }}" alt="Avatar" style="width: 30px; margin: 10px;">
+                                            {% endif %}
+                                            <span class="header__name">{{ app.user.nom }}</span>
+                                        </div>
+                                        <div class="user__menu-dropdown">
+                                            <a href="{{ path('mes_annonces') }}">Annonces</a>
+                                            <a href="{{ path('mes_messages') }}">Messages</a>
+                                            <a href="{{ path('my_profile') }}">Profil</a>
+                                            <a href="{{ path('app_logout') }}">Déconnexion</a>
+                                        </div>
+                                    </div>        
+                                {% endif %}
+                                <a href="{{ path('ajouter_annonce') }}" class="btn-add-ads">Publier une annonce</a>
+                            </div>
+                        </div>
+                        <button class="mobile-menu-toggle" aria-expanded="false" aria-controls="primary-menu">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+        {% endblock %}
+
+        {% block body %}
+
+        {% endblock %}
+        {{ render(controller('App\\Controller\\NewsletterController::buildNewsletterForm')) }}
+        <div class="footer-wrapper">
+            <footer class="footer">
+                <div class="footer__links">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 footer__links-single">
+                                <h3 class="footer__title">{{'Louer' |trans}}</h3>
+                                <ul class="footer__list">
+                                    <li><a href="{{ path('annonce_liste', {'offre': 'location', 'page': 1}) }}">{{'Immobilier à louer' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_type', {'offre': 'location', 'type' : 'appartement', 'page': '1' }) }}">{{'Location appartement' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_type', {'offre': 'location', 'type' : 'villa', 'page': '1' }) }}">{{'Location maison' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_type', {'offre': 'location', 'type' : 'vacances', 'page': '1' }) }}">{{'Location Vacances' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_type', {'offre': 'location', 'type' : 'commerce', 'page': '1' }) }}">{{'Commerce à louer' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_type', {'offre': 'location', 'type' : 'bureau', 'page': '1' }) }}">{{'Bureau à louer' |trans}}</a></li>
+                                </ul><!-- .footer__list -->
+                            </div><!-- .col -->
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 footer__links-single">
+                                <h3 class="footer__title">{{'Vente' |trans}}</h3>
+                                <ul class="footer__list">
+                                    <li><a href="{{ path('annonce_liste', {'offre': 'vente', 'page': 1}) }}">{{'Immobilier à vendre' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_type', {'offre': 'vente', 'type' : 'appartement', 'page': '1' }) }}">{{'Appartement à vendre' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_type', {'offre': 'vente', 'type' : 'villa', 'page': '1'}) }}">{{'Maison à vendre' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_type', {'offre': 'vente', 'type' : 'commerce', 'page': '1' }) }}">{{'Commerce à vendre' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_type', {'offre': 'vente', 'type' : 'terrain', 'page': '1' }) }}">{{'Terrain à vendre' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_type', {'offre': 'vente', 'type' : 'bureau', 'page': '1' }) }}">{{'Bureau à vendre' |trans}}</a></li>
+                                </ul><!-- .footer__list -->
+                            </div><!-- .col -->
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 footer__links-single">
+                                <h3 class="footer__title">{{'Top recherches' |trans}}</h3>
+                                <ul class="footer__list">
+                                    <li><a href="{{ path('annonce_liste_delegation', {'slug': 'tunis' }) }}">{{'Tunis' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_delegation', {'slug': 'hammamet' }) }}">{{'Hammamet' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_delegation', {'slug': 'kelibia' }) }}">{{'Kelibia' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_delegation', {'slug': 'houmet-essouk' }) }}">{{'Houmet Essouk' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_delegation', {'slug': 'korba' }) }}">{{'Korba' |trans}}</a></li>
+                                    <li><a href="{{ path('annonce_liste_delegation', {'slug': 'ariana-ville' }) }}">{{'Ariana Ville' |trans}}</a></li>
+                                </ul><!-- .footer__list -->
+                            </div><!-- .col -->
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 footer__links-single">
+                                <h3 class="footer__title">{{'Qui sommes nous ?' |trans}}</h3>
+                                <ul class="footer__list">
+                                    <li><a href="{{ path('contact') }}">{{'Contact' |trans}}</a></li>
+                                    <li><a href="{{ path('FAQ') }}">{{'Qui sommes nous ?' |trans}}</a></li>
+                                    <li><a href="{{ path('mentions_legales') }}">{{'Mentions legales' |trans}}</a></li>
+                                    <li><a href="{{ path('confidentialites') }}">{{'Politique de confidentialités' |trans}}</a></li>
+                                </ul><!-- .footer__list -->
+                            </div><!-- .col -->
+                        </div><!-- .row -->
+                    </div><!-- .container -->
+                </div><!-- .footer__links -->
+
+                <div class="footer__main">
+                    <div class="container">
+                        <div class="footer__logo">
+                            <img src="{{ asset('asset/images/logo-dark.png') }}" alt="limmobilier.tn">
+                            <ul class="footer__social">
+                                <li><a aria-label="facebook" href="https://www.facebook.com/limmobilier.tn" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a aria-label="linkedin" href="https://www.linkedin.com/company/limmobilier-tn" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div><!-- .footer__logo -->
+                        {% block text_footer %}
+                            <p class="footer__desc">Rejoignez l'immobilier.tn pour trouver votre prochaine location, vente d'appartements, de maisons ou de terrains {% if(annonce is defined) %} à {{ annonce.delegation| capitalize }} {{ annonce.ville| capitalize }} {% endif %} {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %}{% if(ville is defined) %} à {{ ville | capitalize }} {% endif %} en Tunisie. Nous sommes la plateforme immobilière en ligne la plus complète de {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %} Tunisie, offrant des milliers d'annonces actualisées régulièrement pour répondre à tous vos besoins immobiliers. Grâce à notre système de recherche avancé, trouver la propriété parfaite est facile et rapide. Inscrivez-vous dès maintenant pour découvrir les meilleures offres d'immobilier en Tunisie {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}.</p>
+                            <p class="footer__desc">Ne cherchez plus, l'immobilier.tn est la plateforme qu'il vous faut pour trouver votre prochaine maison {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %} en Tunisie. Que vous cherchiez une location, une vente d'appartements, de maisons ou de terrains, nous avons tout ce qu'il vous faut. Avec une interface conviviale et des fonctionnalités de recherche avancées, trouver votre chez-vous n'a jamais été aussi facile. Inscrivez-vous dès maintenant pour accéder à des milliers d'annonces immobilières actualisées quotidiennement, et trouvez la propriété idéale pour vous et votre famille.</p>
+                            <p class="footer__desc">L'immobilier.tn est votre solution pour trouver la maison de vos rêves en Tunisie {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}. Nous vous offrons un accès à des milliers d'annonces immobilières actualisées quotidiennement, pour répondre à tous vos besoins de location, de vente d'appartements, de maisons et de terrains. Notre système de recherche avancé vous permet de trouver la propriété idéale en fonction de vos critères personnalisés. Inscrivez-vous dès maintenant pour profiter de l'expérience d'achat immobilier la plus simple et la plus efficace en Tunisie {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}.</p>   
+                            <p class="footer__desc">
+                                Pour publier une annonce sur l'immobilier.tn, vous pouvez suivre ces étapes:<br>
+
+                                1. Inscrivez-vous sur le site web de l'immobilier.tn<br>
+                                2. Cliquez sur le bouton "Publier une annonce"<br>
+                                3. Remplissez les informations requises sur la propriété, telles que le type, l'emplacement, les caractéristiques, les photos, etc.<br>
+                                4. Validez votre annonce en vérifiant les informations et en soumettant la demande.<br><br>
+                                L'équipe de l'immobilier.tn examinera votre annonce pour s'assurer qu'elle répond à leurs politiques et la publiera sur la plateforme. Assurez-vous de fournir des informations complètes et précises pour maximiser la visibilité de votre annonce et attirer l'attention des acheteurs potentiels.</p>
+                            <p>Tunisie annonce immobilier {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}, Tunisie annonces {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}, Vente appartement {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}, {% if(offre is defined) %}{{offre}}{%else%} vente ou en location {% endif %} maison {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}, {% if(offre is defined) %}{{offre}}{%else%} vente ou en location {% endif %} terrain {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}, {% if(offre is defined) %}{{offre}}{%else%} vente ou en location {% endif %} immobilier {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}, {% if(offre is defined) %}{{offre}}{%else%} vente ou en location {% endif %} appartement {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}, {% if(offre is defined) %}{{offre}}{%else%} vente ou en location {% endif %} maison {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}, {% if(offre is defined) %}{{offre}}{%else%} vente ou en location {% endif %} {% if(type is defined) %} {{type}} {%else%}appartement, maison, terrain, bureau ou vacances{% endif %} {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}, {% if(offre is defined) %}{{offre}}{%else%} vente ou en location {% endif %} {% if(type is defined) %} {{type}} {%else%}appartement, maison, terrain, bureau ou vacances{% endif %} {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}, Maison de vacances avec piscine {% if(delegation is defined) %} à {{ delegation | capitalize }} {% endif %} {% if(ville is defined) %} à {{ ville | capitalize }} {% endif %}</p>
+                        {% endblock %}
+                        <!-- .footer__social -->
+                    </div><!-- .container -->
+                </div><!-- .footer__main -->
+
+                <div class="footer__copyright">
+                    <div class="container">
+                        <div class="footer__copyright-inner">
+                            <p class="footer__copyright-desc">
+                                &copy; 2018 - {{ "now"|date("Y") }} <span class="footer--highlighted">limmobilier.tn</span> All Right Reserved.
+                                Powered by <a target="_blank" href="https://newexus.com/">newexus</a>
+                            </p>
+                        </div><!-- .footer__copyright-inner -->
+                    </div><!-- .container -->
+                </div><!-- .footer__copyright -->
+            </footer><!-- .footer -->
+        </div>          
+        <a href="#" class="back-to-top"><span class="ion-ios-arrow-up"></span></a>
+            {% block stylesheet %}
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+            <link rel="stylesheet" href="{{ asset('asset/css/homepage.css') }}" /> 
+        {% endblock %} 
+        <!-- CSS files -->
+        <!-- JS Files -->
+        {% block javascripts %}
+            <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+            <script src="{{ asset('asset/js/dropkick.js') }}"></script>
+            <script src="{{ asset('asset/js/select2.min.js') }}"></script>
+            <script src="{{ asset('asset/js/script.js') }}"></script>
+            <script src="{{ asset('asset/js/functions.js') }}"></script>
+            <script>
+            $('.select2-selection__rendered').select2({
+                placeholder: 'Select an option'
+            });
+            </script>
+        {% endblock %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const menuToggle = document.querySelector('.mobile-menu-toggle');
+                const mainMenu = document.querySelector('#pbr-mainmenu');
+                const userActions = document.querySelector('.user-actions');
+
+                if (menuToggle && mainMenu) {
+                    // We will manage the overflow property here in the JS
+                    // Make sure the menu starts as hidden
+                    mainMenu.style.overflow = 'hidden';
+
+                    menuToggle.addEventListener('click', function () {
+                        // Check if the menu is currently open or opening
+                        if (mainMenu.classList.contains('is-open')) {
+                            // IT'S OPEN, SO CLOSE IT
+                            // 1. Immediately hide overflow to prevent content from spilling out during animation
+                            // 2. Remove the class to trigger the CSS max-height transition
+                            mainMenu.classList.remove('is-open');
+                            userActions.classList.remove('is-open');
+                        } else {
+                            // IT'S CLOSED, SO OPEN IT
+                            // 1. Add the class to trigger the CSS max-height transition
+                            mainMenu.classList.add('is-open');
+                            userActions.classList.add('is-open');
+                            // 2. Wait for the CSS animation to finish, THEN make overflow visible
+                        }
+
+                        // Update aria-expanded for accessibility
+                        const isOpen = mainMenu.classList.contains('is-open');
+                        this.setAttribute('aria-expanded', isOpen);
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

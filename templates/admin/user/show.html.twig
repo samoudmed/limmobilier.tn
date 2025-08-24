@@ -1,0 +1,170 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b">
+                    <div class="card-header flex-wrap py-3">
+                        <div class="card-title">
+                            <h3 class="card-label">Utilisateurs</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div id="kt_datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th>Logo</th>
+                                                <td>
+                                                    {% if user.logo %}
+                                                        <img src="{{ asset('uploads/logos/'~user.logo) }}" alt="photo" style="width:200px">
+                                                    {% else %}
+                                                        <img src="{{ asset('uploads/logos/man-300x300.png') }}" alt="photo" style="width:200px">
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Id</th>
+                                                <td>{{ user.id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nom</th>
+                                                <td>{{ user.nom }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Prenom</th>
+                                                <td>{{ user.prenom }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Telephone</th>
+                                                <td>{{ user.telephone }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Type</th>
+                                                <td>{%  if user.type == 1  %} Particulier {% elseif user.type == 2 %} Professionnel {% endif %}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Agence</th>
+                                                <td>{{ user.agence }}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Ip</th>
+                                                <td>{{ user.ip }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td>{{ user.email }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>IsActive</th>
+                                                <td>{{ user.isActive ? 'Oui' : 'Non' }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Titre</th>
+                                                <th>Utilisateur</th>
+                                                <th>Offre</th>
+                                                <th>Prix</th>
+                                                <th>Ville</th>
+                                                <th>Surface m<sup>2</sup></th>
+                                                <th>Affichage</th>
+                                                <th>Statut</th>
+                                                <th>Publié</th>
+                                                <th>Refus</th>
+                                                <th>Supprimé</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for annonce in user.annonces %}
+                                                <tr>
+                                                    <td>{{ annonce.id }}</td>
+                                                    <td>{{ annonce.label }}</td>
+                                                    <td><a href="{{ path('app_user_show', {'id': annonce.user.id}) }}">{{ annonce.user }}</a></td>
+                                                    <td>{{ annonce.offre }}</td>
+                                                    <td>{{ annonce.prix }}</td>
+                                                    <td>{{ annonce.ville }}</td>
+                                                    <td>{{ annonce.surface }}</td>
+                                                    <td>{{ annonce.view }} / {{ annonce.realView }}</td>
+                                                    <td>
+                                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                                            <input data-switch="true" data-entity="annonces" type="checkbox" {% if annonce.statut  %} checked="checked" {% endif %} data-id="{{ annonce.id }}" id="switcher{{ annonce.id }}" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {%  if annonce.published == 1  %}
+                                                            <span  class="label label-lg font-weight-bold label-light-success label-inline">Oui</span>
+                                                        {% else %}
+                                                            <span class="label label-lg font-weight-bold label-light-danger label-inline">Non</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <select name="motifRefus" id="motifRefus" class="select2-multiple2" multiple="multiple">
+                                                            <option>Refus</option>
+                                                            <option value="1">Photos non réelles</option>
+                                                            <option value="2">Annonce déjà publiée</option>
+                                                            <option value="3">Annonce non immobilière</option>
+                                                            <option value="4">Titre non conforme</option>
+                                                            <option value="5">Description non conforme</option>
+                                                            <option value="6">Prix non conforme</option>
+                                                            <option value="7">Autre motif de refus</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        {%  if annonce.deleted == 0  %}
+                                                            <span  class="label label-lg font-weight-bold label-light-success label-inline">Non</span>
+                                                        {% else %}
+                                                            <span class="label label-lg font-weight-bold label-light-danger label-inline">Oui</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ path('app_annonces_show', {'id': annonce.id}) }}"><i class="la la-eye"></i></a>
+                                                        <a href="{{ path('app_annonces_edit', {'id': annonce.id}) }}"><i class="la la-edit"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="43">no records found</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>        
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <a href="{{ path('app_user_index') }}"><i class="la la-undo"></i> Retour</a>
+
+                                            <a href="{{ path('app_user_edit', {'id': user.id}) }}"><i class="la la-edit"></i> Modifier</a>
+                                        </div>   
+                                        <div class="col-lg-2 right">
+                                            {{ include('admin/user/_delete_form.html.twig') }}
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end: Datatable-->
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Entry-->
+    </div>
+{% endblock %}

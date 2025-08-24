@@ -1,0 +1,77 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Reponses{% endblock %}
+
+{% block body %}
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b">
+                    <div class="card-header flex-wrap py-3">
+                        <div class="card-title">
+                            <h3 class="card-label">Favorite</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div id="kt_datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h1>Reponses</h1>
+
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th>Id</th>
+                                                <td>{{ reponse.id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Message</th>
+                                                <td>{{ reponse.message }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Statut</th>
+                                                <td>{{ reponse.statut }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Is_deleted</th>
+                                                <td>{{ reponse.isDeleted }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Created_at</th>
+                                                <td>{{ reponse.createdAt ? reponse.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Updated_at</th>
+                                                <td>{{ reponse.updatedAt ? reponse.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <a href="{{ path('reponses_index') }}">back to list</a>
+
+                                            <a href="{{ path('reponses_edit', {'id': reponse.id}) }}"><i class="la la-edit"></i></a>
+                                        </div>   
+                                        <div class="col-lg-2 right">
+                                            {{ include('admin/reponses/_delete_form.html.twig') }}
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end: Datatable-->
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Entry-->
+    </div>
+{% endblock %}

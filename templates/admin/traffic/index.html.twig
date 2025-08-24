@@ -1,0 +1,192 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Traffic index{% endblock %}
+
+{% block body %}
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b">
+                    <div class="card-header flex-wrap py-3">
+                        <div class="card-title">
+                            <h3 class="card-label">Listes des traffic</h3>
+                        </div>
+                        <div class="card-toolbar">
+                            <!--begin::Dropdown-->
+                            <!--end::Dropdown-->
+                            <!--begin::Button-->
+                            <a href="{{ path('app_traffic_new') }}" class="btn btn-primary font-weight-bolder">
+                                <span class="svg-icon svg-icon-md">
+                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                            <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                        </g>
+                                    </svg>
+                                    <!--end::Svg Icon-->
+                                </span>
+                                Ajouter
+                            </a>
+                            <!--end::Button-->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div id="kt_datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Argv</th>
+                                                <th>Argc</th>
+                                                <th>GatewayInterface</th>
+                                                <th>ServerAddr</th>
+                                                <th>ServerName</th>
+                                                <th>ServerSoftware</th>
+                                                <th>ServerProtocol</th>
+                                                <th>RequestMethod</th>
+                                                <th>RequestTime</th>
+                                                <th>RequestTime_float</th>
+                                                <th>QueryString</th>
+                                                <th>DocumentRoot</th>
+                                                <th>HttpAccept</th>
+                                                <th>HttpAcceptCharset</th>
+                                                <th>HttpAcceptEncoding</th>
+                                                <th>HttpAcceptLanguage</th>
+                                                <th>HttpConnection</th>
+                                                <th>HttpHost</th>
+                                                <th>HttpReferer</th>
+                                                <th>HttpUserAgent</th>
+                                                <th>Https</th>
+                                                <th>RemoteAddr</th>
+                                                <th>HostName</th>
+                                                <th>RemoteHost</th>
+                                                <th>RemotePort</th>
+                                                <th>RemoteUser</th>
+                                                <th>RedirectRemoteUser</th>
+                                                <th>ScriptFilename</th>
+                                                <th>ServerAdmin</th>
+                                                <th>ServerPort</th>
+                                                <th>ServerSignature</th>
+                                                <th>PathTranslated</th>
+                                                <th>ScriptName</th>
+                                                <th>RequestUri</th>
+                                                <th>PhpAuthDigest</th>
+                                                <th>PhpAuthUser</th>
+                                                <th>PhpAuthPw</th>
+                                                <th>AuthType</th>
+                                                <th>PathInfo</th>
+                                                <th>OrigPathInfo</th>
+                                                <th>ConnectedAt</th>
+                                                <th>actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for traffic in traffic %}
+                                                <tr>
+                                                    <td>{{ traffic.id }}</td>
+                                                    <td>{{ traffic.argv }}</td>
+                                                    <td>{{ traffic.argc }}</td>
+                                                    <td>{{ traffic.gatewayInterface }}</td>
+                                                    <td>{{ traffic.serverAddr }}</td>
+                                                    <td>{{ traffic.serverName }}</td>
+                                                    <td>{{ traffic.serverSoftware }}</td>
+                                                    <td>{{ traffic.serverProtocol }}</td>
+                                                    <td>{{ traffic.requestMethod }}</td>
+                                                    <td>{{ traffic.requestTime }}</td>
+                                                    <td>{{ traffic.requestTimeFloat }}</td>
+                                                    <td>{{ traffic.queryString }}</td>
+                                                    <td>{{ traffic.documentRoot }}</td>
+                                                    <td>{{ traffic.httpAccept }}</td>
+                                                    <td>{{ traffic.httpAcceptCharset }}</td>
+                                                    <td>{{ traffic.httpAcceptEncoding }}</td>
+                                                    <td>{{ traffic.httpAcceptLanguage }}</td>
+                                                    <td>{{ traffic.httpConnection }}</td>
+                                                    <td>{{ traffic.httpHost }}</td>
+                                                    <td>{{ traffic.httpReferer }}</td>
+                                                    <td>{{ traffic.httpUserAgent }}</td>
+                                                    <td>{{ traffic.https }}</td>
+                                                    <td>{{ traffic.remoteAddr }}</td>
+                                                    <td>{{ traffic.hostName }}</td>
+                                                    <td>{{ traffic.remoteHost }}</td>
+                                                    <td>{{ traffic.remotePort }}</td>
+                                                    <td>{{ traffic.remoteUser }}</td>
+                                                    <td>{{ traffic.redirectRemoteUser }}</td>
+                                                    <td>{{ traffic.scriptFilename }}</td>
+                                                    <td>{{ traffic.serverAdmin }}</td>
+                                                    <td>{{ traffic.serverPort }}</td>
+                                                    <td>{{ traffic.serverSignature }}</td>
+                                                    <td>{{ traffic.pathTranslated }}</td>
+                                                    <td>{{ traffic.scriptName }}</td>
+                                                    <td>{{ traffic.requestUri }}</td>
+                                                    <td>{{ traffic.phpAuthDigest }}</td>
+                                                    <td>{{ traffic.phpAuthUser }}</td>
+                                                    <td>{{ traffic.phpAuthPw }}</td>
+                                                    <td>{{ traffic.authType }}</td>
+                                                    <td>{{ traffic.pathInfo }}</td>
+                                                    <td>{{ traffic.origPathInfo }}</td>
+                                                    <td>{{ traffic.connectedAt ? traffic.connectedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                                    <td>
+                                                        <a href="{{ path('traffic_show', {'id': traffic.id}) }}"><i class="la la-eye"></i></a>
+                                                        <a href="{{ path('traffic_edit', {'id': traffic.id}) }}"><i class="la la-edit"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="43">no records found</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="kt_datatable_info" role="status" aria-live="polite">Showing 1 to 10 of 50 entries</div>
+                                </div>
+                                <div class="col-sm-12 col-md-7 dataTables_pager">
+                                    <div class="dataTables_length" id="kt_datatable_length">
+                                        <label>
+                                            Display 
+                                            <select name="kt_datatable_length" aria-controls="kt_datatable" class="custom-select custom-select-sm form-control form-control-sm">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="dataTables_paginate paging_simple_numbers" id="kt_datatable_paginate">
+                                        <ul class="pagination">
+                                            <li class="paginate_button page-item previous disabled" id="kt_datatable_previous"><a href="#" aria-controls="kt_datatable" data-dt-idx="0" tabindex="0" class="page-link"><i class="ki ki-arrow-back"></i></a></li>
+                                            <li class="paginate_button page-item active"><a href="#" aria-controls="kt_datatable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="kt_datatable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="kt_datatable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="kt_datatable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="kt_datatable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
+                                            <li class="paginate_button page-item next" id="kt_datatable_next"><a href="#" aria-controls="kt_datatable" data-dt-idx="6" tabindex="0" class="page-link"><i class="ki ki-arrow-next"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end: Datatable-->
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Entry-->
+    </div>
+{% endblock %}

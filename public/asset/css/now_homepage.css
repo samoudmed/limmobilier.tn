@@ -1,0 +1,4065 @@
+/* ================================
+   - BASE, TYPOGRAPHY & GLOBAL ELEMENTS
+================================ */
+@charset "UTF-8";
+/* ================================
+   - ICONS & FONTS
+================================ */   
+/* ================================
+   - LAYOUT & STRUCTURE
+================================ */
+/* ================================
+   - LISTS & MENU
+================================ */
+/* ================================
+   - BUTTONS & FORMS
+================================ */
+/* ================================
+   - NAVIGATION & DROPDOWNS
+================================ */
+/* ================================
+   - LINK & HOVER EFFECTS
+================================ */
+/* ================================
+   - TOPBAR & FOOTER
+================================ */
+/* ================================
+   - LISTING & WIDGETS
+================================ */
+/* ================================
+   - OVERFLOW CONTROL
+================================ */
+/* ================================
+   - PLACEHOLDER & VIEWPORT
+================================ */
+/* ================================
+   - HEAD SECTION
+================================ */
+
+
+/* ================================
+   BASE, TYPOGRAPHY & GLOBAL ELEMENTS
+================================ */
+
+
+/* ================================
+   Global Element Styling
+================================ */
+a,
+button,
+select {
+    outline: 0 !important;
+}
+
+body,
+html {
+    overflow-x: hidden;
+}
+
+canvas,
+sup {
+    vertical-align: baseline;
+}
+
+.footer__desc,
+img,
+label,
+select {
+    max-width: 100%;
+}
+
+*,
+:after,
+:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+a,
+body,
+code,
+dd,
+div,
+dt,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+html,
+label,
+li,
+p,
+q,
+s,
+span,
+sup,
+ul,
+var {
+    border: 0;
+    font-family: inherit;
+    font-size: 100%;
+    font-style: inherit;
+    font-weight: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+body,
+#pbr-topbar {
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #666;
+}
+
+btn {
+    font-family: Raleway, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.label,
+b,
+dt {
+    font-weight: 700;
+}
+
+/* ================================
+   Page & Layout Containers
+================================ */
+#page,
+#pbr-mainmenu {
+    background: transparent;
+}
+
+#list-property-style2,
+#page,
+#pbr-mainmenu,
+#pbr-masthead,
+._1977,
+.contact-info p,
+.container,
+.dk-selected,
+.dropdown,
+.fa-ul>li,
+.input-group,
+.input-group-btn,
+.input-group-btn>.btn,
+.navbar-mega .navbar-nav ul li.parent,
+.zoom-2,
+.zoom-3,
+article,
+article header,
+sup {
+    position: relative;
+}
+
+article,
+details,
+footer,
+header,
+main,
+nav,
+section {
+    display: block;
+}
+
+article.page {
+    margin-bottom: 0 !important;
+}
+
+article.post {
+    margin-bottom: 50px;
+    background-color: #fff;
+}
+
+article .post-format a {
+    display: block;
+    height: 40px;
+    width: 40px;
+    line-height: 39px;
+    background: #3c3;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+/* ================================
+   Lists & Menu Items
+================================ */
+ul,
+ul.menu li,
+ul.property-status li {
+    list-style: none;
+}
+
+a.list-group-item,
+button.list-group-item {
+    color: #555;
+}
+
+a.list-group-item:focus,
+a.list-group-item:hover,
+button.list-group-item:focus,
+button.list-group-item:hover {
+    background-color: #f5f5f5;
+    text-decoration: none;
+}
+
+.text-info,
+a.list-group-item-info,
+button.list-group-item-info {
+    color: #31708f;
+}
+
+a.list-group-item-info.active,
+button.list-group-item-info.active {
+    color: #fff;
+    background-color: #31708f;
+    border-color: #31708f;
+}
+
+a.list-group-item-info:hover,
+button.list-group-item-info:hover {
+    background-color: #3fa5ec;
+}
+
+.text-success,
+a.list-group-item-success,
+button.list-group-item-success {
+    color: #8ac842;
+}
+
+a.list-group-item-success.active,
+button.list-group-item-success.active {
+    color: #fff;
+    background-color: #8ac842;
+    border-color: #8ac842;
+}
+
+a.list-group-item-success:hover,
+button.list-group-item-success:hover {
+    background-color: #18a689;
+}
+
+/* ================================
+   Overflow Control
+================================ */
+.ui-icon,
+.zoom-2,
+.zoom-3 {
+    overflow: hidden;
+}
+
+/* ================================
+   Placeholder Styling
+================================ */
+:-moz-placeholder {
+    color: rgba(51, 51, 51, 0.7);
+    font-family: "Noto Sans", sans-serif;
+}
+
+:-ms-input-placeholder {
+    color: rgba(51, 51, 51, 0.7);
+    font-family: "Noto Sans", sans-serif;
+}
+
+::-webkit-input-placeholder {
+    color: rgba(51, 51, 51, 0.7);
+    font-family: "Noto Sans", sans-serif;
+}
+
+/* ================================
+   Viewport Settings
+================================ */
+@-ms-viewport {
+    width: device-width;
+}
+
+/* ================================
+   Fonts
+================================ */
+
+@font-face {
+    font-family: FontAwesome;
+    src: url("../fonts/fontawesome-webfont93e3.eot?v=4.4.0");
+    src: url("../fonts/fontawesome-webfontd41d.eot?#iefix&v=4.4.0") format("embedded-opentype"),
+        url("../fonts/fontawesome-webfont93e3.woff2?v=4.4.0") format("woff2"),
+        url("../fonts/fontawesome-webfont93e3.woff?v=4.4.0") format("woff"),
+        url("../fonts/fontawesome-webfont93e3.ttf?v=4.4.0") format("truetype"),
+        url("../fonts/fontawesome-webfont93e3.svg?v=4.4.0#fontawesomeregular") format("svg");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Ionicons;
+    src: url("../fonts/ionicons28b5.eot?v=2.0.0");
+    src: url("../fonts/ionicons28b5.eot?v=2.0.0#iefix") format("embedded-opentype"),
+        url("../fonts/ionicons28b5.ttf?v=2.0.0") format("truetype"),
+        url("../fonts/ionicons28b5.woff?v=2.0.0") format("woff"),
+        url("../fonts/ionicons28b5.svg?v=2.0.0#Ionicons") format("svg");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Pe-icon-7-stroke;
+    src: url("../fonts/Pe-icon-7-strokebb1d.eot?d7yf1v");
+    src: url("../fonts/Pe-icon-7-stroked41d.eot?#iefixd7yf1v") format("embedded-opentype"),
+        url("../fonts/Pe-icon-7-strokebb1d.woff?d7yf1v") format("woff"),
+        url("../fonts/Pe-icon-7-strokebb1d.ttf?d7yf1v") format("truetype"),
+        url("../fonts/Pe-icon-7-strokebb1d.svg?d7yf1v#Pe-icon-7-stroke") format("svg");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: datedropper;
+    src: url("../fonts/datedropper.eot");
+    src: url("../fonts/datedropperd41d.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/datedropper.woff") format("woff"),
+        url("../fonts/datedropper.ttf") format("truetype"),
+        url("../fonts/datedropper.svg#datedropper") format("svg");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: revicons;
+    src: url("../fonts/revicons/revicons90c6.eot?5510888");
+    src: url("../fonts/revicons/revicons90c6.eot?5510888#iefix") format("embedded-opentype"),
+        url("../fonts/revicons/revicons90c6.woff?5510888") format("woff"),
+        url("../fonts/revicons/revicons90c6.ttf?5510888") format("truetype"),
+        url("../fonts/revicons/revicons90c6.svg?5510888#revicons") format("svg");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ================================
+   Head Section
+================================ */
+#pbr-masthead.header-default,
+#pbr-masthead.header-location .pbr-header-top {
+    background-color: #fff;
+}
+
+#pbr-masthead.header-default .user-login .list-inline li a img {
+    display: none;
+}
+
+/* ================================
+   Topbar & Footer
+================================ */
+#pbr-topbar .widget .widget-title,
+.pbr-footer .widget.widget_nav_menu ul.menu,
+.widget_copyright_widget {
+    margin-bottom: 0 !important;
+}
+
+.pbr-copyright .input-group {
+    border: 0;
+}
+
+/* ================================
+   Navigation & Dropdowns
+================================ */
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child,
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child a {
+    border: 0;
+}
+
+.navbar-offcanvas ul#main-menu-offcanvas>li .caret:hover,
+[role="button"] {
+    cursor: pointer;
+}
+
+/* ================================
+   Buttons & Inputs
+================================ */
+[type="button"],
+[type="submit"],
+[type="text"],
+[type="email"],
+[type="password"],
+[type="search"],
+[type="date"],
+[type="time"],
+[type="url"],
+[type="number"],
+[type="tel"],
+[type="color"],
+[type="week"],
+[type="month"],
+[type="datetime-local"],
+[type="datetime"],
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button.list-group-item {
+    width: 100%;
+    text-align: left;
+}
+
+.input-group-btn,
+.label,
+btn {
+    white-space: nowrap;
+}
+
+/* ================================
+   Form Styling
+================================ */
+[data-toggle="buttons"]>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn input[type="radio"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+select[data-dkcacheid],
+input[type="file"] {
+    display: none;
+}
+
+/* ================================
+   Listing & Widgets
+================================ */
+.dk-select-options .dk-option-hidden {
+    display: none;
+}
+
+#pbr-topbar .widget,
+.navbar-mega .navbar-nav .container-mega .row .widget:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* ================================
+   Link & Hover Effects
+================================ */
+a {
+    background-color: transparent;
+    color: #333;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    color: #1fc341;
+    outline: 0;
+}
+
+a.bg-info:focus,
+a.bg-info:hover {
+    background-color: #289ae9;
+}
+
+a.bg-primary:focus,
+a.bg-primary:hover {
+    background-color: #189732;
+}
+
+a.bg-success:focus,
+a.bg-success:hover {
+    background-color: #158f76;
+}
+
+a.label:focus,
+a.label:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+a.text-info:focus,
+a.text-info:hover {
+    color: #245269;
+}
+
+a.text-primary:focus,
+a.text-primary:hover {
+    color: #189732;
+}
+
+
+/* ================================
+   UI Components
+================================ */
+.ui-icon,
+btn,
+img {
+    vertical-align: middle;
+}
+
+.ui-button,
+a.ui-button {
+    color: #454545;
+    text-decoration: none;
+}
+
+.ui-button.ui-state-active:hover,
+.ui-button:active,
+.ui-state-active {
+    border: 1px solid #003eff;
+    background: #007fff;
+    color: #fff;
+}
+
+.ui-state-hover a {
+    color: #2b2b2b;
+    text-decoration: none;
+}
+
+body .ui-tooltip {
+    border-width: 2px;
+}
+
+button.ui-button::-moz-focus-inner,
+input.ui-button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* ================================
+   Miscellaneous
+================================ */
+.label:empty,
+[hidden],
+a img,
+img {
+    display: none;
+    border: 0;
+}
+
+.no-space-row .row,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+/* ================================
+   Button & Input Focus Reset
+================================ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+button[disabled],
+html input[disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][disabled] {
+    cursor: not-allowed;
+}
+
+/* ================================
+   Canvas & Code Styling
+================================ */
+canvas {
+    display: inline;
+    zoom: 1;
+}
+
+code {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 10px;
+}
+
+code,
+var {
+    font-family: Inconsolata, monospace;
+    hyphens: none;
+}
+
+/* ================================
+   Typography & Headings
+================================ */
+dd {
+    margin-bottom: 1.6em;
+    margin-left: 0;
+    line-height: 1.5;
+}
+
+dt {
+    line-height: 1.5;
+}
+
+.h1,
+h1,
+.back-to-top i {
+    font-size: 22px;
+}
+
+.h2,
+h2,
+.f16,
+.f18,
+.f30,
+.h4,
+h4 {
+    font-size: 16px;
+}
+
+.h3,
+h3,
+.f24,
+h5 {
+    font-size: 18px;
+}
+
+.h3,
+h3 {
+    font-size: 24px;
+}
+
+.h5,
+h5,
+.f14 {
+    font-size: 14px;
+}
+
+.h6,
+h6,
+#pbr-topbar {
+    font-size: 12px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Raleway, sans-serif;
+    font-weight: 700;
+    line-height: 1;
+    color: #333;
+    margin: 0 0 0 0;
+}
+
+i {
+    font-style: italic;
+}
+
+p {
+    line-height: 26px;
+    margin: 0 0 10.5px;
+}
+
+q {
+    quotes: "" "";
+}
+
+q:before,
+q:after {
+    content: "";
+}
+
+/* ================================
+   HTML & Body Defaults
+================================ */
+html {
+    font-family: sans-serif;
+    font-size: 10px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body,
+html {
+    overflow-x: hidden;
+}
+
+/* ================================
+   Image & Label Styling
+================================ */
+img {
+    -ms-interpolation-mode: bicubic;
+    height: auto;
+    max-width: 100%;
+}
+
+label {
+    margin-bottom: 10px;
+    max-width: 100%;
+}
+
+select {
+    max-width: 100%;
+    border-radius: 0 !important;
+}
+
+/* ================================
+   Form Inputs
+================================ */
+input {
+    line-height: normal;
+}
+
+input.ui-button.ui-button-icon-only {
+    text-indent: 0;
+}
+
+input::placeholder {
+    color: #666;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: 0;
+    border: 1px solid #1fc341;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    margin: 4px 0 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="url"],
+select {
+    padding: 0 15px;
+    font-size: 14px;
+    color: #878787;
+    height: 42px;
+    line-height: 1;
+    background-color: #f5f5f5;
+    border: none;
+    transition: 0.2s;
+}
+
+input[type="search"] {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+input[type="range"] {
+    display: block;
+    width: 100%;
+}
+
+input[type="button"].btn-block,
+input[type="reset"].btn-block,
+input[type="submit"].btn-block,
+.sidebar select,
+.banner-widget a img,
+.col-xs-12 {
+    width: 100%;
+}
+
+/* ================================
+   Viewport Settings
+================================ */
+@-ms-viewport {
+    width: device-width;
+}
+
+/* ================================
+   Head Section
+================================ */
+#pbr-masthead.header-default,
+#pbr-masthead.header-location .pbr-header-top {
+    background-color: #fff;
+}
+
+#pbr-masthead.header-default .user-login .list-inline li a img {
+    display: none;
+}
+
+/* ================================
+   Topbar & Footer
+================================ */
+#pbr-topbar .widget .widget-title,
+.pbr-footer .widget.widget_nav_menu ul.menu,
+.widget_copyright_widget {
+    margin-bottom: 0 !important;
+}
+
+.pbr-copyright .input-group {
+    border: 0;
+}
+
+/* ================================
+   Navigation & Dropdowns
+================================ */
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child,
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child a {
+    border: 0;
+}
+
+.navbar-offcanvas ul#main-menu-offcanvas>li .caret:hover,
+[role="button"] {
+    cursor: pointer;
+}
+
+/* ================================
+   Buttons & Inputs
+================================ */
+[type="button"],
+[type="submit"],
+[type="text"],
+[type="email"],
+[type="password"],
+[type="search"],
+[type="date"],
+[type="time"],
+[type="url"],
+[type="number"],
+[type="tel"],
+[type="color"],
+[type="week"],
+[type="month"],
+[type="datetime-local"],
+[type="datetime"],
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button.list-group-item {
+    width: 100%;
+    text-align: left;
+}
+
+.input-group-btn,
+.label,
+btn {
+    white-space: nowrap;
+}
+
+/* ================================
+   Form Styling
+================================ */
+[data-toggle="buttons"]>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn input[type="radio"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+select[data-dkcacheid],
+input[type="file"] {
+    display: none;
+}
+
+/* ================================
+   Listing & Widgets
+================================ */
+.dk-select-options .dk-option-hidden {
+    display: none;
+}
+
+#pbr-topbar .widget,
+.navbar-mega .navbar-nav .container-mega .row .widget:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* ================================
+   Icons & Fonts
+================================ */
+
+
+/* ================================
+   Link & Hover Effects
+================================ */
+a {
+    background-color: transparent;
+    color: #333;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    color: #1fc341;
+    outline: 0;
+}
+
+a.bg-info:focus,
+a.bg-info:hover {
+    background-color: #289ae9;
+}
+
+a.bg-primary:focus,
+a.bg-primary:hover {
+    background-color: #189732;
+}
+
+a.bg-success:focus,
+a.bg-success:hover {
+    background-color: #158f76;
+}
+
+a.label:focus,
+a.label:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+a.text-info:focus,
+a.text-info:hover {
+    color: #245269;
+}
+
+a.text-primary:focus,
+a.text-primary:hover {
+    color: #189732;
+}
+
+
+/* ================================
+   UI Components
+================================ */
+.ui-icon,
+btn,
+img {
+    vertical-align: middle;
+}
+
+.ui-button,
+a.ui-button {
+    color: #454545;
+    text-decoration: none;
+}
+
+.ui-button.ui-state-active:hover,
+.ui-button:active,
+.ui-state-active {
+    border: 1px solid #003eff;
+    background: #007fff;
+    color: #fff;
+}
+
+.ui-state-hover a {
+    color: #2b2b2b;
+    text-decoration: none;
+}
+
+body .ui-tooltip {
+    border-width: 2px;
+}
+
+button.ui-button::-moz-focus-inner,
+input.ui-button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* ================================
+   Miscellaneous
+================================ */
+.label:empty,
+[hidden],
+a img,
+img {
+    display: none;
+    border: 0;
+}
+
+.no-space-row .row,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+/* ================================
+   Button & Input Focus Reset
+================================ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+button[disabled],
+html input[disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][disabled] {
+    cursor: not-allowed;
+}
+
+/* ================================
+   Canvas & Code Styling
+================================ */
+canvas {
+    display: inline;
+    zoom: 1;
+}
+
+code {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 10px;
+}
+
+code,
+var {
+    font-family: Inconsolata, monospace;
+    hyphens: none;
+}
+
+/* ================================
+   Typography & Headings
+================================ */
+dd {
+    margin-bottom: 1.6em;
+    margin-left: 0;
+    line-height: 1.5;
+}
+
+dt {
+    line-height: 1.5;
+}
+
+.h1,
+h1,
+.back-to-top i {
+    font-size: 22px;
+}
+
+.h2,
+h2,
+.f16,
+.f18,
+.f30,
+.h4,
+h4 {
+    font-size: 16px;
+}
+
+.h3,
+h3,
+.f24,
+h5 {
+    font-size: 18px;
+}
+
+.h3,
+h3 {
+    font-size: 24px;
+}
+
+.h5,
+h5,
+.f14 {
+    font-size: 14px;
+}
+
+.h6,
+h6,
+#pbr-topbar {
+    font-size: 12px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Raleway, sans-serif;
+    font-weight: 700;
+    line-height: 1;
+    color: #333;
+    margin: 0 0 0 0;
+}
+
+i {
+    font-style: italic;
+}
+
+p {
+    line-height: 26px;
+    margin: 0 0 10.5px;
+}
+
+q {
+    quotes: "" "";
+}
+
+q:before,
+q:after {
+    content: "";
+}
+
+/* ================================
+   HTML & Body Defaults
+================================ */
+html {
+    font-family: sans-serif;
+    font-size: 10px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body,
+html {
+    overflow-x: hidden;
+}
+
+/* ================================
+   Image & Label Styling
+================================ */
+img {
+    -ms-interpolation-mode: bicubic;
+    height: auto;
+    max-width: 100%;
+}
+
+label {
+    margin-bottom: 10px;
+    max-width: 100%;
+}
+
+select {
+    max-width: 100%;
+    border-radius: 0 !important;
+}
+
+/* ================================
+   Form Inputs
+================================ */
+input {
+    line-height: normal;
+}
+
+input.ui-button.ui-button-icon-only {
+    text-indent: 0;
+}
+
+input::placeholder {
+    color: #666;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: 0;
+    border: 1px solid #1fc341;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    margin: 4px 0 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="url"],
+select {
+    padding: 0 15px;
+    font-size: 14px;
+    color: #878787;
+    height: 42px;
+    line-height: 1;
+    background-color: #f5f5f5;
+    border: none;
+    transition: 0.2s;
+}
+
+input[type="search"] {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+input[type="range"] {
+    display: block;
+    width: 100%;
+}
+
+input[type="button"].btn-block,
+input[type="reset"].btn-block,
+input[type="submit"].btn-block,
+.sidebar select,
+.banner-widget a img,
+.col-xs-12 {
+    width: 100%;
+}
+
+/* ================================
+   Viewport Settings
+================================ */
+@-ms-viewport {
+    width: device-width;
+}
+
+/* ================================
+   Head Section
+================================ */
+#pbr-masthead.header-default,
+#pbr-masthead.header-location .pbr-header-top {
+    background-color: #fff;
+}
+
+#pbr-masthead.header-default .user-login .list-inline li a img {
+    display: none;
+}
+
+/* ================================
+   Topbar & Footer
+================================ */
+#pbr-topbar .widget .widget-title,
+.pbr-footer .widget.widget_nav_menu ul.menu,
+.widget_copyright_widget {
+    margin-bottom: 0 !important;
+}
+
+.pbr-copyright .input-group {
+    border: 0;
+}
+
+/* ================================
+   Navigation & Dropdowns
+================================ */
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child,
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child a {
+    border: 0;
+}
+
+.navbar-offcanvas ul#main-menu-offcanvas>li .caret:hover,
+[role="button"] {
+    cursor: pointer;
+}
+
+/* ================================
+   Buttons & Inputs
+================================ */
+[type="button"],
+[type="submit"],
+[type="text"],
+[type="email"],
+[type="password"],
+[type="search"],
+[type="date"],
+[type="time"],
+[type="url"],
+[type="number"],
+[type="tel"],
+[type="color"],
+[type="week"],
+[type="month"],
+[type="datetime-local"],
+[type="datetime"],
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button.list-group-item {
+    width: 100%;
+    text-align: left;
+}
+
+.input-group-btn,
+.label,
+btn {
+    white-space: nowrap;
+}
+
+/* ================================
+   Form Styling
+================================ */
+[data-toggle="buttons"]>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn input[type="radio"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+select[data-dkcacheid],
+input[type="file"] {
+    display: none;
+}
+
+/* ================================
+   Listing & Widgets
+================================ */
+.dk-select-options .dk-option-hidden {
+    display: none;
+}
+
+#pbr-topbar .widget,
+.navbar-mega .navbar-nav .container-mega .row .widget:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* ================================
+   Icons & Fonts
+================================ */
+
+
+/* ================================
+   Link & Hover Effects
+================================ */
+a {
+    background-color: transparent;
+    color: #333;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    color: #1fc341;
+    outline: 0;
+}
+
+a.bg-info:focus,
+a.bg-info:hover {
+    background-color: #289ae9;
+}
+
+a.bg-primary:focus,
+a.bg-primary:hover {
+    background-color: #189732;
+}
+
+a.bg-success:focus,
+a.bg-success:hover {
+    background-color: #158f76;
+}
+
+a.label:focus,
+a.label:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+a.text-info:focus,
+a.text-info:hover {
+    color: #245269;
+}
+
+a.text-primary:focus,
+a.text-primary:hover {
+    color: #189732;
+}
+
+
+/* ================================
+   UI Components
+================================ */
+.ui-icon,
+btn,
+img {
+    vertical-align: middle;
+}
+
+.ui-button,
+a.ui-button {
+    color: #454545;
+    text-decoration: none;
+}
+
+.ui-button.ui-state-active:hover,
+.ui-button:active,
+.ui-state-active {
+    border: 1px solid #003eff;
+    background: #007fff;
+    color: #fff;
+}
+
+.ui-state-hover a {
+    color: #2b2b2b;
+    text-decoration: none;
+}
+
+body .ui-tooltip {
+    border-width: 2px;
+}
+
+button.ui-button::-moz-focus-inner,
+input.ui-button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* ================================
+   Miscellaneous
+================================ */
+.label:empty,
+[hidden],
+a img,
+img {
+    display: none;
+    border: 0;
+}
+
+.no-space-row .row,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+/* ================================
+   Button & Input Focus Reset
+================================ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+button[disabled],
+html input[disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][disabled] {
+    cursor: not-allowed;
+}
+
+/* ================================
+   Canvas & Code Styling
+================================ */
+canvas {
+    display: inline;
+    zoom: 1;
+}
+
+code {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 10px;
+}
+
+code,
+var {
+    font-family: Inconsolata, monospace;
+    hyphens: none;
+}
+
+/* ================================
+   Typography & Headings
+================================ */
+dd {
+    margin-bottom: 1.6em;
+    margin-left: 0;
+    line-height: 1.5;
+}
+
+dt {
+    line-height: 1.5;
+}
+
+.h1,
+h1,
+.back-to-top i {
+    font-size: 22px;
+}
+
+.h2,
+h2,
+.f16,
+.f18,
+.f30,
+.h4,
+h4 {
+    font-size: 16px;
+}
+
+.h3,
+h3,
+.f24,
+h5 {
+    font-size: 18px;
+}
+
+.h3,
+h3 {
+    font-size: 24px;
+}
+
+.h5,
+h5,
+.f14 {
+    font-size: 14px;
+}
+
+.h6,
+h6,
+#pbr-topbar {
+    font-size: 12px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Raleway, sans-serif;
+    font-weight: 700;
+    line-height: 1;
+    color: #333;
+    margin: 0 0 0 0;
+}
+
+i {
+    font-style: italic;
+}
+
+p {
+    line-height: 26px;
+    margin: 0 0 10.5px;
+}
+
+q {
+    quotes: "" "";
+}
+
+q:before,
+q:after {
+    content: "";
+}
+
+/* ================================
+   HTML & Body Defaults
+================================ */
+html {
+    font-family: sans-serif;
+    font-size: 10px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body,
+html {
+    overflow-x: hidden;
+}
+
+/* ================================
+   Image & Label Styling
+================================ */
+img {
+    -ms-interpolation-mode: bicubic;
+    height: auto;
+    max-width: 100%;
+}
+
+label {
+    margin-bottom: 10px;
+    max-width: 100%;
+}
+
+select {
+    max-width: 100%;
+    border-radius: 0 !important;
+}
+
+/* ================================
+   Form Inputs
+================================ */
+input {
+    line-height: normal;
+}
+
+input.ui-button.ui-button-icon-only {
+    text-indent: 0;
+}
+
+input::placeholder {
+    color: #666;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: 0;
+    border: 1px solid #1fc341;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    margin: 4px 0 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="url"],
+select {
+    padding: 0 15px;
+    font-size: 14px;
+    color: #878787;
+    height: 42px;
+    line-height: 1;
+    background-color: #f5f5f5;
+    border: none;
+    transition: 0.2s;
+}
+
+input[type="search"] {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+input[type="range"] {
+    display: block;
+    width: 100%;
+}
+
+input[type="button"].btn-block,
+input[type="reset"].btn-block,
+input[type="submit"].btn-block,
+.sidebar select,
+.banner-widget a img,
+.col-xs-12 {
+    width: 100%;
+}
+
+/* ================================
+   Viewport Settings
+================================ */
+@-ms-viewport {
+    width: device-width;
+}
+
+/* ================================
+   Head Section
+================================ */
+#pbr-masthead.header-default,
+#pbr-masthead.header-location .pbr-header-top {
+    background-color: #fff;
+}
+
+#pbr-masthead.header-default .user-login .list-inline li a img {
+    display: none;
+}
+
+/* ================================
+   Topbar & Footer
+================================ */
+#pbr-topbar .widget .widget-title,
+.pbr-footer .widget.widget_nav_menu ul.menu,
+.widget_copyright_widget {
+    margin-bottom: 0 !important;
+}
+
+.pbr-copyright .input-group {
+    border: 0;
+}
+
+/* ================================
+   Navigation & Dropdowns
+================================ */
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child,
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child a {
+    border: 0;
+}
+
+.navbar-offcanvas ul#main-menu-offcanvas>li .caret:hover,
+[role="button"] {
+    cursor: pointer;
+}
+
+/* ================================
+   Buttons & Inputs
+================================ */
+[type="button"],
+[type="submit"],
+[type="text"],
+[type="email"],
+[type="password"],
+[type="search"],
+[type="date"],
+[type="time"],
+[type="url"],
+[type="number"],
+[type="tel"],
+[type="color"],
+[type="week"],
+[type="month"],
+[type="datetime-local"],
+[type="datetime"],
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button.list-group-item {
+    width: 100%;
+    text-align: left;
+}
+
+.input-group-btn,
+.label,
+btn {
+    white-space: nowrap;
+}
+
+/* ================================
+   Form Styling
+================================ */
+[data-toggle="buttons"]>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn input[type="radio"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+select[data-dkcacheid],
+input[type="file"] {
+    display: none;
+}
+
+/* ================================
+   Listing & Widgets
+================================ */
+.dk-select-options .dk-option-hidden {
+    display: none;
+}
+
+#pbr-topbar .widget,
+.navbar-mega .navbar-nav .container-mega .row .widget:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* ================================
+   Icons & Fonts
+================================ */
+
+
+/* ================================
+   Link & Hover Effects
+================================ */
+a {
+    background-color: transparent;
+    color: #333;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    color: #1fc341;
+    outline: 0;
+}
+
+a.bg-info:focus,
+a.bg-info:hover {
+    background-color: #289ae9;
+}
+
+a.bg-primary:focus,
+a.bg-primary:hover {
+    background-color: #189732;
+}
+
+a.bg-success:focus,
+a.bg-success:hover {
+    background-color: #158f76;
+}
+
+a.label:focus,
+a.label:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+a.text-info:focus,
+a.text-info:hover {
+    color: #245269;
+}
+
+a.text-primary:focus,
+a.text-primary:hover {
+    color: #189732;
+}
+
+
+/* ================================
+   UI Components
+================================ */
+.ui-icon,
+btn,
+img {
+    vertical-align: middle;
+}
+
+.ui-button,
+a.ui-button {
+    color: #454545;
+    text-decoration: none;
+}
+
+.ui-button.ui-state-active:hover,
+.ui-button:active,
+.ui-state-active {
+    border: 1px solid #003eff;
+    background: #007fff;
+    color: #fff;
+}
+
+.ui-state-hover a {
+    color: #2b2b2b;
+    text-decoration: none;
+}
+
+body .ui-tooltip {
+    border-width: 2px;
+}
+
+button.ui-button::-moz-focus-inner,
+input.ui-button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* ================================
+   Miscellaneous
+================================ */
+.label:empty,
+[hidden],
+a img,
+img {
+    display: none;
+    border: 0;
+}
+
+.no-space-row .row,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+/* ================================
+   Button & Input Focus Reset
+================================ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+button[disabled],
+html input[disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][disabled] {
+    cursor: not-allowed;
+}
+
+/* ================================
+   Canvas & Code Styling
+================================ */
+canvas {
+    display: inline;
+    zoom: 1;
+}
+
+code {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 10px;
+}
+
+code,
+var {
+    font-family: Inconsolata, monospace;
+    hyphens: none;
+}
+
+/* ================================
+   Typography & Headings
+================================ */
+dd {
+    margin-bottom: 1.6em;
+    margin-left: 0;
+    line-height: 1.5;
+}
+
+dt {
+    line-height: 1.5;
+}
+
+.h1,
+h1,
+.back-to-top i {
+    font-size: 22px;
+}
+
+.h2,
+h2,
+.f16,
+.f18,
+.f30,
+.h4,
+h4 {
+    font-size: 16px;
+}
+
+.h3,
+h3,
+.f24,
+h5 {
+    font-size: 18px;
+}
+
+.h3,
+h3 {
+    font-size: 24px;
+}
+
+.h5,
+h5,
+.f14 {
+    font-size: 14px;
+}
+
+.h6,
+h6,
+#pbr-topbar {
+    font-size: 12px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Raleway, sans-serif;
+    font-weight: 700;
+    line-height: 1;
+    color: #333;
+    margin: 0 0 0 0;
+}
+
+i {
+    font-style: italic;
+}
+
+p {
+    line-height: 26px;
+    margin: 0 0 10.5px;
+}
+
+q {
+    quotes: "" "";
+}
+
+q:before,
+q:after {
+    content: "";
+}
+
+/* ================================
+   HTML & Body Defaults
+================================ */
+html {
+    font-family: sans-serif;
+    font-size: 10px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body,
+html {
+    overflow-x: hidden;
+}
+
+/* ================================
+   Image & Label Styling
+================================ */
+img {
+    -ms-interpolation-mode: bicubic;
+    height: auto;
+    max-width: 100%;
+}
+
+label {
+    margin-bottom: 10px;
+    max-width: 100%;
+}
+
+select {
+    max-width: 100%;
+    border-radius: 0 !important;
+}
+
+/* ================================
+   Form Inputs
+================================ */
+input {
+    line-height: normal;
+}
+
+input.ui-button.ui-button-icon-only {
+    text-indent: 0;
+}
+
+input::placeholder {
+    color: #666;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: 0;
+    border: 1px solid #1fc341;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    margin: 4px 0 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="url"],
+select {
+    padding: 0 15px;
+    font-size: 14px;
+    color: #878787;
+    height: 42px;
+    line-height: 1;
+    background-color: #f5f5f5;
+    border: none;
+    transition: 0.2s;
+}
+
+input[type="search"] {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+input[type="range"] {
+    display: block;
+    width: 100%;
+}
+
+input[type="button"].btn-block,
+input[type="reset"].btn-block,
+input[type="submit"].btn-block,
+.sidebar select,
+.banner-widget a img,
+.col-xs-12 {
+    width: 100%;
+}
+
+/* ================================
+   Viewport Settings
+================================ */
+@-ms-viewport {
+    width: device-width;
+}
+
+/* ================================
+   Head Section
+================================ */
+#pbr-masthead.header-default,
+#pbr-masthead.header-location .pbr-header-top {
+    background-color: #fff;
+}
+
+#pbr-masthead.header-default .user-login .list-inline li a img {
+    display: none;
+}
+
+/* ================================
+   Topbar & Footer
+================================ */
+#pbr-topbar .widget .widget-title,
+.pbr-footer .widget.widget_nav_menu ul.menu,
+.widget_copyright_widget {
+    margin-bottom: 0 !important;
+}
+
+.pbr-copyright .input-group {
+    border: 0;
+}
+
+/* ================================
+   Navigation & Dropdowns
+================================ */
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child,
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child a {
+    border: 0;
+}
+
+.navbar-offcanvas ul#main-menu-offcanvas>li .caret:hover,
+[role="button"] {
+    cursor: pointer;
+}
+
+/* ================================
+   Buttons & Inputs
+================================ */
+[type="button"],
+[type="submit"],
+[type="text"],
+[type="email"],
+[type="password"],
+[type="search"],
+[type="date"],
+[type="time"],
+[type="url"],
+[type="number"],
+[type="tel"],
+[type="color"],
+[type="week"],
+[type="month"],
+[type="datetime-local"],
+[type="datetime"],
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button.list-group-item {
+    width: 100%;
+    text-align: left;
+}
+
+.input-group-btn,
+.label,
+btn {
+    white-space: nowrap;
+}
+
+/* ================================
+   Form Styling
+================================ */
+[data-toggle="buttons"]>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn input[type="radio"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+select[data-dkcacheid],
+input[type="file"] {
+    display: none;
+}
+
+/* ================================
+   Listing & Widgets
+================================ */
+.dk-select-options .dk-option-hidden {
+    display: none;
+}
+
+#pbr-topbar .widget,
+.navbar-mega .navbar-nav .container-mega .row .widget:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* ================================
+   Icons & Fonts
+================================ */
+
+
+/* ================================
+   Link & Hover Effects
+================================ */
+a {
+    background-color: transparent;
+    color: #333;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    color: #1fc341;
+    outline: 0;
+}
+
+a.bg-info:focus,
+a.bg-info:hover {
+    background-color: #289ae9;
+}
+
+a.bg-primary:focus,
+a.bg-primary:hover {
+    background-color: #189732;
+}
+
+a.bg-success:focus,
+a.bg-success:hover {
+    background-color: #158f76;
+}
+
+a.label:focus,
+a.label:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+a.text-info:focus,
+a.text-info:hover {
+    color: #245269;
+}
+
+a.text-primary:focus,
+a.text-primary:hover {
+    color: #189732;
+}
+
+
+/* ================================
+   UI Components
+================================ */
+.ui-icon,
+btn,
+img {
+    vertical-align: middle;
+}
+
+.ui-button,
+a.ui-button {
+    color: #454545;
+    text-decoration: none;
+}
+
+.ui-button.ui-state-active:hover,
+.ui-button:active,
+.ui-state-active {
+    border: 1px solid #003eff;
+    background: #007fff;
+    color: #fff;
+}
+
+.ui-state-hover a {
+    color: #2b2b2b;
+    text-decoration: none;
+}
+
+body .ui-tooltip {
+    border-width: 2px;
+}
+
+button.ui-button::-moz-focus-inner,
+input.ui-button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* ================================
+   Miscellaneous
+================================ */
+.label:empty,
+[hidden],
+a img,
+img {
+    display: none;
+    border: 0;
+}
+
+.no-space-row .row,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+/* ================================
+   Button & Input Focus Reset
+================================ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+button[disabled],
+html input[disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][disabled] {
+    cursor: not-allowed;
+}
+
+/* ================================
+   Canvas & Code Styling
+================================ */
+canvas {
+    display: inline;
+    zoom: 1;
+}
+
+code {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 10px;
+}
+
+code,
+var {
+    font-family: Inconsolata, monospace;
+    hyphens: none;
+}
+
+/* ================================
+   Typography & Headings
+================================ */
+dd {
+    margin-bottom: 1.6em;
+    margin-left: 0;
+    line-height: 1.5;
+}
+
+dt {
+    line-height: 1.5;
+}
+
+.h1,
+h1,
+.back-to-top i {
+    font-size: 22px;
+}
+
+.h2,
+h2,
+.f16,
+.f18,
+.f30,
+.h4,
+h4 {
+    font-size: 16px;
+}
+
+.h3,
+h3,
+.f24,
+h5 {
+    font-size: 18px;
+}
+
+.h3,
+h3 {
+    font-size: 24px;
+}
+
+.h5,
+h5,
+.f14 {
+    font-size: 14px;
+}
+
+.h6,
+h6,
+#pbr-topbar {
+    font-size: 12px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Raleway, sans-serif;
+    font-weight: 700;
+    line-height: 1;
+    color: #333;
+    margin: 0 0 0 0;
+}
+
+i {
+    font-style: italic;
+}
+
+p {
+    line-height: 26px;
+    margin: 0 0 10.5px;
+}
+
+q {
+    quotes: "" "";
+}
+
+q:before,
+q:after {
+    content: "";
+}
+
+/* ================================
+   HTML & Body Defaults
+================================ */
+html {
+    font-family: sans-serif;
+    font-size: 10px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body,
+html {
+    overflow-x: hidden;
+}
+
+/* ================================
+   Image & Label Styling
+================================ */
+img {
+    -ms-interpolation-mode: bicubic;
+    height: auto;
+    max-width: 100%;
+}
+
+label {
+    margin-bottom: 10px;
+    max-width: 100%;
+}
+
+select {
+    max-width: 100%;
+    border-radius: 0 !important;
+}
+
+/* ================================
+   Form Inputs
+================================ */
+input {
+    line-height: normal;
+}
+
+input.ui-button.ui-button-icon-only {
+    text-indent: 0;
+}
+
+input::placeholder {
+    color: #666;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: 0;
+    border: 1px solid #1fc341;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    margin: 4px 0 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="url"],
+select {
+    padding: 0 15px;
+    font-size: 14px;
+    color: #878787;
+    height: 42px;
+    line-height: 1;
+    background-color: #f5f5f5;
+    border: none;
+    transition: 0.2s;
+}
+
+input[type="search"] {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+input[type="range"] {
+    display: block;
+    width: 100%;
+}
+
+input[type="button"].btn-block,
+input[type="reset"].btn-block,
+input[type="submit"].btn-block,
+.sidebar select,
+.banner-widget a img,
+.col-xs-12 {
+    width: 100%;
+}
+
+/* ================================
+   Viewport Settings
+================================ */
+@-ms-viewport {
+    width: device-width;
+}
+
+/* ================================
+   Head Section
+================================ */
+#pbr-masthead.header-default,
+#pbr-masthead.header-location .pbr-header-top {
+    background-color: #fff;
+}
+
+#pbr-masthead.header-default .user-login .list-inline li a img {
+    display: none;
+}
+
+/* ================================
+   Topbar & Footer
+================================ */
+#pbr-topbar .widget .widget-title,
+.pbr-footer .widget.widget_nav_menu ul.menu,
+.widget_copyright_widget {
+    margin-bottom: 0 !important;
+}
+
+.pbr-copyright .input-group {
+    border: 0;
+}
+
+/* ================================
+   Navigation & Dropdowns
+================================ */
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child,
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child a {
+    border: 0;
+}
+
+.navbar-offcanvas ul#main-menu-offcanvas>li .caret:hover,
+[role="button"] {
+    cursor: pointer;
+}
+
+/* ================================
+   Buttons & Inputs
+================================ */
+[type="button"],
+[type="submit"],
+[type="text"],
+[type="email"],
+[type="password"],
+[type="search"],
+[type="date"],
+[type="time"],
+[type="url"],
+[type="number"],
+[type="tel"],
+[type="color"],
+[type="week"],
+[type="month"],
+[type="datetime-local"],
+[type="datetime"],
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button.list-group-item {
+    width: 100%;
+    text-align: left;
+}
+
+.input-group-btn,
+.label,
+btn {
+    white-space: nowrap;
+}
+
+/* ================================
+   Form Styling
+================================ */
+[data-toggle="buttons"]>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn input[type="radio"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+select[data-dkcacheid],
+input[type="file"] {
+    display: none;
+}
+
+/* ================================
+   Listing & Widgets
+================================ */
+.dk-select-options .dk-option-hidden {
+    display: none;
+}
+
+#pbr-topbar .widget,
+.navbar-mega .navbar-nav .container-mega .row .widget:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* ================================
+   Icons & Fonts
+================================ */
+
+
+/* ================================
+   Link & Hover Effects
+================================ */
+a {
+    background-color: transparent;
+    color: #333;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    color: #1fc341;
+    outline: 0;
+}
+
+a.bg-info:focus,
+a.bg-info:hover {
+    background-color: #289ae9;
+}
+
+a.bg-primary:focus,
+a.bg-primary:hover {
+    background-color: #189732;
+}
+
+a.bg-success:focus,
+a.bg-success:hover {
+    background-color: #158f76;
+}
+
+a.label:focus,
+a.label:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+a.text-info:focus,
+a.text-info:hover {
+    color: #245269;
+}
+
+a.text-primary:focus,
+a.text-primary:hover {
+    color: #189732;
+}
+
+
+/* ================================
+   UI Components
+================================ */
+.ui-icon,
+btn,
+img {
+    vertical-align: middle;
+}
+
+.ui-button,
+a.ui-button {
+    color: #454545;
+    text-decoration: none;
+}
+
+.ui-button.ui-state-active:hover,
+.ui-button:active,
+.ui-state-active {
+    border: 1px solid #003eff;
+    background: #007fff;
+    color: #fff;
+}
+
+.ui-state-hover a {
+    color: #2b2b2b;
+    text-decoration: none;
+}
+
+body .ui-tooltip {
+    border-width: 2px;
+}
+
+button.ui-button::-moz-focus-inner,
+input.ui-button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* ================================
+   Miscellaneous
+================================ */
+.label:empty,
+[hidden],
+a img,
+img {
+    display: none;
+    border: 0;
+}
+
+.no-space-row .row,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+/* ================================
+   Button & Input Focus Reset
+================================ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+button[disabled],
+html input[disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][disabled] {
+    cursor: not-allowed;
+}
+
+/* ================================
+   Canvas & Code Styling
+================================ */
+canvas {
+    display: inline;
+    zoom: 1;
+}
+
+code {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 10px;
+}
+
+code,
+var {
+    font-family: Inconsolata, monospace;
+    hyphens: none;
+}
+
+/* ================================
+   Typography & Headings
+================================ */
+dd {
+    margin-bottom: 1.6em;
+    margin-left: 0;
+    line-height: 1.5;
+}
+
+dt {
+    line-height: 1.5;
+}
+
+.h1,
+h1,
+.back-to-top i {
+    font-size: 22px;
+}
+
+.h2,
+h2,
+.f16,
+.f18,
+.f30,
+.h4,
+h4 {
+    font-size: 16px;
+}
+
+.h3,
+h3,
+.f24,
+h5 {
+    font-size: 18px;
+}
+
+.h3,
+h3 {
+    font-size: 24px;
+}
+
+.h5,
+h5,
+.f14 {
+    font-size: 14px;
+}
+
+.h6,
+h6,
+#pbr-topbar {
+    font-size: 12px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Raleway, sans-serif;
+    font-weight: 700;
+    line-height: 1;
+    color: #333;
+    margin: 0 0 0 0;
+}
+
+i {
+    font-style: italic;
+}
+
+p {
+    line-height: 26px;
+    margin: 0 0 10.5px;
+}
+
+q {
+    quotes: "" "";
+}
+
+q:before,
+q:after {
+    content: "";
+}
+
+/* ================================
+   HTML & Body Defaults
+================================ */
+html {
+    font-family: sans-serif;
+    font-size: 10px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body,
+html {
+    overflow-x: hidden;
+}
+
+/* ================================
+   Image & Label Styling
+================================ */
+img {
+    -ms-interpolation-mode: bicubic;
+    height: auto;
+    max-width: 100%;
+}
+
+label {
+    margin-bottom: 10px;
+    max-width: 100%;
+}
+
+select {
+    max-width: 100%;
+    border-radius: 0 !important;
+}
+
+/* ================================
+   Form Inputs
+================================ */
+input {
+    line-height: normal;
+}
+
+input.ui-button.ui-button-icon-only {
+    text-indent: 0;
+}
+
+input::placeholder {
+    color: #666;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: 0;
+    border: 1px solid #1fc341;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    margin: 4px 0 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="url"],
+select {
+    padding: 0 15px;
+    font-size: 14px;
+    color: #878787;
+    height: 42px;
+    line-height: 1;
+    background-color: #f5f5f5;
+    border: none;
+    transition: 0.2s;
+}
+
+input[type="search"] {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+input[type="range"] {
+    display: block;
+    width: 100%;
+}
+
+input[type="button"].btn-block,
+input[type="reset"].btn-block,
+input[type="submit"].btn-block,
+.sidebar select,
+.banner-widget a img,
+.col-xs-12 {
+    width: 100%;
+}
+
+/* ================================
+   Viewport Settings
+================================ */
+@-ms-viewport {
+    width: device-width;
+}
+
+/* ================================
+   Head Section
+================================ */
+#pbr-masthead.header-default,
+#pbr-masthead.header-location .pbr-header-top {
+    background-color: #fff;
+}
+
+#pbr-masthead.header-default .user-login .list-inline li a img {
+    display: none;
+}
+
+/* ================================
+   Topbar & Footer
+================================ */
+#pbr-topbar .widget .widget-title,
+.pbr-footer .widget.widget_nav_menu ul.menu,
+.widget_copyright_widget {
+    margin-bottom: 0 !important;
+}
+
+.pbr-copyright .input-group {
+    border: 0;
+}
+
+/* ================================
+   Navigation & Dropdowns
+================================ */
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child,
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child a {
+    border: 0;
+}
+
+.navbar-offcanvas ul#main-menu-offcanvas>li .caret:hover,
+[role="button"] {
+    cursor: pointer;
+}
+
+/* ================================
+   Buttons & Inputs
+================================ */
+[type="button"],
+[type="submit"],
+[type="text"],
+[type="email"],
+[type="password"],
+[type="search"],
+[type="date"],
+[type="time"],
+[type="url"],
+[type="number"],
+[type="tel"],
+[type="color"],
+[type="week"],
+[type="month"],
+[type="datetime-local"],
+[type="datetime"],
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button.list-group-item {
+    width: 100%;
+    text-align: left;
+}
+
+.input-group-btn,
+.label,
+btn {
+    white-space: nowrap;
+}
+
+/* ================================
+   Form Styling
+================================ */
+[data-toggle="buttons"]>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn input[type="radio"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+select[data-dkcacheid],
+input[type="file"] {
+    display: none;
+}
+
+/* ================================
+   Listing & Widgets
+================================ */
+.dk-select-options .dk-option-hidden {
+    display: none;
+}
+
+#pbr-topbar .widget,
+.navbar-mega .navbar-nav .container-mega .row .widget:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* ================================
+   Icons & Fonts
+================================ */
+
+
+/* ================================
+   Link & Hover Effects
+================================ */
+a {
+    background-color: transparent;
+    color: #333;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    color: #1fc341;
+    outline: 0;
+}
+
+a.bg-info:focus,
+a.bg-info:hover {
+    background-color: #289ae9;
+}
+
+a.bg-primary:focus,
+a.bg-primary:hover {
+    background-color: #189732;
+}
+
+a.bg-success:focus,
+a.bg-success:hover {
+    background-color: #158f76;
+}
+
+a.label:focus,
+a.label:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+a.text-info:focus,
+a.text-info:hover {
+    color: #245269;
+}
+
+a.text-primary:focus,
+a.text-primary:hover {
+    color: #189732;
+}
+
+
+/* ================================
+   UI Components
+================================ */
+.ui-icon,
+btn,
+img {
+    vertical-align: middle;
+}
+
+.ui-button,
+a.ui-button {
+    color: #454545;
+    text-decoration: none;
+}
+
+.ui-button.ui-state-active:hover,
+.ui-button:active,
+.ui-state-active {
+    border: 1px solid #003eff;
+    background: #007fff;
+    color: #fff;
+}
+
+.ui-state-hover a {
+    color: #2b2b2b;
+    text-decoration: none;
+}
+
+body .ui-tooltip {
+    border-width: 2px;
+}
+
+button.ui-button::-moz-focus-inner,
+input.ui-button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* ================================
+   Miscellaneous
+================================ */
+.label:empty,
+[hidden],
+a img,
+img {
+    display: none;
+    border: 0;
+}
+
+.no-space-row .row,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+/* ================================
+   Button & Input Focus Reset
+================================ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+button[disabled],
+html input[disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][disabled] {
+    cursor: not-allowed;
+}
+
+/* ================================
+   Canvas & Code Styling
+================================ */
+canvas {
+    display: inline;
+    zoom: 1;
+}
+
+code {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 10px;
+}
+
+code,
+var {
+    font-family: Inconsolata, monospace;
+    hyphens: none;
+}
+
+/* ================================
+   Typography & Headings
+================================ */
+dd {
+    margin-bottom: 1.6em;
+    margin-left: 0;
+    line-height: 1.5;
+}
+
+dt {
+    line-height: 1.5;
+}
+
+.h1,
+h1,
+.back-to-top i {
+    font-size: 22px;
+}
+
+.h2,
+h2,
+.f16,
+.f18,
+.f30,
+.h4,
+h4 {
+    font-size: 16px;
+}
+
+.h3,
+h3,
+.f24,
+h5 {
+    font-size: 18px;
+}
+
+.h3,
+h3 {
+    font-size: 24px;
+}
+
+.h5,
+h5,
+.f14 {
+    font-size: 14px;
+}
+
+.h6,
+h6,
+#pbr-topbar {
+    font-size: 12px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Raleway, sans-serif;
+    font-weight: 700;
+    line-height: 1;
+    color: #333;
+    margin: 0 0 0 0;
+}
+
+i {
+    font-style: italic;
+}
+
+p {
+    line-height: 26px;
+    margin: 0 0 10.5px;
+}
+
+q {
+    quotes: "" "";
+}
+
+q:before,
+q:after {
+    content: "";
+}
+
+/* ================================
+   HTML & Body Defaults
+================================ */
+html {
+    font-family: sans-serif;
+    font-size: 10px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body,
+html {
+    overflow-x: hidden;
+}
+
+/* ================================
+   Image & Label Styling
+================================ */
+img {
+    -ms-interpolation-mode: bicubic;
+    height: auto;
+    max-width: 100%;
+}
+
+label {
+    margin-bottom: 10px;
+    max-width: 100%;
+}
+
+select {
+    max-width: 100%;
+    border-radius: 0 !important;
+}
+
+/* ================================
+   Form Inputs
+================================ */
+input {
+    line-height: normal;
+}
+
+input.ui-button.ui-button-icon-only {
+    text-indent: 0;
+}
+
+input::placeholder {
+    color: #666;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: 0;
+    border: 1px solid #1fc341;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    margin: 4px 0 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="url"],
+select {
+    padding: 0 15px;
+    font-size: 14px;
+    color: #878787;
+    height: 42px;
+    line-height: 1;
+    background-color: #f5f5f5;
+    border: none;
+    transition: 0.2s;
+}
+
+input[type="search"] {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+input[type="range"] {
+    display: block;
+    width: 100%;
+}
+
+input[type="button"].btn-block,
+input[type="reset"].btn-block,
+input[type="submit"].btn-block,
+.sidebar select,
+.banner-widget a img,
+.col-xs-12 {
+    width: 100%;
+}
+
+/* ================================
+   Viewport Settings
+================================ */
+@-ms-viewport {
+    width: device-width;
+}
+
+/* ================================
+   Head Section
+================================ */
+#pbr-masthead.header-default,
+#pbr-masthead.header-location .pbr-header-top {
+    background-color: #fff;
+}
+
+#pbr-masthead.header-default .user-login .list-inline li a img {
+    display: none;
+}
+
+/* ================================
+   Topbar & Footer
+================================ */
+#pbr-topbar .widget .widget-title,
+.pbr-footer .widget.widget_nav_menu ul.menu,
+.widget_copyright_widget {
+    margin-bottom: 0 !important;
+}
+
+.pbr-copyright .input-group {
+    border: 0;
+}
+
+/* ================================
+   Navigation & Dropdowns
+================================ */
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child,
+.navbar-mega .navbar-nav>li .dropdown-menu li:last-child a {
+    border: 0;
+}
+
+.navbar-offcanvas ul#main-menu-offcanvas>li .caret:hover,
+[role="button"] {
+    cursor: pointer;
+}
+
+/* ================================
+   Buttons & Inputs
+================================ */
+[type="button"],
+[type="submit"],
+[type="text"],
+[type="email"],
+[type="password"],
+[type="search"],
+[type="date"],
+[type="time"],
+[type="url"],
+[type="number"],
+[type="tel"],
+[type="color"],
+[type="week"],
+[type="month"],
+[type="datetime-local"],
+[type="datetime"],
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button.list-group-item {
+    width: 100%;
+    text-align: left;
+}
+
+.input-group-btn,
+.label,
+btn {
+    white-space: nowrap;
+}
+
+/* ================================
+   Form Styling
+================================ */
+[data-toggle="buttons"]>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn input[type="radio"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="checkbox"],
+[data-toggle="buttons"]>.btn-group>.btn input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+select[data-dkcacheid],
+input[type="file"] {
+    display: none;
+}
+
+/* ================================
+   Listing & Widgets
+================================ */
+.dk-select-options .dk-option-hidden {
+    display: none;
+}
+
+#pbr-topbar .widget,
+.navbar-mega .navbar-nav .container-mega .row .widget:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* ================================
+   Icons & Fonts
+================================ */
+
+
+/* ================================
+   Link & Hover Effects
+================================ */
+a {
+    background-color: transparent;
+    color: #333;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    color: #1fc341;
+    outline: 0;
+}
+
+a.bg-info:focus,
+a.bg-info:hover {
+    background-color: #289ae9;
+}
+
+a.bg-primary:focus,
+a.bg-primary:hover {
+    background-color: #189732;
+}
+
+a.bg-success:focus,
+a.bg-success:hover {
+    background-color: #158f76;
+}
+
+a.label:focus,
+a.label:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+a.text-info:focus,
+a.text-info:hover {
+    color: #245269;
+}
+
+a.text-primary:focus,
+a.text-primary:hover {
+    color: #189732;
+}
+
+
+/* ================================
+   UI Components
+================================ */
+.ui-icon,
+btn,
+img {
+    vertical-align: middle;
+}
+
+.ui-button,
+a.ui-button {
+    color: #454545;
+    text-decoration: none;
+}
+
+.ui-button.ui-state-active:hover,
+.ui-button:active,
+.ui-state-active {
+    border: 1px solid #003eff;
+    background: #007fff;
+    color: #fff;
+}
+
+.ui-state-hover a {
+    color: #2b2b2b;
+    text-decoration: none;
+}
+
+body .ui-tooltip {
+    border-width: 2px;
+}
+
+button.ui-button::-moz-focus-inner,
+input.ui-button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* ================================
+   Miscellaneous
+================================ */
+.label:empty,
+[hidden],
+a img,
+img {
+    display: none;
+    border: 0;
+}
+
+.no-space-row .row,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+/* ================================
+   Button & Input Focus Reset
+================================ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+button[disabled],
+html input[disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][disabled] {
+    cursor: not-allowed;
+}
+
+/* ================================
+   Canvas & Code Styling
+================================ */
+canvas {
+    display: inline;
+    zoom: 1;
+}
+
+code {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 10px;
+}
+
+code,
+var {
+    font-family: Inconsolata, monospace;
+    hyphens: none;
+}
+
+/* ================================
+   Typography & Headings
+================================ */
+dd {
+    margin-bottom: 1.6em;
+    margin-left: 0;
+    line-height: 1.5;
+}
+
+dt {
+    line-height: 1.5;
+}
+
+.h1,
+h1,
+.back-to-top i {
+    font-size: 22px;
+}
+
+.h2,
+h2,
+.f16,
+.f18,
+.f30,
+.h4,
+h4 {
+    font-size: 16px;
+}
+
+.h3,
+h3,
+.f24,
+h5 {
+    font-size: 18px;
+}
+
+.h3,
+h3 {
+    font-size: 24px;
+}
+
+.h5,
+h5,
+.f14 {
+    font-size: 14px;
+}
+
+.h6,
+h6,
+#pbr-topbar {
+    font-size: 12px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Raleway, sans-serif;
+    font-weight: 700;
+    line-height: 1;
+    color: #333;
+    margin: 0 0 0 0;
+}
+
+i {
+    font-style: italic;
+}
+
+p {
+    line-height: 26px;
+    margin: 0 0 10.5px;
+}
+
+q {
+    quotes: "" "";
+}
+
+q:before,
+q:after {
+    content: "";
+}

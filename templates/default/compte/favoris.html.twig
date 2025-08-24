@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    {{ render(controller('App\\Controller\\Admin\\MetaController::getMeta', {'idEntity' : 1, 'entity': 'favoris'})) }}
+{% endblock %}
+{% block body %}
+    <section class="my-property">
+    <div class="container">
+        <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+            <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+            <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Mes favoris</span></li>
+        </ul><!-- .ht-breadcrumb -->
+
+        <div class="my-property__container">
+            <div class="row">
+                {{ include("default/compte/_menuUser.html.twig") }}<!-- .col -->
+
+                <div class="col-md-9">
+                    <ul class="manage-list manage-list--my-property">
+                        <li class="manage-list__header">
+                            <span class="manage-list__title"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Annonces</span>
+                        </li>
+                        {% for annonce in annonces %}
+                            <li class="manage-list__item">
+                                <div class="manage-list__item-container">
+                                    <div class="manage-list__item-img col-md-9">
+                                        <a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">
+                                            <img src="{{ asset('uploads/photos/263x175/'~annonce.photo) }}" alt="{{annonce.label| capitalize}}" class="listing__img">
+                                        </a>
+                                    </div><!-- manage-list__item-img -->
+                                    <div class="manage-list__item-detail">
+                                        <h3 class="listing__title"><a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">{{annonce.label}}</a></h3>
+                                        <p class="listing__location"><span class="ion-ios-location-outline listing__location-icon"></span> {{annonce.adresse| capitalize}}</p>
+                                        <p class="listing__price">{{annonce.prix|number_format(3, '.', ' ')}} DT</p>
+                                    </div>
+                                </div><!-- .manage-list__item-container -->
+                            </li><!-- .manage-list__item" -->
+                        {% endfor %}
+                        <div class="text-center">{{ knp_pagination_render(annonces) }}</div>
+                    </ul>
+                </div><!-- .col -->
+
+            </div><!-- .row -->
+        </div><!-- .my-property__container -->
+    </div><!-- .container -->
+</section>
+{% endblock %}

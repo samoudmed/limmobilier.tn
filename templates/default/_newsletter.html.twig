@@ -1,0 +1,23 @@
+<section class="newsletter">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 newsletter__content">
+                <img src="{{ asset('asset/images/icon_mail.png') }}" alt="Newsletter" class="newsletter__icon">
+                <div class="newsletter__text-content">
+                    <h2 class="newsletter__title">Newsletter</h2>
+                    <p class="newsletter__desc">Inscrivez-vous à notre newsletter et recevez en exclusivité les dernières annonces</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+                <div class="newsletter__form">
+                    <span class="help-block help-block_newsletter_email">{{ form_errors(form.email) }}</span>
+                    {{ form_widget(form.email, {'attr': {'class': 'newsletter__field', 'placeholder': 'Entrer votre email'}}) }}
+                    <button type="button" class="newsletter__submit" id="newsletter_submit">Subscribe</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</section><!-- .newsletter -->

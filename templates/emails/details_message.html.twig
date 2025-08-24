@@ -1,0 +1,231 @@
+<table cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" align="center" width="660" style="font-family: sans-serif;">
+    <tbody>
+        <tr>
+            <td height="10" width="10" valign="top"><img height="10" border="0" width="10" src="https://ci4.googleusercontent.com/proxy/3YvOEUV2i3zgFU-4Nhs0TArb97vAQ1JCHMwer2Slscd4_dyixioCUVSF89Ni9KGWunMKo4WR0pF4Xg=s0-d-e1-ft#http://www.limmobilier.tn/fr/pics/cb-tl.gif" style="display:block" class="CToWUd"></td>
+            <td height="10" align="center" width="100%" valign="top">
+                <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-top:1px solid rgb(194,208,228)">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td height="10" width="10" valign="top"><img height="10" border="0" width="10" src="https://ci3.googleusercontent.com/proxy/7FzlEI5UQf_sniMc4AVsk46vDQHwMY-Su0ujRPB7NgG0pGi4Daeh7QMmAEA4aIbd1BbgMFnSNvCmsA=s0-d-e1-ft#http://www.limmobilier.tn/fr/pics/cb-tr.gif" style="display:block" class="CToWUd"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#ffffff" width="10" style="border-left:1px solid rgb(194,208,228)"><img height="10" width="9" src="https://ci5.googleusercontent.com/proxy/JgaT361y3ZogSgXadf-_X-8VZdkvLe6Cj8ai-60blx4tWRW-uQruZYHJm1C2oZYFhqdHQgHFduM=s0-d-e1-ft#http://www.limmobilier.tn/fr/pics/pix.gif" style="display:block" class="CToWUd">
+            </td>
+            <td align="center" width="640" valign="top">
+
+                <table cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" width="640">
+                    <tbody>
+                        <tr>
+                            <td height="20" colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td width="20"></td>
+                            <td align="left" width="600">
+                                <a href="https://www.limmobilier.tn/" target="_blank">
+                                    <img border="0" src="https://limmobilier.tn/asset/images/logo-dark.png" alt="limmobilier.tn" style="display:block" class="CToWUd">
+                                </a>
+                            </td>
+                            <td width="20"></td>
+                        </tr>
+                        <tr>
+                            <td width="20"></td>
+                            <td width="600" valign="top">
+                                <p style="text-align:left;font-family:'Trebuchet MS',Arial,Helvetica,sans-serif;color:rgb(42,77,135);font-size:20px;font-weight:normal">
+                                    <br>Un visiteur désire plus d'informations.
+                                </p>
+                            </td>
+                            <td width="20"></td>
+                        </tr>
+                        <tr>
+                            <td width="20"></td>
+                            <td width="600" valign="top">
+                                <table height="10" cellspacing="2" cellpadding="0" border="0" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td bgcolor="#3d6caa"></td>
+                                            <td bgcolor="#ec8a1d"></td>
+                                            <td bgcolor="#d52016"></td>
+                                            <td bgcolor="#438919"></td>
+                                            <td bgcolor="#b5c135"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p style="text-align:left;font-family:Arial,Helvetica,sans-serif;color:rgb(77,77,77);font-size:12px">
+                                    Bonjour {{ nom }} {{ prenom }},
+                                </p>
+                                <p style="text-align:left;font-family:Arial,Helvetica,sans-serif;color:rgb(77,77,77);font-size:12px">
+                                    Un visiteur désire plus d'informations sur... <b><a href="https://limmobilier.tn{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}" target="_blank">{{ annonce.label }}</a></b>
+                                </p>
+                                <br>
+                                <table cellspacing="0" cellpadding="6" border="0" bgcolor="#ffffff" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td align="left" valign="middle" colspan="3">
+                                                <font style="text-align:left;font-family:Arial,Helvetica,sans-serif;color:rgb(77,77,77);font-size:12px">
+                                                    <b>Ce visiteur souhaiterait obtenir des informations complémentaires :</b>
+                                                </font>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#e6e6e6" align="center" width="1%" valign="middle"></td>
+                                            <td colspan="2">
+                                                <font style="text-align:left;font-family:Arial,Helvetica,sans-serif;color:rgb(77,77,77);font-size:12px">
+                                                    <b>Nom :</b> 
+                                                    {{ sender_name }}
+                                                </font>
+                                                <br>
+                                                <font style="text-align:left;font-family:Arial,Helvetica,sans-serif;color:rgb(77,77,77);font-size:12px">
+                                                    <b>Téléphone :</b> 
+                                                    {{ telephone }}
+                                                </font>
+                                                <br>
+                                                <font style="text-align:left;font-family:Arial,Helvetica,sans-serif;color:rgb(77,77,77);font-size:12px">
+                                                    <b>E-mail:</b> 
+                                                    <a href="mailto:{{ mail }}" target="_blank">{{ mail }}</a>
+                                                </font>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="left" valign="middle" colspan="3">
+                                                <font style="text-align:left;font-family:Arial,Helvetica,sans-serif;color:rgb(77,77,77);font-size:12px">
+                                                    <b>Remarque du visiteur :</b>
+                                                </font>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#e6e6e6" align="center" width="1%" valign="middle"></td>
+                                            <td colspan="2">
+                                                <font style="text-align:left;font-family:Arial,Helvetica,sans-serif;color:rgb(77,77,77);font-size:12px">
+                                                    <em>{{ message }}</em>
+                                                </font>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <br>
+                                <p style="text-align:left;font-family:Arial,Helvetica,sans-serif;color:rgb(77,77,77);font-size:12px">
+                                    Nous vous remercions de votre confiance.<br>L'équipe <br><span class="il">limmobilier.tn</span><br><br>
+                                </p>
+                            </td>
+                            <td width="20"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </td>
+            <td bgcolor="#ffffff" width="10" style="border-right:1px solid rgb(194,208,228)"><img height="10" width="9" src="" class="CToWUd">
+            </td>
+        </tr>
+        <tr>
+            <td align="left" width="10" valign="bottom"><img height="11" width="10" src="https://ci5.googleusercontent.com/proxy/NogbnhAreDKpw9q0xC0OzBv2tbhFcZ2KQuKPNyDrn4BbTzO1IiovmoQ70ON0KYzi8byDjM2FBDKngrx8-lvXpDiOsNdsWc3bxDcgRvjQWA=s0-d-e1-ft#http://www.limmobilier.tn/fr/pics/cornerblue2-botleft-stroke.gif" style="display:block" class="CToWUd"></td>
+            <td height="10" align="center" width="100%" valign="bottom">
+                <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-bottom:1px solid rgb(194,208,228)">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td align="right" width="10" valign="bottom">
+                <img height="11" width="10" src="https://ci5.googleusercontent.com/proxy/Y0wIQ-MtSy1tBWFBgF3vWXkkgHPZS-GhsXqPZ4yLxZGcJIPjp_omN4NpoFj7dvRu1VZqMzes4MQQ5jB5GsxpyJP1VzIaseZF-U2v4GLp-dI=s0-d-e1-ft#http://www.limmobilier.tn/fr/pics/cornerblue2-botright-stroke.gif" style="display:block" class="CToWUd">
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td width="100%">
+                    <table width="660" align="center" border="0" cellspacing="0" cellpadding="0">
+                        <tbody><tr>
+                                <td valign="top">
+                                    <table width="660" align="center" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                            <tr>
+                                                <td height="10" valign="top"></td>
+                                            </tr>
+                                            <tr>
+                                                <td valign="top">
+                                                    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table width="400" align="left" border="0" cellspacing="0" cellpadding="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td height="100" valign="middle" style="color:rgb(39,70,110);font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:bold">
+                                                                                    Ne manquez aucun bien,
+                                                                                    suivez nous sur facebook !<br>
+                                                                                    <br>
+                                                                                    <table width="300" border="0" cellspacing="0" cellpadding="0">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <table width="300" align="center" border="0" cellspacing="0" cellpadding="2">
+                                                                                                        <tbody>
+                                                                                                            <tr>
+                                                                                                                <td width="150">
+                                                                                                                    <a href="https://www.facebook.com/limmobilier.tn" target="_blank" ><img width="34" style="max-width:32px" alt="icon-facebook" src="https://ci6.googleusercontent.com/proxy/IFoQi6ZULKqNyPd1CmjqCjMyU654_9mSyibsN79UwcZIOxuG3PaJ2iLYM_XuC3cUoK7lXAPTe-j50FyaHvZi0VPzCQyn29VWhrQVjcH228IPrJOEYUQgSFzh=s0-d-e1-ft#https://by.emailr.com/documents/media/165/1028/00_template/facebook.png" border="0" vspace="0" hspace="0" class="CToWUd"></a>
+                                                                                                                </td>
+                                                                                                                <td width="150">
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    <table width="660" align="center" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td height="10" valign="top"></td>
+                            </tr>
+                            <tr>
+                                <td height="20" valign="top" style="border-top-color:rgb(235,240,246);border-top-width:2px;border-top-style:solid"></td>
+                            </tr>
+
+                            <tr>
+                                <td align="center" valign="middle" style="text-align:center;color:rgb(99,105,126);font-family:Arial,Helvetica,sans-serif;font-size:12px"></td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="middle" style="text-align:center;color:rgb(99,105,126);font-family:Arial,Helvetica,sans-serif;font-size:12px">
+                                    Consultez notre&nbsp;<a style="color:rgb(99,105,126);font-family:Arial,Helvetica,sans-serif;font-size:12px" href="https://limmobilier.tn/mentions-legales.html" target="_blank">politique
+                                        de vie privée</a> ou contactez notre délégué à la protection des données via&nbsp;<a style="color:rgb(99,105,126);font-family:Arial,Helvetica,sans-serif;font-size:12px" href="mailto:privacy@limmobilier.tn" target="_blank">privacy@<span class="il">limmobilier</span>.tn</a>
+                                    <br><br>
+                                    © <span class="il">limmobilier.tn</span> | <a style="color:rgb(99,105,126);font-family:Arial,Helvetica,sans-serif;font-size:12px" href="https://limmobilier.tn/mentions-legales.html" target="_blank">Conditions
+                                        d'utilisation</a>
+                                    <br>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

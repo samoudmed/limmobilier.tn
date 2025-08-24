@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+User-agent: *
+Disallow: /public/
+Disallow: /*_profiler
+Disallow: /*app_dev.php

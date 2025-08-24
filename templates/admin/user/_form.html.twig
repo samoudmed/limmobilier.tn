@@ -1,0 +1,90 @@
+{{ form_start(form) }}
+<div class="card-body">
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <label>Nom :</label>
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+            <span class="form-text text-muted">Please enter your full name</span>
+        </div>
+        <div class="col-lg-6">
+            <label>Prénom :</label>
+            {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+            <span class="form-text text-muted">Please enter your contact number</span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-6">
+                <label>Email :<span class="text-danger">*</span></label>
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+        </div> 
+        <div class="col-lg-6">
+            <label>Téléphone :</label>
+            <div class="input-group">
+                {{ form_widget(form.telephone, {'attr': {'class': 'form-control'}}) }}
+                <div class="input-group-append"><span class="input-group-text"><i class="la la-map-marker"></i></span></div>
+            </div>
+            <span class="form-text text-muted">Please enter your address</span>
+        </div>        
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <label>Agence :</label>
+            <div class="input-group">
+                {{ form_widget(form.agence, {'attr': {'class': 'form-control'}}) }}
+                <div class="input-group-append"><span class="input-group-text"><i class="la la-map-marker"></i></span></div>
+            </div>
+            <span class="form-text text-muted">Please enter your address</span>
+        </div>
+        <div class="col-lg-6">
+            <label>Logo :</label>
+            <div class="input-group">
+                {{ form_widget(form.logo, {'attr': {'class': 'form-control'}}) }}
+                <div class="input-group-append"><span class="input-group-text"><i class="la la-bookmark-o"></i></span></div>
+            </div>
+            <span class="form-text text-muted">Please enter your postcode</span>
+        </div>        
+    </div>           
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <label>Type:</label>
+            <div class="radio-inline">
+                <label class="radio radio-solid">
+                    {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>
+                    Particulier
+                </label>
+                <label class="radio radio-solid">
+                    <input type="radio" name="example_2" value="2"/>
+                    <span></span>
+                    Professionnelle
+                </label>
+            </div>
+            <span class="form-text text-muted">Please select user group</span>
+        </div>
+        <div class="col-lg-6">
+            <label>Active:</label>
+            <div class="radio-inline">
+                <label class="radio radio-solid">
+                    {{ form_widget(form.active, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>
+                    Oui
+                </label>
+                <label class="radio radio-solid">
+                    <input type="radio" name="example_2" value="2"/>
+                    <span></span>
+                    Non
+                </label>
+            </div>
+            <span class="form-text text-muted">Please select user group</span>
+        </div>
+    </div>           
+</div>
+<div class="card-footer">
+    <div class="row">
+        <div class="col-lg-6">
+            <button class="btn">{{ button_label|default('Save') }}</button>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}

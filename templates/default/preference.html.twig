@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    {{ render(controller('App\\Controller\\Admin\\MetaController::getMeta', {'idEntity' : 1, 'entity': 'preferences'})) }}
+{% endblock %}
+{% block body %}
+    <section class="about-us">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Préférences</span></li>
+            </ul><!-- ht-breadcrumb -->
+
+            <div class="about-us__main">
+                <div class="row">
+                    <main class="col-md-8 col-md-main">
+                        <h1 class="about-us__title">Vos préférences</h1>
+                        {{ form_start(form, {'attr': {'id': 'form_contact'}}) }}
+                        {{ form_errors(form) }}
+                        <div class="contact-form__body">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {% for label, messages in app.flashes %}
+                                        {% for message in messages %}
+                                            <div class="alert alert-{{ label }} alert-dismissible" role="alert">
+                                                <strong>{{ message }}</strong>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="sign-up-nom" class="sign-up__label">Offre</label>
+                                    {{ form_widget(form.offre, {'attr': {'class': 'sign-up__field'}}) }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="sign-up-nom" class="sign-up__label">Type</label>
+                                    {{ form_widget(form.kind, {'attr': {'class': 'sign-up__field'}}) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="sign-up-nom" class="sign-up__label">Gouvernorat</label>
+                                    {{ render(controller('App\\Controller\\DefaultController::listingGouvernorat')) }}
+                                    <span class="help-block">{{ form_errors(form.gouvernorat) }}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="sign-up-nom" class="sign-up__label">Délégation</label>
+                                    <select name="delegation" id="listing-delegation" class="main-listing__form-field js-example-basic-single" data-dkcacheid="0" style="width: 100%;" required="required"></select>
+                                    <span class="help-block">{{ form_errors(form.delegation) }}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="sign-up-nom" class="sign-up__label">Ville</label>
+                                    <select name="city" id="listing-city" class="main-listing__form-field js-example-basic-single" data-dkcacheid="0" style="width: 100%;" required="required"></select>
+                                    <span class="help-block">{{ form_errors(form.ville) }}</span>
+                                </div>
+                            </div>    
+
+                        </div><!-- .contact-form__body -->
+                        <div class="contact-form__footer">
+                            <button class="g-recaptcha sign-up__submit" 
+                                    data-sitekey="6LePmP0UAAAAAIwb4vLi826OgAQTQIp5zuXMa6Z7"
+                                    data-callback='onSubmit' 
+                                    data-action='submit'>Envoyer</button>
+                        </div><!-- .contact-form__footer -->
+                        {{ form_row(form._token) }}
+                        {{ form_end(form, {'render_rest': false}) }}
+                    </main><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .about-us__main -->
+        </div><!-- .container -->
+    </section>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="about-us">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Qui sommes nous ?</span></li>
+            </ul><!-- ht-breadcrumb -->
+
+            <div class="about-us__main">
+                <div class="row">
+                    <main class="col-md-8 col-md-main">
+                        <h1 class="about-us__title">Qui sommes nous ?</h1>
+                        <p>
+                            limmobilier.tn est un site de petites annonces qui vous permet de consulter et publier gratuitement vos annonces. Service gratuit de petites annonces de vente et location immobilières, vente et achat des immobilières neuf.
+                        </p>
+                        <p>
+                            Déposez gratuitement une petite annonce. Consultez gratuitement toutes les petites annonces publiées par des particuliers ou professionnels. 
+                            Service 100% gratuit de petites annonces de vente, achat, location, colocation, échange. etc.
+                        </p>
+                        
+                    </main><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .about-us__main -->
+        </div><!-- .container -->
+    </section>
+{% endblock %}

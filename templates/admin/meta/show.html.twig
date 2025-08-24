@@ -1,0 +1,72 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Meta{% endblock %}
+
+{% block body %}
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b">
+                    <div class="card-header flex-wrap py-3">
+                        <div class="card-title">
+                            <h3 class="card-label">Meta</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div id="kt_datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th>Id</th>
+                                                <td>{{ metum.id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Title</th>
+                                                <td>{{ metum.title }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Description</th>
+                                                <td>{{ metum.description }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Entity</th>
+                                                <td>{{ metum.entity }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>IdEntity</th>
+                                                <td>{{ metum.idEntity }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <a href="{{ path('app_meta_index') }}" class="btn btn-primary font-weight-bold mr-2">Retour a la liste</a>
+
+                                            <a href="{{ path('app_meta_edit', {'id': metum.id}) }}" class="btn btn-primary font-weight-bold mr-2">Modifier</a>
+                                        </div>   
+                                        <div class="col-lg-2 right">
+                                            {{ include('admin/meta/_delete_form.html.twig') }}
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end: Datatable-->
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Entry-->
+    </div>
+
+{% endblock %}

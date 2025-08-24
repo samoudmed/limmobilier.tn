@@ -1,0 +1,14 @@
+{% for annonce in annonces %}
+    <div class="similar-home">
+        <a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">
+            <div class="similar-home__image">
+                <div class="similar-home__overlay"></div><!-- .similar-home__overlay -->
+                <img src="{{ asset('uploads/photos/263x175/'~annonce.photo) }}" alt="{{annonce.label| capitalize}}">
+            </div><!-- .similar-home__image -->
+            <div class="similar-home__content">
+                <h3 class="similar-home__title">{{annonce.label| capitalize}}</h3>
+                <span class="similar-home__price">{{annonce.prix|number_format(0, '.', ' ')}} DT</span>
+            </div><!-- .similar-home__content -->
+        </a>
+    </div>
+{% endfor %}

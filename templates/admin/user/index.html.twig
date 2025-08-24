@@ -1,0 +1,122 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b">
+                    <div class="card-header flex-wrap py-3">
+                        <div class="card-title">
+                            <h3 class="card-label">Listes des utilisateurs</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!--begin: Datatable-->
+                        <div id="kt_datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Nom & Prénom</th>
+                                                <th>Email</th>
+                                                <th>Téléphone</th>
+                                                <th>Type</th>
+                                                <th>Vérifié</th>
+                                                <th>Annonces</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for user in users %}
+                                                <tr>
+                                                    <td>{{ user.id }}</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="symbol symbol-50 flex-shrink-0">
+                                                                {% if user.logo %}
+                                                                    <img src="{{ asset('uploads/logos/'~user.logo) }}" alt="photo" style="width:200px">
+                                                                {% else %}
+                                                                    <img src="{{ asset('uploads/logos/man-300x300.png') }}" alt="photo" style="width:200px">
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="ml-3">
+                                                                <span class="text-dark-75 font-weight-bold line-height-sm d-block pb-2">{{ user.nom }} {{ user.prenom }}</span>
+                                                                <a href="#" class="text-muted text-hover-primary">{{user.agence}}</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ user.email }}</td>
+                                                    <td>{{ user.telephone }}</td>
+                                                    <td>{%  if user.type == 1  %} Particulier {% elseif user.type == 0 %} Professionnel {% endif %}</td>
+                                                    <td>
+                                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                                            <input data-switch="true" data-entity="user" type="checkbox" {% if user.isVerified  %} checked="checked" {% endif %} data-id="{{ user.id }}" id="switcher{{ user.id }}" />
+                                                        </div>
+                                                    </td>
+                                                    <td><a href="{{ path('app_user_annonces', {'id': user.id}) }}">{{ user.annonces|length }}</a></td>
+                                                    <td>
+                                                        <a href="{{ path('app_user_show', {'id': user.id}) }}"><i class="la la-eye"></i></a>
+                                                        <a href="{{ path('app_user_edit', {'id': user.id}) }}"><i class="la la-edit"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="12">no records found</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="kt_datatable_info" role="status" aria-live="polite">Showing 1 to 10 of 50 entries</div>
+                                </div>
+                                <div class="col-sm-12 col-md-7 dataTables_pager">
+                                    <div class="dataTables_length" id="kt_datatable_length">
+                                        <label>
+                                            Display 
+                                            <select name="kt_datatable_length" aria-controls="kt_datatable" class="custom-select custom-select-sm form-control form-control-sm">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="dataTables_paginate paging_simple_numbers" id="kt_datatable_paginate">
+                                        {{ knp_pagination_render(users) }}
+                                        <ul class="pagination">
+                                            <li class="paginate_button page-item previous disabled" id="kt_datatable_previous"><a href="#" aria-controls="kt_datatable" data-dt-idx="0" tabindex="0" class="page-link"><i class="ki ki-arrow-back"></i></a></li>
+                                            <li class="paginate_button page-item active"><a href="#" aria-controls="kt_datatable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="kt_datatable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="kt_datatable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="kt_datatable" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="kt_datatable" data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
+                                            <li class="paginate_button page-item next" id="kt_datatable_next"><a href="#" aria-controls="kt_datatable" data-dt-idx="6" tabindex="0" class="page-link"><i class="ki ki-arrow-next"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end: Datatable-->
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Entry-->
+    </div>
+    <a href="{{ path('app_user_new') }}">Create new</a>
+{% endblock %}

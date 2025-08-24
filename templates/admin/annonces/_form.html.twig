@@ -1,0 +1,323 @@
+{{ form_start(form) }}
+<div class="card-body">
+    <div class="form-group row">
+        <div class="col-lg-12">
+            <label>Label :</label>
+            {{ form_widget(form.label, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>        
+    <div class="form-group row">        
+        <div class="col-lg-12">
+            <label>Description :</label>
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <label>Offre :<span class="text-danger">*</span></label>
+            {{ form_widget(form.offre, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-lg-6">
+            <label>Type :</label>
+            <div class="input-group">
+                {{ form_widget(form.kind, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <label>Adresse :</label>
+            <div class="input-group">
+                {{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}
+                <div class="input-group-append"><span class="input-group-text"><i class="la la-map-marker"></i></span></div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <label>Géolocalisation :</label>
+            <div class="input-group">
+                {{ form_widget(form.localisationMap, {'attr': {'class': 'form-control'}}) }}
+                <div class="input-group-append"><span class="input-group-text"><i class="la la-map-marker"></i></span></div>
+            </div>
+        </div>        
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-3">
+            <label>Prix :</label>
+            <div class="input-group">
+                {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+                <div class="input-group-append"><span class="input-group-text"><i class="la la-bookmark-o"></i></span></div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <label>Par :</label>
+            <div class="input-group">
+                {{ form_widget(form.instalment, {'attr': {'class': 'form-control'}}) }}
+                <div class="input-group-append"><span class="input-group-text"><i class="la la-bookmark-o"></i></span></div>
+            </div>
+        </div>        
+        <div class="col-lg-6">
+            <label>Capacité :</label>
+            <div class="input-group">
+                {{ form_widget(form.capacite, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>        
+    </div>            
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <label>Année de construction :</label>
+            <div class="input-group">
+                {{ form_widget(form.anneeConstruction, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <label>Orientation:</label>
+            <div class="input-group">
+                {{ form_widget(form.orientation, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+    </div> 
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <label>Etage :</label>
+            <div class="input-group">
+                {{ form_widget(form.etage, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <label>Pays :</label>
+            <div class="input-group">
+                {{ form_widget(form.pays, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>    
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <label>Pièces :</label>
+            <div class="input-group">
+                {{ form_widget(form.pieces, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <label>Surface :<span class="text-danger">*</span></label>
+            {{ form_widget(form.surface, {'attr': {'class': 'form-control'}}) }}
+        </div>    
+    </div> 
+    <div class="form-group row">
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.climatiseur, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Climatiseur
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.meuble, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Meublé
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.internet, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Internet
+                </label>
+            </div>
+        </div> 
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.chauffage, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Chauffage
+                </label>
+            </div>
+        </div> 
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.parking, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Parking
+                </label>
+            </div>
+        </div>  
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.jardin, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Jardin
+                </label>
+            </div>
+        </div>            
+    </div>     
+    <div class="form-group row">
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.salleBain, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Salle de Bain
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.securite, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Sécurité
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.ascenseur, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Ascenseur
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.cheminee, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Cheminée
+                </label>
+            </div>
+        </div> 
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.cuisineEquipe, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Cuisine équipée
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.jacuzzi, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Jacuzzi
+                </label>
+            </div>
+        </div>            
+    </div>         
+    <div class="form-group row">
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.electricite, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Électricité
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.gaz, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Gaz
+                </label>
+            </div>
+        </div> 
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.telephone, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Téléphone
+                </label>
+            </div>
+        </div> 
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.eau, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Eau
+                </label>
+            </div>
+        </div>   
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.assainissement, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Assainissement
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.vue, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Vue
+                </label>
+            </div>
+        </div>            
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.permisConstruction, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Permis de construction
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    {{ form_widget(form.piscine, {'attr': {'class': 'form-control'}}) }}
+                    <span></span>Piscine
+                </label>
+            </div>
+        </div>            
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <label>Disponibilité :</label>
+            <div class="input-group">
+                {{ form_widget(form.disponibilite, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <label>Date d'expiration :</label>
+            <div class="input-group">
+                {{ form_widget(form.expired_at, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>    
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-4">
+            <label>Gouvernorat :</label>
+            <div class="input-group">
+                {{ form_widget(form.gouvernorat, {'attr': {'class': 'form-control select2'}}) }}
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <label>Délégation :</label>
+            <div class="input-group">
+                {{ form_widget(form.delegation, {'attr': {'class': 'form-control select2'}}) }}
+            </div>
+        </div>    
+        <div class="col-lg-4">
+            <label>Ville :</label>
+            <div class="input-group">
+                {{ form_widget(form.ville, {'attr': {'class': 'form-control select2'}}) }}
+            </div>
+        </div>
+    </div>  
+    <div class="form-group row">
+        <div class="col-lg-2">
+            <div class="checkbox-list">
+                <label class="checkbox">
+                    <span></span>Statut
+                </label>
+            </div>
+        </div>    
+    </div>        
+</div>
+<div class="card-footer">
+    <button type="submit" class="btn btn-primary mr-2">{{ button_label|default('Enregistrer') }}</button>
+    <a href="{{ path('app_annonces_index') }}">back to list</a>
+</div>
+{{ form_end(form) }}

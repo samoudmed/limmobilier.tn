@@ -1,0 +1,67 @@
+[Sun Feb 02 00:00:08.822649 2025] [ssl:warn] [pid 52884:tid 52884] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Sun Feb 02 00:11:06.222990 2025] [cgi:error] [pid 482937:tid 483015] [client 45.148.10.242:54476] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 01:44:28.862933 2025] [cgi:error] [pid 482937:tid 483002] [client 45.148.10.242:48368] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 02:45:09.744359 2025] [cgi:error] [pid 482937:tid 483023] [client 45.148.10.242:41952] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 03:10:09.899028 2025] [cgi:error] [pid 482937:tid 483022] [client 45.148.10.242:42694] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 03:18:55.086073 2025] [cgi:error] [pid 482937:tid 483029] [client 45.148.10.242:50792] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 04:22:55.707438 2025] [cgi:error] [pid 482937:tid 483013] [client 45.148.10.242:48936] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 04:56:19.384146 2025] [core:error] [pid 482937:tid 483017] [client 164.92.227.178:39826] AH10244: invalid URI path (/cgi-bin/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/bin/sh)
+[Sun Feb 02 05:32:11.890458 2025] [core:error] [pid 482937:tid 483029] [client 92.246.141.191:48108] AH10244: invalid URI path (/cgi-bin/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/bin/sh)
+[Sun Feb 02 05:34:22.303443 2025] [cgi:error] [pid 482936:tid 483009] [client 45.148.10.242:56554] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 06:16:17.691496 2025] [cgi:error] [pid 482937:tid 483013] [client 45.148.10.242:55176] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 07:42:04.252835 2025] [cgi:error] [pid 482936:tid 482987] [client 45.148.10.242:33758] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 11:05:09.133743 2025] [cgi:error] [pid 482936:tid 483028] [client 45.148.10.242:47224] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 11:50:24.990439 2025] [cgi:error] [pid 482936:tid 483006] [client 45.148.10.242:53134] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 13:32:41.438954 2025] [ssl:warn] [pid 641006:tid 641006] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Sun Feb 02 13:32:41.471919 2025] [ssl:warn] [pid 641007:tid 641007] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Sun Feb 02 14:01:22.913997 2025] [proxy_fcgi:error] [pid 641011:tid 641075] (70007)The timeout specified has expired: [client 185.213.175.171:52242] AH01075: Error dispatching request to : (reading input brigade)
+[Sun Feb 02 14:45:15.148981 2025] [cgi:error] [pid 641011:tid 641089] [client 45.148.10.242:58902] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 14:56:15.392058 2025] [core:error] [pid 641011:tid 641095] [client 129.146.67.131:53520] AH10244: invalid URI path (/cgi-bin/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/bin/sh)
+[Sun Feb 02 21:53:49.686678 2025] [cgi:error] [pid 641009:tid 641108] [client 45.148.10.242:53362] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Sun Feb 02 22:08:45.453660 2025] [proxy_fcgi:error] [pid 641011:tid 641082] (70007)The timeout specified has expired: [client 185.91.69.5:41558] AH01075: Error dispatching request to : (reading input brigade)
+[Sun Feb 02 22:54:57.853435 2025] [ssl:warn] [pid 773009:tid 773009] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Sun Feb 02 22:54:57.883779 2025] [ssl:warn] [pid 773010:tid 773010] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Mon Feb 03 00:00:11.122746 2025] [ssl:warn] [pid 773010:tid 773010] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Mon Feb 03 00:29:50.552760 2025] [ssl:warn] [pid 773010:tid 773010] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 00:29:50.565648 2025] [ssl:warn] [pid 773010:tid 773010] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Mon Feb 03 00:40:10.154659 2025] [ssl:warn] [pid 773010:tid 773010] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 00:40:10.157764 2025] [ssl:warn] [pid 773010:tid 773010] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Mon Feb 03 00:43:38.173696 2025] [ssl:warn] [pid 773010:tid 773010] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 00:43:38.177419 2025] [ssl:warn] [pid 773010:tid 773010] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Mon Feb 03 00:52:13.310562 2025] [ssl:warn] [pid 773010:tid 773010] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 00:52:13.313355 2025] [ssl:warn] [pid 773010:tid 773010] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Mon Feb 03 00:52:49.997924 2025] [ssl:warn] [pid 773010:tid 773010] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 00:52:50.000586 2025] [ssl:warn] [pid 773010:tid 773010] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Mon Feb 03 00:59:18.394095 2025] [ssl:warn] [pid 813959:tid 813959] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 00:59:18.396664 2025] [ssl:warn] [pid 813959:tid 813959] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Mon Feb 03 00:59:18.419373 2025] [ssl:warn] [pid 813960:tid 813960] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 00:59:18.422654 2025] [ssl:warn] [pid 813960:tid 813960] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Mon Feb 03 01:01:01.167980 2025] [ssl:warn] [pid 813960:tid 813960] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 01:01:01.171022 2025] [ssl:warn] [pid 813960:tid 813960] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Mon Feb 03 01:01:08.852266 2025] [ssl:warn] [pid 813960:tid 813960] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 01:01:08.854120 2025] [ssl:warn] [pid 813960:tid 813960] AH01906: limmobilier.tn:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Mon Feb 03 01:01:11.858720 2025] [ssl:warn] [pid 813960:tid 813960] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 01:01:12.104261 2025] [ssl:warn] [pid 813960:tid 813960] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 01:02:07.290689 2025] [ssl:warn] [pid 813960:tid 813960] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 01:02:14.960583 2025] [ssl:warn] [pid 813960:tid 813960] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 01:02:17.212434 2025] [ssl:warn] [pid 813960:tid 813960] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 01:02:17.216467 2025] [ssl:warn] [pid 813960:tid 813960] AH01909: limmobilier.tn:443:0 server certificate does NOT include an ID which matches the server name
+[Mon Feb 03 01:02:17.339511 2025] [ssl:warn] [pid 813960:tid 813960] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 01:02:17.342080 2025] [ssl:warn] [pid 813960:tid 813960] AH01909: limmobilier.tn:443:0 server certificate does NOT include an ID which matches the server name
+[Mon Feb 03 01:02:37.453501 2025] [ssl:warn] [pid 813960:tid 813960] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 01:02:37.532766 2025] [ssl:warn] [pid 813960:tid 813960] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 01:03:18.305074 2025] [ssl:warn] [pid 813960:tid 813960] AH01897: Init: Oops, you want to request client authentication, but no CAs are known for verification!?  [Hint: SSLCACertificate*]
+[Mon Feb 03 01:52:01.132749 2025] [cgi:error] [pid 819860:tid 819919] [client 45.148.10.242:47574] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Mon Feb 03 02:03:24.060328 2025] [core:error] [pid 819860:tid 819947] [client 43.252.231.25:56092] AH10244: invalid URI path (/cgi-bin/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/bin/sh)
+[Mon Feb 03 02:11:30.343029 2025] [core:error] [pid 819860:tid 819951] [client 103.96.73.77:53822] AH10244: invalid URI path (/cgi-bin/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/bin/sh)
+[Mon Feb 03 04:10:08.226510 2025] [cgi:error] [pid 819859:tid 819929] [client 45.148.10.242:37426] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Mon Feb 03 09:29:14.724553 2025] [cgi:error] [pid 819859:tid 819953] [client 45.148.10.242:36136] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Mon Feb 03 13:38:01.856708 2025] [authz_core:error] [pid 958473:tid 958574] [client 213.232.87.234:22615] AH01630: client denied by server configuration: /home/limmobilier/public_html/server-status
+[Mon Feb 03 13:56:53.249892 2025] [cgi:error] [pid 974490:tid 974542] [client 45.148.10.242:56614] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Mon Feb 03 16:43:43.930972 2025] [core:error] [pid 958473:tid 958543] [client 158.220.123.184:55606] AH10244: invalid URI path (/cgi-bin/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/bin/sh)
+[Mon Feb 03 17:26:42.062919 2025] [cgi:error] [pid 1018428:tid 1018528] [client 45.148.10.242:34076] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Mon Feb 03 19:10:18.532592 2025] [core:error] [pid 1018428:tid 1018509] [client 102.211.152.45:54272] AH10244: invalid URI path (/cgi-bin/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/bin/sh)
+[Mon Feb 03 21:07:51.059529 2025] [cgi:error] [pid 1018429:tid 1018504] [client 45.140.42.115:60298] AH02811: stderr from /home/limmobilier/cgi-bin/welcome: script not found or unable to stat
+[Tue Feb 04 02:47:07.779641 2025] [cgi:error] [pid 1106961:tid 1107032] [client 45.148.10.242:43116] AH02811: stderr from /home/limmobilier/cgi-bin/luci: script not found or unable to stat
+[Tue Feb 04 06:07:18.249586 2025] [core:error] [pid 1106961:tid 1107049] [client 103.96.73.77:33062] AH10244: invalid URI path (/cgi-bin/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/bin/sh)
+[Tue Feb 04 12:09:57.130702 2025] [core:error] [pid 1106962:tid 1107037] [client 91.227.41.134:57028] AH10244: invalid URI path (/cgi-bin/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/bin/sh)
