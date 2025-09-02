@@ -1,9 +1,42 @@
 <div class="settings-block">
-    <h2 class="bookmarked-listing__headline">Bonjour, <strong> {{ app.user.prenom }}!</strong></h2>
+    <h2 class="bookmarked-listing__headline">Bonjour, <strong>{{ app.user.prenom }}!</strong></h2>
     <ul class="settings">
-        <li class="setting"><a href="{{ path('mes_annonces') }}" class="setting__link"><i class="fa fa-list fa-fw" aria-hidden="true"></i> Annonces</a></li>
-        <li class="setting"><a href="{{ path('mes_messages') }}" class="setting__link"><i class="fa fa-envelope fa-fw"></i> Messages</a></li>
-        <li class="setting"><a href="{{ path('my_profile') }}" class="setting__link"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profil</a></li>
-        <li class="setting"><a href="{{ path('app_logout') }}" class="setting__link"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Déconnexion</a></li>
+        <li class="setting">
+            <a href="{{ path('mes_annonces') }}" class="setting__link">
+                <!-- List icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+                Annonces
+            </a>
+        </li>
+        <li class="setting">
+            <a href="{{ path('mes_messages') }}" class="setting__link">
+                <!-- Envelope icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.708 2.823L15 11.5V5.383zM14.8 12H1.2l4.708-2.823L8 10.583l2.092-1.406L14.8 12zm-13.6-.517L6.708 7.206 2 4.383v7.1z"/>
+                </svg>
+                Messages
+            </a>
+        </li>
+        <li class="setting">
+            <a href="{{ path('my_profile') }}" class="setting__link">
+                <!-- User icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm4 8s-1-1.5-4-1.5S4 16 4 16s-1-4-1-6 1-5 5-5 5 2 5 5-1 6-1 6z"/>
+                </svg>
+                Profil
+            </a>
+        </li>
+        <li class="setting">
+            <a href="{{ path('app_logout') }}" class="setting__link">
+                <!-- Sign out icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M6 2a2 2 0 0 0-2 2v3h1V4a1 1 0 0 1 1-1h5v2H6v6h5v2H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h1V2H6z"/>
+                    <path d="M11.5 8l-3-3v2H0v2h8.5v2l3-3z"/>
+                </svg>
+                Déconnexion
+            </a>
+        </li>
     </ul>
 </div>

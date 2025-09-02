@@ -36,9 +36,6 @@
                 <div class="row">
                     {% include 'default/__aside.html.twig' %}
                     <main class="col-md-9">
-                        <div class="main-listing__tags">
-                            {% if(offre is defined) %}<a href="{{ path('annonce_liste', {'offre': offre, 'page': '1'}) }}" class="main-listing__clear" style="display: none">Initialiser</a>{% endif %}
-                        </div><!-- .main-listing__tags -->
                         <section class="main-listing-list row">
                             <div class="loading" style="display: none;text-align: center;">
                                 <img src="{{ asset('asset/images/load.gif') }}" alt="Loading">
@@ -56,6 +53,7 @@
         </div><!-- .main-listing__main -->
     </section>
 {% endblock %}
+
 {% block text_footer %}
     <p class="footer__desc">
         Bienvenue sur la page dédiée aux annonces immobilières dans la ville de {{ ville | capitalize }} delegation {{ ville.delegation | capitalize }} gouvernorat {{ ville.gouvernorat | capitalize }}. Que vous recherchiez un appartement, une maison, un terrain ou un local commercial à vendre ou à louer, notre sélection d’annonces actualisées vous permet de trouver rapidement le bien immobilier qui correspond à vos besoins.
@@ -82,7 +80,6 @@
     {{ parent() }}
     <script type="text/javascript">
         $(":input").on("change", function () {
-
             $(".main-listing-list").empty();
             $(".pagination").empty();
             $(".loading").show();
@@ -93,17 +90,6 @@
                 dataType: 'json', // ** ensure you add this line **
                 success: function (data) { // code_html contient le HTML renvoyé
                     var result = jQuery.parseJSON(JSON.stringify(data));
-                    if ($('input[name$="property-type"]:checked').val() != 'ALL') {
-                        $(".main-listing__tag_type").show();
-                        $(".main-listing__clear").show();
-                        $(".main-listing__tag-value_Type").html($('input[name$="property-type"]:checked').val());
-                    }
-                    /*if ($('#listing-city').val() != 'ALL') {
-                     $(".main-listing__tag_city").show();
-                     var villes =  {#{ villes|json_encode }#};
-                     //$(".main-listing__tag-value_City").html('{#{villes.0.label}#}');
-                     }*/
-
                     $(".listing-sort__list").html(data.length + ' résultats');
                     $(".loading").hide();
                     jQuery.each(data, function (index, item) {
@@ -114,10 +100,26 @@
                         if (item.surface_3) {
                             html += '<li class="property-label-areasize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Surface" aria-describedby="tooltip386929"><i class="icon-property-areasize"></i><span class="label-content">' + item.surface_3 + ' m<sup>2</sup></span></li>';
                         }
-                        html += '</ul></div></div><a href="#"><img itemprop="logo" src="/public/uploads/logos/' + item.logo + '" alt="" style="width: 50px;"></a></div></div></div></div></div>';
+                        html += '</ul></div></div><a href="#"><img itemprop="logo" src="/public/uploads/logos/' + item.logo + '" alt="" loading="lazy" width="50" height="50" itemprop="logo" style="width: 50px; height: 50px; object-fit: contain;"></a></div></div></div></div></div>';
 
                         $(".main-listing-list").prepend(html);
                     });
+                }
+            });
+        });
+    </script>
+    <script>
+        window.addEventListener("load", function () {
+            document.querySelectorAll("picture").forEach(picture => {
+                const source = picture.querySelector("source");
+                const img = picture.querySelector("img");
+
+                if (source && source.dataset.srcset) {
+                    source.srcset = source.dataset.srcset;
+                }
+
+                if (img && img.dataset.src) {
+                    img.src = img.dataset.src;
                 }
             });
         });

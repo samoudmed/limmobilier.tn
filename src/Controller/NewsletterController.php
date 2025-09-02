@@ -79,7 +79,7 @@ class NewsletterController extends AbstractController {
                     ->findOneById($id);
 
             $newsletterGeo = $form->getData();
-            dd($form->getData());
+
             if ($request->request->get('gouvernorat')) {
                 $gouvernoratId = $request->request->get('gouvernorat');
                 $gouvernorat = $this->getDoctrine()

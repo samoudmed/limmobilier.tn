@@ -17,35 +17,53 @@
                         <ul class="nav">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('mes_messages') }}">
-                                    <i class="fa fa-inbox"></i> Reçus
+                                    <!-- Inbox icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M4 4h8v2h3v6H0V6h3V4zm8 2V4H4v2H0v6h16V6h-4z"/>
+                                    </svg>
+                                    Reçus
                                     <span class="badge badge-danger">4</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('mes_messages_envoyes') }}">
-                                    <i class="fa fa-rocket"></i> Envoyés
+                                    <!-- Rocket icon SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M6 2l1 5 4-1-1-5-4 1zM2 14s1-2 4-2 4 2 4 2H2z"/>
+                                    </svg>
+                                    Envoyés
                                 </a>
                             </li>
                         </ul>
                     </nav>
                     <main class="inbox">
-
                         <ul class="messages">
                             {% for message in messages %}
                                 <li class="message {% if(message.statut==1) %} unread {% endif %}">
                                 <a href="{{ path('message_show', { 'id' : message.id }) }}">{{message.sujet}}
                                     <div class="actions">
                                         <span class="action">
-                                            <i class="fa fa-square-o"></i>
+                                            <!-- Square icon SVG -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                <rect width="16" height="16" fill="none" stroke="currentColor" stroke-width="1"/>
+                                            </svg>
                                         </span>
                                         <span class="action">
-                                            <i class="fa fa-star-o"></i>
+                                            <!-- Star icon SVG -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M8 12.5l-3.09 1.64.59-3.43L2 7.91l3.46-.5L8 4l1.54 3.41 3.46.5-2.5 2.8.59 3.43L8 12.5z"/>
+                                            </svg>
                                         </span>
                                     </div>
                                     <div class="header">
                                         <span class="from">{{message.sender.username}}</span>
                                         <span class="date">
-                                            <span class="fa fa-paper-clip"></span> {{message.createdAt|date("Y-m-d H:i:s") }}</span>
+                                            <!-- Paperclip icon SVG -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M5.5 6.5v6a3 3 0 0 0 6 0V4a2 2 0 0 0-4 0v6.5a1 1 0 0 0 2 0V5h-1v6a2 2 0 0 1-4 0V6.5h1z"/>
+                                            </svg>
+                                            {{message.createdAt|date("Y-m-d H:i:s") }}
+                                        </span>
                                     </div>
                                     <div class="title">{{message.sujet}}</div>
                                     <div class="description">

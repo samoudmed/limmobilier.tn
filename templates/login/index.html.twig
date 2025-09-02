@@ -1,138 +1,70 @@
 {% extends 'base.html.twig' %}
 
-{% block meta %}
-    <title>Déposer gratuitement votre annonce immobilière</title>
-    <meta name="description" content="Se connecter, devenir membre de limmobilier.tn et déposer gratuitement votre annonce immobilière" />
-    <!-- Inclure la bibliothèque Tailwind CSS pour le nouveau design -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inclure la bibliothèque Chart.js pour le graphique -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        /* Ajout d'une police par défaut pour une meilleure esthétique */
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        /* Style des messages flash pour correspondre au design */
-        .flash-success {
-            background-color: #d1fae5;
-            color: #065f46;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 0.5rem;
-        }
-        .flash-error {
-            background-color: #fee2e2;
-            color: #991b1b;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 0.5rem;
-        }
-    </style>
-{% endblock %}
+{# Page-specific title and description #}
+{% block title %}Déposer gratuitement votre annonce immobilière{% endblock %}
+{% block meta_description %}Se connecter, devenir membre de limmobilier.tn et déposer gratuitement votre annonce immobilière{% endblock %}
 
 {% block body %}
-    <section id="main-container" class="container inner">
-        <div class="container">
-            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
-                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
-                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Connexion</span></li>
-            </ul>
-        </div>
-        <div class="container">
-            <div id="main-content" class="main-content col-xs-12 col-md-12">
-                <div id="primary" class="content-area">
-                    <div id="content" class="site-content" role="main">
-                        <article id="post-8780" class="post-8780 page type-page status-publish hentry">
-                            <div class="entry-content-page clearfix">
-                                <div class="wpb-container vc_row">
-                                    <div class="wpb-container-inner">
-                                        <div class="container">
-                                            <!-- Conteneur principal qui s'adapte pour les écrans larges -->
-                                            <div class="flex flex-col md:flex-row items-stretch justify-center w-full max-w-6xl space-y-8 md:space-y-0 md:space-x-8 mx-auto pb-4">
-                                                <!-- Section du formulaire de connexion à gauche -->
-                                                <div class="bg-white p-8 rounded-2xl shadow-xl w-full md:w-1/2 flex flex-col justify-center">
-                                                    <!-- En-tête du formulaire -->
-                                                    <div class="flex flex-col items-center mb-8">
-                                                        <h1 class="text-3xl font-bold text-gray-800 mb-1">Connexion</h1>
-                                                        <p class="text-gray-500 text-center">Connectez-vous pour continuer</p>
-                                                    </div>
+    <div class="container">
+        {# Breadcrumbs styled with your .ht-breadcrumbs classes #}
+        <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding">
+            <li class="ht-breadcrumbs__item">
+                <a href="{{ path('homepage') }}" class="ht-breadcrumbs__link">
+                    <span class="ht-breadcrumbs__title">Accueil</span>
+                </a>
+            </li>
+            <li class="ht-breadcrumbs__item">
+                <span class="ht-breadcrumbs__page">Connexion</span>
+            </li>
+        </ul>
 
-                                                    <!-- Messages flash -->
-                                                    {% for type, messages in app.session.flashbag.all() %}
-                                                        {% for message in messages %}
-                                                            <div class="flash-{{ type }}">
-                                                                {{ message }}
-                                                            </div>
-                                                        {% endfor %}
-                                                    {% endfor %}
+        {# Main content section #}
+        <div class="row" style="justify-content: center;">
+            <div class="col-md-6">
+                {#
+                   - The main form container, using your custom class.
+                   - Centering can be achieved with a wrapper if needed, or by styling the parent.
+                #}
+                <div class="opalmembership-login-form-wrapper">
 
-                                                    <!-- Formulaire de connexion -->
-                                                    <form action="{{ path('app_login') }}" method="POST" class="space-y-6">
-                                                        <!-- Champ d'e-mail -->
-                                                        <div>
-                                                            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Adresse e-mail</label>
-                                                            <div class="relative rounded-lg shadow-sm input-with-icon">
-                                                                
-                                                                <input 
-                                                                    type="text" 
-                                                                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 sm:text-sm" 
-                                                                    name="_username" 
-                                                                    id="username" 
-                                                                    placeholder="votre@email.com" 
-                                                                    value="">
-                                                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none icon-container">
-                                                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path></svg>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Champ de mot de passe -->
-                                                        <div>
-                                                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
-                                                            <div class="relative rounded-lg shadow-sm input-with-icon">
-                                                                <input 
-                                                                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 sm:text-sm" 
-                                                                    type="password" 
-                                                                    name="_password" 
-                                                                    id="password" 
-                                                                    placeholder="••••••••">
-                                                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none icon-container">
-                                                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                    <h1>Connexion</h1>
+                    <p class="text-center" style="margin-bottom: 2rem;">Connectez-vous pour continuer</p>
 
-                                                        <!-- Bouton de connexion et mot de passe oublié -->
-                                                        <div class="flex items-center justify-between">
-                                                            <div class="text-sm">
-                                                                <a href="{{ path('app_forgot_password_request') }}" class="font-medium text-gray-700 hover:text-black transition-colors duration-200">Mot de passe oublié ?</a>
-                                                            </div>
-                                                            <button type="submit" class="btn-add-ads">
-                                                                Se connecter
-                                                            </button>
-                                                        </div>
+                    {# Include the flash message component (assuming it's styled separately or uses .alert) #}
+                    {% include 'default/_flash_messages.html.twig' %}
 
-                                                        <!-- Champs cachés pour le formulaire -->
-                                                        <input type="hidden" id="opalmembership-login-nonce" name="opalmembership-login-nonce" value="a836c24165">
-                                                        <input type="hidden" name="_wp_http_referer" value="/submit-form/">
-                                                    </form>
+                    {# Login Form #}
+                    <form action="{{ path('app_login') }}" method="POST">
+                        {# Email Field #}
+                        <div class="form-group">
+                            <label for="username" class="form-label">Adresse e-mail</label>
+                            {# Using a generic input style class from your CSS #}
+                            <input type="text" name="_username" id="username" class="form-field" placeholder="votre@email.com" value="">
+                        </div>
 
-                                                    <!-- Lien pour l'inscription -->
-                                                    <div class="mt-6 text-center">
-                                                        <p class="text-sm text-gray-600">
-                                                            Vous n'avez pas de compte ?
-                                                            <a href="{{ path('app_register') }}" class="font-medium text-gray-700 hover:text-black transition-colors duration-200">Inscrivez-vous gratuitement</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
+                        {# Password Field #}
+                        <div class="form-group">
+                            <label for="password" class="form-label">Mot de passe</label>
+                            <input type="password" name="_password" id="password" class="form-field" placeholder="••••••••">
+                        </div>
+
+                        {# Submit and Forgot Password #}
+                        <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+                            <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
+                            <button type="submit" class="btn-add-ads">Se connecter</button>
+                        </div>
+                    </form>
+
+                    {# Link to Registration #}
+                    <div style="margin-top: 1.5rem; text-align: center;">
+                        <p>
+                            Vous n'avez pas de compte ?
+                            <a href="{{ path('app_register') }}">Inscrivez-vous gratuitement</a>
+                        </p>
                     </div>
+
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 {% endblock %}

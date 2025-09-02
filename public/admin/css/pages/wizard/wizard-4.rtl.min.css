@@ -129,9 +129,9 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    -webkit-box-align: start;
-    -ms-flex-align: start;
-    align-items: flex-start; }
+    -webkit-box-align: st;
+    -ms-flex-align: st;
+    align-items: flex-st; }
     .wizard.wizard-4 .wizard-nav .wizard-steps .wizard-step {
       -webkit-box-flex: 0 !important;
       -ms-flex: 0 0 100% !important;
@@ -139,9 +139,9 @@
       position: relative;
       width: 100% !important; }
       .wizard.wizard-4 .wizard-nav .wizard-steps .wizard-step .wizard-wrapper {
-        -webkit-box-pack: start;
-        -ms-flex-pack: start;
-        justify-content: flex-start;
+        -webkit-box-pack: st;
+        -ms-flex-pack: st;
+        justify-content: flex-st;
         -webkit-box-flex: 0;
         -ms-flex: 0 0 100%;
         flex: 0 0 100%;

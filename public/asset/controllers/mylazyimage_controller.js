@@ -15,7 +15,7 @@ export default class extends Controller {
     }
 
     _onConnect(event) {
-        // The lazy-image behavior just started
+        // The lazy-image behavior just sted
     }
 
     _onReady(event) {

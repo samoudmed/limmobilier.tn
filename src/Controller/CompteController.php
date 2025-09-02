@@ -149,76 +149,74 @@ class CompteController extends AbstractController {
                 ->getRepository(Villes::class)
                 ->findAll();
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $annonce = $form->getData();
-                $user = $this->getUser();
-                $em = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                // The form should handle setting these values. If they are not part of the form,
-                // you need to fetch them differently. Assuming they are hidden fields or similar.
-                
-               
-                $annonce->setUser($user);
-                $annonce->setSlug($slugify->slugify($annonce->getLabel()));
-                $annonce->setCreatedAt(new \DateTime('now'));
-                $annonce->setUpdatedAt(new \DateTime('now'));
+            $typeOffre = $request->request->get('offre');
 
-                // The expiredAt field should be handled by the form if it's a date field.
-                // If it's a number of days, you would have a non-mapped field in your form.
-                // For this example, let's assume `expired_at` is a field on your Annonce entity.
-                // If not, you need to use a non-mapped field and set it manually.
-                // $expired_at = $annonce->getExpiredAt(); // Get the value from the form
-                // $dateExpired = new \DateTime();
-                // $dateExpired->modify('+' . $expired_at . ' days');
-                // $annonce->setExpiredAt($dateExpired);
+            $prix = $request->request->get('prix');
+            $file = $request->files->get('nom');
 
-                $em->persist($annonce);
-                $em->flush();
 
-                // The file uploads need to be handled separately if they are not part of the form's data.
-                // However, it's better to manage them through a "FileType" in your form.
-                $nom = $request->files->get('nom');
-                $photos = $request->files->get('photos');
+            $ville = $this->getDoctrine()
+                    ->getRepository(Villes::class)
+                    ->findOneById($request->request->get('annonces')['ville']);
 
-                // upload photos
-                if ($nom) {
-                    $this->savePhoto($nom, 1, $annonce, $user);
-                }
+            $delegation = $this->getDoctrine()
+                    ->getRepository(Delegation::class)
+                    ->findOneById($request->request->get('annonces')['delegation']);
 
-                if ($photos) {
-                    foreach ($photos as $file) {
-                        $this->savePhoto($file, 0, $annonce, $user);
-                    }
-                }
+            $gouvernorat = $this->getDoctrine()
+                    ->getRepository(Gouvernorat::class)
+                    ->findOneById($request->request->get('annonces')['gouvernorat']);
 
-                // The Meta entity creation is commented out. If it's part of the form submission,
-                // it should be handled differently, perhaps with a data transformer or event listener.
-                //
-                // $meta = new Meta();
-                // $meta->setIdEntity($annonce->getId());
-                // $meta->setEntity('annonce');
-                // $meta->setTitle($annonce->getLabel());
-                // $meta->setDescription(substr(strip_tags($annonce->getDescription()), 0, 150));
-                // ...
-                // $em->persist($meta);
-                // $em->flush();
+            $em = $this->getDoctrine()->getManager();
 
-                $this->addFlash('success', 'Votre Annonce a été ajouté avec succès!');
+            $user = $this->getUser();
+            $annonce = $form->getData();
+            $annonce->setUser($user);
+            $annonce->setVille($ville);
+            $annonce->setDelegation($delegation);
+            $annonce->setGouvernorat($gouvernorat);
+            $annonce->setSlug($slugify->slugify($annonce->getLabel()));
+            $annonce->setCreatedAt(new \DateTime('now'));
+            $annonce->setUpdatedAt(new \DateTime('now'));
+            $em->persist($annonce);
 
-                // You should redirect after a successful form submission to prevent resubmission.
-                // return $this->redirectToRoute('some_route');
-            } else {
-                // If the form is submitted but not valid, handle the errors.
-                foreach ($form->getErrors(true) as $error) {
-                    
-                    $fieldName = $error->getCause() ? $error->getCause()->getPropertyPath() : 'global';
-                    $errorMessage = $error->getMessage();
-                    // You can now use $fieldName and $errorMessage to log or flash the errors.
-                    echo "Error on field '{$fieldName}': {$errorMessage}<br>";
-                }
-                dd($request->request);
+            $expired_at = $request->request->get('annonces')['expired_at'];
+            $dateExpired = new \DateTime();
+            $dateExpired->modify('+' . $expired_at . ' days');
+            $dateExpired->format('Y-m-d H:i:s');
+
+            //$annonce->setDisponibilite(new \DateTime('now'));
+            $annonce->setExpiredAt($dateExpired);
+            $annonce->setUpdatedAt(new \DateTime('now'));
+
+            $em->persist($annonce);
+            $em->flush();
+
+            //upload photos
+            if ($file) {
+                $this->savePhoto($file, 1, $annonce, $user);
             }
+
+
+            if ($request->files->get('photos')) {
+                foreach ($request->files->get('photos') as $file2) {
+                    $this->savePhoto($file2, 0, $annonce, $user);
+                }
+            }
+
+            $meta = new Meta();
+            $meta->setIdEntity($annonce->getId());
+            $meta->setEntity('annonce');
+            $meta->setTitle($annonce->getLabel());
+            $meta->setDescription(substr(strip_tags($annonce->getDescription()), 0, 150));
+
+            // mail('samoud.mohamed@gmail.com', 'annonce edit '.$id, 'annonce edit');
+
+            $this->addFlash(
+                    'success', 'Votre Annonce a été ajouté avec succès!'
+            );
         }
 
         $annonce = $this->getDoctrine()

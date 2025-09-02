@@ -3,8 +3,8 @@
     <div class="item-grid__image-container style-hover-zoom clearfix">
         <a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">
             <picture>
-                <source data-srcset="https://limmobilier.tn{{ asset('uploads/photos/263x175/webp/' ~ annonce.photo ~ '.webp') }}" type="image/webp">
-                <img src="https://limmobilier.tn{{ asset('asset/images/lg.gif') }}" data-src="https://limmobilier.tn{{ asset('uploads/photos/263x175/' ~ annonce.photo) }}" alt="Image annonce" width="263" height="175" class="delayed-load">
+                <source data-srcset="{{ asset('uploads/photos/263x175/webp/' ~ annonce.photo ~ '.webp') }}" type="image/webp">
+                <img src="{{ asset('asset/images/lg.gif') }}" data-src="{{ asset('uploads/photos/263x175/' ~ annonce.photo) }}" alt="Image annonce" width="263" height="175" class="delayed-load">
             </picture>
         </a>
     </div><!-- .item-grid__image-container -->
@@ -21,7 +21,7 @@
                     <div>
                         <h3 class="listing__title  h-70"><a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">{{annonce.label| slice(0, 49) | capitalize}} {{ (annonce.label| length) > 49 ? '...' }}</a></h3>
                     </div>
-                    <span class="listing__type"><a href="{{ path('annonce_liste_delegation', {'slug': annonce.delegation.label|slugify , 'page': '1' }) }}">{{annonce.delegation.label}}</a></span>
+                    <span class="listing__type"><a href="{{ path('annonce_liste_delegation', {'slug': annonce.delegation|slugify , 'page': '1' }) }}">{{annonce.delegation}}</a></span>
                     <div class="property-price">
                         <p class="listing__price"> 
                             {% if(annonce.prix != 0) %}
@@ -53,14 +53,14 @@
                         </ul>
                     </div>
                 </div>
-                {% if(annonce.user.agence  != NULL) %}
-                    <a href="{{ path('liste_agence', {'label': annonce.user.agence|slugify, 'id': annonce.user.id, 'page': 1} )  }} ">
-                        {% if(annonce.user.logo  != NULL) %}
+                {% if(annonce.userAgence  != NULL) %}
+                    <a href="{{ path('liste_agence', {'label': annonce.userAgence|slugify, 'id': annonce.userId, 'page': 1} )  }} ">
+                        {% if(annonce.userLogo  != NULL) %}
                             <div itemscope itemtype="https://schema.org/Organization">
-                                <img src="https://limmobilier.tn{{ asset('uploads/logos/' ~ annonce.user.logo) }}" alt="{{ annonce.user.agence }}" loading="lazy" width="50" height="50" itemprop="logo" style="width: 50px; height: 50px; object-fit: contain;">
+                                <img src="{{ asset('uploads/logos/' ~ annonce.userLogo) }}" alt="{{ annonce.userAgence }}" loading="lazy" width="50" height="50" itemprop="logo" style="width: 50px; height: 50px; object-fit: contain;">
                             </div>
                         {% else %}
-                            <div class="avatar50">{{ annonce.user.agence }}</div>
+                            <div class="avatar50">{{ annonce.userAgence }}</div>
                         {% endif %}
                     </a>    
                 {% endif %}        

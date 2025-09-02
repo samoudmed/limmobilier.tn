@@ -36,7 +36,7 @@ var _ = {
 	 *
 	 * By setting this value to `true`, Prism will not automatically highlight all code elements on the page.
 	 *
-	 * You obviously have to change this value before the automatic highlighting started. To do this, you can add an
+	 * You obviously have to change this value before the automatic highlighting sted. To do this, you can add an
 	 * empty Prism object into the global scope before loading the Prism script like this:
 	 *
 	 * ```js
@@ -347,12 +347,12 @@ var _ = {
 		 * differently when keys are deleted and re-inserted. So `insertBefore` can't be implemented by temporarily
 		 * deleting properties which is necessary to insert at arbitrary positions.
 		 *
-		 * To solve this problem, `insertBefore` doesn't actually insert the given tokens into the target object.
-		 * Instead, it will create a new object and replace all references to the target object with the new one. This
+		 * To solve this problem, `insertBefore` doesn't actually insert the given tokens into the get object.
+		 * Instead, it will create a new object and replace all references to the get object with the new one. This
 		 * can be done without temporarily deleting properties, so the iteration order is well-defined.
 		 *
 		 * However, only references that can be reached from `Prism.languages` or `insert` will be replaced. I.e. if
-		 * you hold the target object in a variable, then the value of the variable will not change.
+		 * you hold the get object in a variable, then the value of the variable will not change.
 		 *
 		 * ```js
 		 * var oldMarkup = Prism.languages.markup;
@@ -828,8 +828,8 @@ Token.stringify = function stringify(o, language) {
  * @param {string} text
  * @param {LinkedList<string | Token>} tokenList
  * @param {any} grammar
- * @param {LinkedListNode<string | Token>} startNode
- * @param {number} startPos
+ * @param {LinkedListNode<string | Token>} stNode
+ * @param {number} stPos
  * @param {RematchOptions} [rematch]
  * @returns {void}
  * @private
@@ -838,7 +838,7 @@ Token.stringify = function stringify(o, language) {
  * @property {string} cause
  * @property {number} reach
  */
-function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
+function matchGrammar(text, tokenList, grammar, stNode, stPos, rematch) {
 	for (var token in grammar) {
 		if (!grammar.hasOwnProperty(token) || !grammar[token]) {
 			continue;
@@ -869,7 +869,7 @@ function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
 			var pattern = patternObj.pattern || patternObj;
 
 			for ( // iterate the token list and keep track of the current token/string position
-				var currentNode = startNode.next, pos = startPos;
+				var currentNode = stNode.next, pos = stPos;
 				currentNode !== tokenList.tail;
 				pos += currentNode.value.length, currentNode = currentNode.next
 			) {
@@ -912,7 +912,7 @@ function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
 					p -= currentNode.value.length;
 					pos = p;
 
-					// the current node is a Token, then the match starts inside another Token, which is invalid
+					// the current node is a Token, then the match sts inside another Token, which is invalid
 					if (currentNode.value instanceof Token) {
 						continue;
 					}

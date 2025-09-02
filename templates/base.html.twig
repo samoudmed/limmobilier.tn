@@ -19,9 +19,6 @@
         <meta name="viewport" content="width=device-width">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="format-detection" content="telephone-no">
-        {% block jquery %}
-            <script src="{{ asset('asset/js/jquery.min.js') }}"></script>
-        {% endblock %}
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-C9CZ21NDMW"></script>
         <script>
@@ -43,6 +40,21 @@
                 s1.setAttribute('crossorigin', '*');
                 s0.parentNode.insertBefore(s1, s0);
             })();
+        </script>
+        <script type='text/javascript'>
+            window.smartlook || (function (d) {
+                var o = smartlook = function () {
+                    o.api.push(arguments)
+                }, h = d.getElementsByTagName('head')[0];
+                var c = d.createElement('script');
+                o.api = new Array();
+                c.async = true;
+                c.type = 'text/javascript';
+                c.charset = 'utf-8';
+                c.src = 'https://web-sdk.smartlook.com/recorder.js';
+                h.appendChild(c);
+            })(document);
+            smartlook('init', 'b0e17f0adba09f80f474b0540ea8e431c4af5841', {region: 'eu'});
         </script>
         <!--End of Tawk.to Script-->
         <script type="application/ld+json">
@@ -67,6 +79,8 @@
             ]
             }
         </script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7846444272926957"
+        crossorigin="anonymous"></script>
     </head>
     <body>
         <!-- .page-loader -->
@@ -76,9 +90,10 @@
                     <div class="header-main">
                         <div class="logo-wrapper">
                             <a href="{{ path('homepage') }}" class="logo pbr-logo">
-                                <img src="{{ asset('asset/images/logo.png') }}" alt="Limmobilier.tn">
+                                <img src="{{ asset('asset/images/logo.png') }}" alt="Limmobilier.tn" width="191" height="18">
                             </a>
                         </div>
+
                         <div class="nav-actions-container">
                             <nav id="pbr-mainmenu" class="pbr-mainmenu">
                                 <ul id="primary-menu" class="nav">
@@ -144,9 +159,12 @@
                             </div>
                         </div>
                         <button class="mobile-menu-toggle" aria-expanded="false" aria-controls="primary-menu">
-                            <span class="bar"></span>
-                            <span class="bar"></span>
-                            <span class="bar"></span>
+                            <span class="screen-reader-text">Menu</span>
+                            <svg class="hamburger-icon" viewBox="0 0 100 100" width="30" height="30" aria-hidden="true" focusable="false">
+                            <rect class="line top" width="80" height="10" x="10" y="20" rx="5"></rect>
+                            <rect class="line middle" width="80" height="10" x="10" y="45" rx="5"></rect>
+                            <rect class="line bottom" width="80" height="10" x="10" y="70" rx="5"></rect>
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -213,8 +231,22 @@
                         <div class="footer__logo">
                             <img src="{{ asset('asset/images/logo-dark.png') }}" alt="limmobilier.tn">
                             <ul class="footer__social">
-                                <li><a aria-label="facebook" href="https://www.facebook.com/limmobilier.tn" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a aria-label="linkedin" href="https://www.linkedin.com/company/limmobilier-tn" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                <li>
+                                    <a aria-label="facebook" href="https://www.facebook.com/limmobilier.tn" target="_blank">
+                                        {# Facebook Icon SVG #}
+                                        <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="width:0.625em; height:1em; vertical-align:-0.125em;color:#0866FF">
+                                        <path fill="currentColor" d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a aria-label="linkedin" href="https://www.linkedin.com/company/limmobilier-tn" target="_blank">
+                                        {# LinkedIn Icon SVG #}
+                                        <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width:0.875em; height:1em; vertical-align:-0.125em;color:#0073b1">
+                                        <path fill="currentColor" d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"></path>
+                                        </svg>
+                                    </a>
+                                </li>
                             </ul>
                         </div><!-- .footer__logo -->
                         {% block text_footer %}
@@ -249,59 +281,19 @@
         </div>          
         <a href="#" class="back-to-top"><span class="ion-ios-arrow-up"></span></a>
             {% block stylesheet %}
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-            <link rel="stylesheet" href="{{ asset('asset/css/homepage.css') }}" /> 
+            <link rel="stylesheet" href="{{ asset('asset/css/design.css') }}" /> 
         {% endblock %} 
         <!-- CSS files -->
         <!-- JS Files -->
         {% block javascripts %}
-            <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+            <script src="{{ asset('asset/js/jquery.min.js') }}"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
             <script src="{{ asset('asset/js/dropkick.js') }}"></script>
-            <script src="{{ asset('asset/js/select2.min.js') }}"></script>
             <script src="{{ asset('asset/js/script.js') }}"></script>
             <script src="{{ asset('asset/js/functions.js') }}"></script>
-            <script>
-            $('.select2-selection__rendered').select2({
-                placeholder: 'Select an option'
-            });
-            </script>
+            <script src="{{ asset('asset/js/my-script.js') }}"></script>
         {% endblock %}
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const menuToggle = document.querySelector('.mobile-menu-toggle');
-                const mainMenu = document.querySelector('#pbr-mainmenu');
-                const userActions = document.querySelector('.user-actions');
-
-                if (menuToggle && mainMenu) {
-                    // We will manage the overflow property here in the JS
-                    // Make sure the menu starts as hidden
-                    mainMenu.style.overflow = 'hidden';
-
-                    menuToggle.addEventListener('click', function () {
-                        // Check if the menu is currently open or opening
-                        if (mainMenu.classList.contains('is-open')) {
-                            // IT'S OPEN, SO CLOSE IT
-                            // 1. Immediately hide overflow to prevent content from spilling out during animation
-                            // 2. Remove the class to trigger the CSS max-height transition
-                            mainMenu.classList.remove('is-open');
-                            userActions.classList.remove('is-open');
-                        } else {
-                            // IT'S CLOSED, SO OPEN IT
-                            // 1. Add the class to trigger the CSS max-height transition
-                            mainMenu.classList.add('is-open');
-                            userActions.classList.add('is-open');
-                            // 2. Wait for the CSS animation to finish, THEN make overflow visible
-                        }
-
-                        // Update aria-expanded for accessibility
-                        const isOpen = mainMenu.classList.contains('is-open');
-                        this.setAttribute('aria-expanded', isOpen);
-                    });
-                }
-            });
-        </script>
     </body>
 </html>

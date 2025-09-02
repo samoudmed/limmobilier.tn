@@ -30,3 +30,53 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 /node_modules
 /css-cleanup/node_modules
+node_modules
+.git
+.env
+*.log
+
+.git
+.gitignore
+
+# Dependencies managed by Composer
+vendor/
+
+# Dependencies managed by Node.js/npm
+node_modules/
+
+# IDE and OS files
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+
+# Log and cache files
+storage/logs/
+storage/framework/
+bootstrap/cache/
+# Ignore Git and version control files
+.git
+.gitignore
+
+# Ignore Composer dependencies (should be installed in the container)
+vendor/
+
+# Ignore Node.js dependencies (if any)
+node_modules/
+
+# Ignore IDE and OS-specific files
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+
+# Ignore log files, cache, and user uploads
+storage/logs/
+storage/framework/
+bootstrap/cache/
+public/uploads/
+
+# Ignore Docker files themselves
+Dockerfile
+docker-compose.yml
+.dockerignore

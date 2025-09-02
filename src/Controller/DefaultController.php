@@ -35,23 +35,64 @@ use Symfony\Component\Mime\Email;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Inspector\Inspector;
+use App\Repository\UserRepository;
+use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 class DefaultController extends AbstractController {
+
+    private TagAwareCacheInterface $annoncesCache;
+
+    public function __construct(TagAwareCacheInterface $annoncesCache) {
+        $this->annoncesCache = $annoncesCache;
+    }
 
     /**
      * @Route("/", name="homepage", methods={"GET"})
      */
-    public function index(Request $request, Inspector $inspector): Response {
+    public function index(Inspector $inspector): Response {
 
-        $annonces = $this->getDoctrine()
-                ->getRepository(Annonces::class)
-                ->findActive(24);
+        //$this->annoncesCache->delete('homepage_index');
+        // Get annonces from cache or rebuild
+        $annoncesList = $this->annoncesCache->get('homepage_index', function (ItemInterface $item) {
+            $item->tag('annonces'); // Now supported
+            $annonces = $this->getDoctrine()->getRepository(Annonces::class)->findActive(24);
+            $annonces = $this->getFeaturedPhoto($annonces);
 
-        $annoncesList = $this->getFeaturedPhoto($annonces);
+            return array_map(function($annonce) {
+
+                return [
+                'id' => $annonce->getId(),
+                'label' => $annonce->getLabel() ?? '',
+                'prix' => $annonce->getPrix() ?? 0,
+                'photo' => $annonce->photo ?? 'default-img.png',
+                'kind' => $annonce->getKind()?->getLabel() ?? '',
+                'delegation' => $annonce->getDelegation()?->getLabel() ?? '',
+                'createdAt' => $annonce->getCreatedAt()?->format('Y-m-d H:i:s') ?? '',
+                'offre' => $annonce->getOffre() ?? '',
+                'pieces' => $annonce->getPieces() ?? null,
+                'surface' => $annonce->getSurface() ?? null,
+                'userId' => $annonce->getUser()?->getId() ?? '',
+                'userAgence' => $annonce->getUser()?->getAgence() ?? '',
+                'userLogo' => $annonce->getUser()?->getLogo() ?? null,
+                'instalment' => $annonce->getInstalment() ?? null,
+                ];
+            }, $annonces);
+        });
+
 
         $villes = $this->villes();
 
-        return $this->render('default/index.html.twig', ['annonces' => $annoncesList, 'villes' => $villes])->setSharedMaxAge(3600);
+        $response = $this->render('default/index.html.twig', [
+            'annonces' => $annoncesList,
+            'villes' => $villes
+        ]);
+
+        $response->setPublic();            // mark as public cacheable
+        $response->setMaxAge(3600);       // browser cache 1 hour
+        $response->setSharedMaxAge(3600); // reverse proxy / CDN cache 1 hour
+
+        return $response;
     }
 
     public function villes() {
@@ -88,65 +129,131 @@ class DefaultController extends AbstractController {
      * @Route("/annonce/{label}-{id}.html", name="annonce_details", requirements={"label"="[0-9a-zA-Z][0-9a-zA-Z\-_]{1,99}", "id"="\d+"})
      */
     public function annonce(Request $request, $id) {
-
-
-        $annonce = $this->getDoctrine()
-                ->getRepository(Annonces::class)
-                ->findOneBy(array('id' => $id));
         $dateNow = new \DateTime();
 
-        if((!$annonce)) {
-            
+        // Get annonce data from Redis cache
+        $annonceData = $this->annoncesCache->get('annonce_' . $id, function (ItemInterface $item) use ($id) {
+            $item->tag('annonces'); // tag for cache invalidation
+
+            $annonce = $this->getDoctrine()->getRepository(Annonces::class)->find($id);
+
+            if (!$annonce) {
+                return null;
+            }
+
+            return [
+            'id' => $annonce->getId(),
+            'label' => $annonce->getLabel(),
+            'slug' => $annonce->getSlug(),
+            'prix' => $annonce->getPrix(),
+            'photo' => $this->getFeaturedPhoto([$annonce])[0] ?? 'default-img.png',
+            'photos' => $annonce->getPhotos() ? array_map(fn($p) => $p->getNom(), $annonce->getPhotos()->toArray()) : [],
+            'kind' => $annonce->getKind()?->getLabel(),
+            'delegation' => $annonce->getDelegation()?->getLabel(),
+            'gouvernorat' => $annonce->getGouvernorat()?->getLabel(),    
+            'gouvernoratSlug' => $annonce->getGouvernorat()?->getSlug(),
+            'ville' => $annonce->getVille()?->getLabel(),
+            'villeSlug' => $annonce->getVille()?->getSlug(),
+            'villeId' => $annonce->getVille()?->getId(),
+            'adresse' => $annonce->getAdresse(),
+            'localisationMap' => $annonce->getLocalisationMap(),    
+            'description' => $annonce->getDescription(),
+            'createdAt' => $annonce->getCreatedAt()?->format('Y-m-d H:i:s'),
+            'offre' => $annonce->getOffre(),
+            'pieces' => $annonce->getPieces(),
+            'surface' => $annonce->getSurface(),
+            'userId' => $annonce->getUser()?->getId(),
+            'userAgence' => $annonce->getUser()?->getAgence(),
+            'userLogo' => $annonce->getUser()?->getLogo(),
+            'instalment' => $annonce->getInstalment(),
+            'isPublished' => $annonce->isPublished(),
+            'isStatut' => $annonce->isStatut(),
+            'isDeleted' => $annonce->isDeleted(),
+            'expiredAt' => $annonce->getExpiredAt()?->format('Y-m-d'),
+            'orientation' => $annonce->getOrientation(),
+            'climatiseur' => $annonce->isClimatiseur(),
+            'anneeConstruction' => $annonce->getAnneeConstruction(),
+            'piscine' => $annonce->isPiscine(),
+            'parking' => $annonce->isParking(),
+            'chauffage' => $annonce->isChauffage(),
+            'capacite' => $annonce->getCapacite(),
+            'internet' => $annonce->isInternet(),
+            'meuble' => $annonce->isMeuble(),
+            'salleBain' => $annonce->isSalleBain(),
+            'securite' => $annonce->isSecurite(),
+            'ascenseur' => $annonce->isAscenseur(),
+            'cheminee' => $annonce->isCheminee(),
+            'cuisineEquipe' => $annonce->isCuisineEquipe(),
+            'jacuzzi' => $annonce->isJacuzzi(),
+            'jardin' => $annonce->isJardin(),
+            'electricite' => $annonce->isElectricite(),
+            'gaz' => $annonce->isGaz(),
+            'telephone' => $annonce->isTelephone(),
+            'eau' => $annonce->isEau(),
+            'assainissement' => $annonce->isAssainissement(),
+            'permisConstruction' => $annonce->isPermisConstruction(),
+            'vue' => $annonce->isVue(),
+            'disponibilite' => $annonce->getDisponibilite()?->format('Y-m-d'),
+            'etage' => $annonce->getEtage(),
+            'created_at' => $annonce->getCreatedAt()?->format('Y-m-d H:i:s'),
+            'updated_at' => $annonce->getUpdatedAt()?->format('Y-m-d H:i:s'),
+            'pays' => $annonce->getPays()?->getLabel(),
+            'userId' => $annonce->getUser()?->getId() ?? '',
+            'userAgence' => $annonce->getUser()?->getAgence() ?? '',
+            'userPhone' => $annonce->getUser()?->getTelephone() ?? '',   
+            'userLogo' => $annonce->getUser()?->getLogo() ?? null,
+            ];
+        });
+
+        // If annonce not found, redirect to homepage
+        if (!$annonceData) {
             return $this->redirectToRoute('homepage');
-            
-        } elseif ((($annonce->isPublished() == 0) || ($annonce->isStatut() == 0) || ($annonce->isDeleted() == 1) || ($annonce->getExpiredAt() < $dateNow))) {
+        }
+
+        // Check if annonce is expired or unpublished
+        if (!$annonceData['isPublished'] || !$annonceData['isStatut'] || $annonceData['isDeleted'] || $annonceData['expiredAt'] < $dateNow->format('Y-m-d')) {
 
             $annonces = $this->getDoctrine()
                     ->getRepository(Annonces::class)
-                    ->searchSimilar($annonce->getOffre(), $annonce->getKind(), $annonce->getVille(), 4, $id);
+                    ->searchSimilar($annonceData['offre'], $annonceData['kind'], $annonceData['delegation'], 4, $id);
 
             $annoncesInCity = $this->getDoctrine()
                     ->getRepository(Annonces::class)
-                    ->searchSimilarCity($annonce->getVille(), 4, $id);
+                    ->searchSimilarCity($annonceData['delegation'], 4, $id);
 
             $annonces = $this->getFeaturedPhoto($annonces);
-            if(!$annonces){
-                $annonces = $this->getDoctrine()
-                    ->getRepository(Annonces::class)
-                    ->findActive(8);
-                $annonces = $this->getFeaturedPhoto($annonces);
-            }
             $annoncesInCity = $this->getFeaturedPhoto($annoncesInCity);
 
-            return $this->render('default/details-expired.html.twig', ['annonce' => $annonce, 'annonces' => $annonces, 'annoncesInCity' => $annoncesInCity]);
-        } else {
-
-            $em = $this->getDoctrine()->getManager();
-            $annonce->setView($annonce->getView() + rand(1, 50));
-            $annonce->setRealView($annonce->getRealView() + 1);
-            $em->persist($annonce);
-            $em->flush();
-
-            $photo = $this->getDoctrine()
-                    ->getRepository(Photos::class)
-                    ->findOneByAnnonce($annonce);
-
-            if (isset($photo)) {
-                $annonce->photo = $photo->getNom();
+            if (!$annonces) {
+                $annonces = $this->getDoctrine()
+                        ->getRepository(Annonces::class)
+                        ->findActive(8);
+                $annonces = $this->getFeaturedPhoto($annonces);
             }
 
+            return $this->render('default/details-expired.html.twig', [
+                        'annonce' => $annonceData,
+                        'annonces' => $annonces,
+                        'annoncesInCity' => $annoncesInCity,
+            ]);
+        } else {
+            // Increment views only for real entity
+            $em = $this->getDoctrine()->getManager();
+            $annonce = $this->getDoctrine()->getRepository(Annonces::class)->find($id);
+            $annonce->setView($annonce->getView() + rand(1, 50));
+            $annonce->setRealView($annonce->getRealView() + 1);
+            $em->flush();
+
+            // Handle message form
             $message = new Message();
             $formMessage = $this->createForm(MessageType::class, $message);
             $formMessage->handleRequest($request);
 
-            $return = $this->render('default/details.html.twig', ['annonce' => $annonce, 'formMessage' => $formMessage->createView()]);
-            
-            $return->setPublic();
-            $return->setSharedMaxAge(3600); // Cache de 1 heure pour Varnish
-            $return->headers->set('Cache-Control', 'public, s-maxage=3600, max-age=3600');
-            $return->headers->remove('Set-Cookie'); // Supprimer les cookies
-
-            return $return;
+            // Render template with HTTP cache headers
+            return $this->render('default/details.html.twig', [
+                        'annonce' => $annonceData,
+                        'formMessage' => $formMessage->createView(),
+            ]);
         }
     }
 
@@ -229,7 +336,7 @@ class DefaultController extends AbstractController {
 
         return $this->render('default/list_agence.html.twig', ['annoncesList' => $allAnnonces, 'annonces' => $annonces, 'user' => $user, 'page' => $page]);
     }
-    
+
     /**
      * @Route("/agences-immobilieres-{page}.html", name="liste-agences")
      */
@@ -246,7 +353,7 @@ class DefaultController extends AbstractController {
                 24 /* limit per page */
         );
 
-        return $this->render('default/list_agences.html.twig', ['agences' => $agences]);
+        return $this->render('default/list_agences.html.twig', ['agences' => $result]);
     }
 
     /**
@@ -284,10 +391,10 @@ class DefaultController extends AbstractController {
             $photo = $this->getDoctrine()
                     ->getRepository(Photos::class)
                     ->findOneBy(array('annonce' => $annonce, 'featured' => 1));
-            if(!$photo) {
+            if (!$photo) {
                 $photo = $this->getDoctrine()
-                    ->getRepository(Photos::class)
-                    ->findOneBy(array('annonce' => $annonce));
+                        ->getRepository(Photos::class)
+                        ->findOneBy(array('annonce' => $annonce));
             }
             $annonces[$k]->photo = (isset($photo)) ? $photo->getNom() : 'default-img.png';
         }
@@ -472,7 +579,17 @@ class DefaultController extends AbstractController {
         $favorite->setUser($user);
         $em->persist($favorite);
         $em->flush();
-        
+
         return $this->json('succes');
     }
+
+    /**
+     * @Route("/top-agencies", name="top_agencies")
+     */
+    public function topAgencies(UserRepository $userRepository): Response {
+        $topAgenciesByAds = $userRepository->findTopAgenciesByAds(3);
+
+        return $this->render('default/__topAgencies.html.twig', ['topAgenciesByAds' => $topAgenciesByAds]);
+    }
+
 }

@@ -48,7 +48,11 @@ services:
             
     FOS\ElasticaBundle\Finder\PaginatedFinderInterface $annonceFinder:
         alias: fos_elastica.finder.annonces
-        
-    App\EventListener\InspectorListener:
+
+    App\EventSubscriber\AnnonceCacheSubscriber:
+        arguments:
+            $cache: '@annonces_cache'  # <-- must match the pool name
+            $logger: '@logger'
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }    
+            - { name: doctrine.event_subscriber }
+

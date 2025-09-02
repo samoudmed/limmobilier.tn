@@ -271,115 +271,7 @@
                         </div>
 
                         <!-- SortableJS (très léger, précis et compatible mobile) -->
-                        <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 
-                        <script>
-                        const previewContainer = document.getElementById("previewMultiImage");
-                        const multiInput = document.getElementById("multi_file");
-                        const uploadArea = document.getElementById("uploadArea");
-                        const orderField = document.getElementById("photos_order");
-                        let imageCount = 0;
-                        const maxImages = 12;
-                        const maxSize = 2 * 1024 * 1024; // 2 Mo
-
-                        // Mise à jour du badge "Photo à la une"
-                        function updateFeaturedBadge() {
-                            [...previewContainer.querySelectorAll(".featured-badge")].forEach(b => b.remove());
-                            const first = previewContainer.querySelector(".preview");
-                            if (first) {
-                                const badge = document.createElement("div");
-                                badge.className = "featured-badge";
-                                badge.textContent = "Photo à la une";
-                                first.appendChild(badge);
-                            }
-                        }
-
-                        // Sérialise l'ordre dans le champ caché
-                        function updateOrderField() {
-                            const ids = [...previewContainer.querySelectorAll(".preview")]
-                                    .map(p => p.dataset.id);
-                            orderField.value = JSON.stringify(ids);
-                        }
-
-                        // Génère un ID unique local
-                        function uid() {
-                            return 'img_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
-                        }
-
-                        // Ajoute une vignette d'aperçu
-                        function addImagePreview(file) {
-                            if (!file.type.startsWith("image/")) {
-                                alert("Seules les images sont acceptées.");
-                                return;
-                            }
-                            if (file.size > maxSize) {
-                                alert(`"${file.name}" est trop grande (${(file.size / 1024 / 1024).toFixed(2)} Mo). Max = 2 Mo`);
-                                return;
-                            }
-                            if (imageCount >= maxImages) {
-                                alert("Vous pouvez télécharger au maximum 12 images.");
-                                return;
-                            }
-
-                            const id = uid();
-                            const reader = new FileReader();
-                            reader.onload = (e) => {
-                                const wrapper = document.createElement("div");
-                                wrapper.className = "preview";
-                                wrapper.dataset.id = id;
-                                const img = document.createElement("img");
-                                img.src = e.target.result;
-                                img.alt = file.name;
-                                const btn = document.createElement("button");
-                                btn.type = "button";
-                                btn.className = "remove-btn";
-                                btn.textContent = "×";
-                                btn.addEventListener("click", (ev) => {
-                                    ev.stopPropagation();
-                                    wrapper.remove();
-                                    imageCount--;
-                                    updateFeaturedBadge();
-                                    updateOrderField();
-                                });
-                                wrapper.appendChild(img);
-                                wrapper.appendChild(btn);
-                                previewContainer.appendChild(wrapper);
-                                imageCount++;
-                                updateFeaturedBadge();
-                                updateOrderField();
-                            };
-                            reader.readAsDataURL(file);
-                        }
-
-                        // Sélection via input
-                        multiInput.addEventListener("change", (e) => {
-                            Array.from(e.target.files).forEach(file => addImagePreview(file));
-                        });
-                        // Drag & drop fichiers dans la zone
-                        uploadArea.addEventListener("click", () => multiInput.click());
-                        uploadArea.addEventListener("dragover", (e) => {
-                            e.preventDefault();
-                            uploadArea.classList.add("dragover");
-                        });
-                        uploadArea.addEventListener("dragleave", () => {
-                            uploadArea.classList.remove("dragover");
-                        });
-                        uploadArea.addEventListener("drop", (e) => {
-                            e.preventDefault();
-                            uploadArea.classList.remove("dragover");
-                            Array.from(e.dataTransfer.files).forEach(file => addImagePreview(file));
-                        });
-                        // --- Réorganisation ultra précise avec SortableJS ---
-                        const sortable = new Sortable(previewContainer, {
-                            animation: 150,
-                            ghostClass: "dragging",
-                            forceFallback: true, // meilleur rendu multi-navigateurs et mobile
-                            filter: ".remove-btn", // éviter le drag quand on clique sur supprimer
-                            onEnd: () => {
-                                updateFeaturedBadge();
-                                updateOrderField();
-                            }
-                        });</script>
                         <div class="form-step" data-step="5">
                             <h3 class="form-section-title">Intérieur & Extérieur</h3>
                             <div class="form-section">
@@ -418,7 +310,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         {{ form_widget(form.cheminee, {'attr': {'class': 'submit-property__checkbox'}}) }}
-                                        <label for="annonces_chemine" class="submit-property__label submit-property__feature">Cheminée</label>
+                                        <label for="annonces_cheminee" class="submit-property__label submit-property__feature">Cheminée</label>
                                         <span class="help-block">{{ form_errors(form.cheminee) }}</span>
                                     </div>
                                     <div class="col-md-3">
@@ -430,6 +322,31 @@
                                         {{ form_widget(form.jacuzzi, {'attr': {'class': 'submit-property__checkbox'}}) }}
                                         <label for="annonces_jacuzzi" class="submit-property__label submit-property__feature">Jacuzzi</label>
                                         <span class="help-block">{{ form_errors(form.jacuzzi) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.electricite, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_electricite" class="submit-property__label submit-property__feature">Électricité</label>
+                                        <span class="help-block">{{ form_errors(form.electricite) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.gaz, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_gaz" class="submit-property__label submit-property__feature">Gaz</label>
+                                        <span class="help-block">{{ form_errors(form.gaz) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.telephone, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_telephone" class="submit-property__label submit-property__feature">Téléphone</label>
+                                        <span class="help-block">{{ form_errors(form.telephone) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.eau, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_eau" class="submit-property__label submit-property__feature">Eau</label>
+                                        <span class="help-block">{{ form_errors(form.eau) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.assainissement, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_assainissement" class="submit-property__label submit-property__feature">Assainissement sanitaire</label>
+                                        <span class="help-block">{{ form_errors(form.assainissement) }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -459,6 +376,11 @@
                                     <div class="col-md-3">
                                         {{ form_widget(form.vue, {'attr': {'class': 'submit-property__checkbox'}}) }}
                                         <label for="annonces_vue" class="submit-property__label submit-property__feature">Vue mer ou dégagée</label>
+                                        <span class="help-block">{{ form_errors(form.vue) }}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.permisConstruction, {'attr': {'class': 'submit-property__checkbox'}}) }}
+                                        <label for="annonces_permisConstruction" class="submit-property__label submit-property__feature">Permis de construction</label>
                                         <span class="help-block">{{ form_errors(form.vue) }}</span>
                                     </div>
                                 </div>
@@ -699,5 +621,115 @@
             }
             return isValid;
         }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+
+    <script>
+        const previewContainer = document.getElementById("previewMultiImage");
+        const multiInput = document.getElementById("multi_file");
+        const uploadArea = document.getElementById("uploadArea");
+        const orderField = document.getElementById("photos_order");
+        let imageCount = 0;
+        const maxImages = 12;
+        const maxSize = 2 * 1024 * 1024; // 2 Mo
+
+        // Mise à jour du badge "Photo à la une"
+        function updateFeaturedBadge() {
+            [...previewContainer.querySelectorAll(".featured-badge")].forEach(b => b.remove());
+            const first = previewContainer.querySelector(".preview");
+            if (first) {
+                const badge = document.createElement("div");
+                badge.className = "featured-badge";
+                badge.textContent = "Photo à la une";
+                first.appendChild(badge);
+            }
+        }
+
+        // Sérialise l'ordre dans le champ caché
+        function updateOrderField() {
+            const ids = [...previewContainer.querySelectorAll(".preview")]
+                    .map(p => p.dataset.id);
+            orderField.value = JSON.stringify(ids);
+        }
+
+        // Génère un ID unique local
+        function uid() {
+            return 'img_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+        }
+
+        // Ajoute une vignette d'aperçu
+        function addImagePreview(file) {
+            if (!file.type.startsWith("image/")) {
+                alert("Seules les images sont acceptées.");
+                return;
+            }
+            if (file.size > maxSize) {
+                alert(`"${file.name}" est trop grande (${(file.size / 1024 / 1024).toFixed(2)} Mo). Max = 2 Mo`);
+                return;
+            }
+            if (imageCount >= maxImages) {
+                alert("Vous pouvez télécharger au maximum 12 images.");
+                return;
+            }
+
+            const id = uid();
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const wrapper = document.createElement("div");
+                wrapper.className = "preview";
+                wrapper.dataset.id = id;
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.alt = file.name;
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "remove-btn";
+                btn.textContent = "×";
+                btn.addEventListener("click", (ev) => {
+                    ev.stopPropagation();
+                    wrapper.remove();
+                    imageCount--;
+                    updateFeaturedBadge();
+                    updateOrderField();
+                });
+                wrapper.appendChild(img);
+                wrapper.appendChild(btn);
+                previewContainer.appendChild(wrapper);
+                imageCount++;
+                updateFeaturedBadge();
+                updateOrderField();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Sélection via input
+        multiInput.addEventListener("change", (e) => {
+            Array.from(e.target.files).forEach(file => addImagePreview(file));
+        });
+        // Drag & drop fichiers dans la zone
+        uploadArea.addEventListener("click", () => multiInput.click());
+        uploadArea.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            uploadArea.classList.add("dragover");
+        });
+        uploadArea.addEventListener("dragleave", () => {
+            uploadArea.classList.remove("dragover");
+        });
+        uploadArea.addEventListener("drop", (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove("dragover");
+            Array.from(e.dataTransfer.files).forEach(file => addImagePreview(file));
+        });
+        // --- Réorganisation ultra précise avec SortableJS ---
+        const sortable = new Sortable(previewContainer, {
+            animation: 150,
+            ghostClass: "dragging",
+            forceFallback: true, // meilleur rendu multi-navigateurs et mobile
+            filter: ".remove-btn", // éviter le drag quand on clique sur supprimer
+            onEnd: () => {
+                updateFeaturedBadge();
+                updateOrderField();
+            }
+        });
     </script>
 {% endblock %}
