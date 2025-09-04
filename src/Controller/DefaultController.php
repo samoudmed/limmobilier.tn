@@ -80,12 +80,8 @@ class DefaultController extends AbstractController {
             }, $annonces);
         });
 
-
-        $villes = $this->villes();
-
         $response = $this->render('default/index.html.twig', [
             'annonces' => $annoncesList,
-            'villes' => $villes
         ]);
 
         $response->setPublic();            // mark as public cacheable
@@ -93,15 +89,6 @@ class DefaultController extends AbstractController {
         $response->setSharedMaxAge(3600); // reverse proxy / CDN cache 1 hour
 
         return $response;
-    }
-
-    public function villes() {
-
-        $villes = $this->getDoctrine()
-                ->getRepository(Villes::class)
-                ->findBy([], ['label' => 'asc']);
-
-        return $villes;
     }
 
     /**
@@ -150,13 +137,13 @@ class DefaultController extends AbstractController {
             'photos' => $annonce->getPhotos() ? array_map(fn($p) => $p->getNom(), $annonce->getPhotos()->toArray()) : [],
             'kind' => $annonce->getKind()?->getLabel(),
             'delegation' => $annonce->getDelegation()?->getLabel(),
-            'gouvernorat' => $annonce->getGouvernorat()?->getLabel(),    
+            'gouvernorat' => $annonce->getGouvernorat()?->getLabel(),
             'gouvernoratSlug' => $annonce->getGouvernorat()?->getSlug(),
             'ville' => $annonce->getVille()?->getLabel(),
             'villeSlug' => $annonce->getVille()?->getSlug(),
             'villeId' => $annonce->getVille()?->getId(),
             'adresse' => $annonce->getAdresse(),
-            'localisationMap' => $annonce->getLocalisationMap(),    
+            'localisationMap' => $annonce->getLocalisationMap(),
             'description' => $annonce->getDescription(),
             'createdAt' => $annonce->getCreatedAt()?->format('Y-m-d H:i:s'),
             'offre' => $annonce->getOffre(),
@@ -200,7 +187,7 @@ class DefaultController extends AbstractController {
             'pays' => $annonce->getPays()?->getLabel(),
             'userId' => $annonce->getUser()?->getId() ?? '',
             'userAgence' => $annonce->getUser()?->getAgence() ?? '',
-            'userPhone' => $annonce->getUser()?->getTelephone() ?? '',   
+            'userPhone' => $annonce->getUser()?->getTelephone() ?? '',
             'userLogo' => $annonce->getUser()?->getLogo() ?? null,
             ];
         });
@@ -286,12 +273,9 @@ class DefaultController extends AbstractController {
      */
     public function annonceListe(Request $request, PaginatorInterface $paginator, $offre, $page = 1) {
 
-
         $allAnnonces = $this->getDoctrine()
                 ->getRepository(Annonces::class)
                 ->findByBien(ucfirst($offre));
-
-        $villes = $this->villes();
 
         $allAnnonces = $this->getFeaturedPhoto($allAnnonces);
 
@@ -305,7 +289,36 @@ class DefaultController extends AbstractController {
             return $this->redirectToRoute('annonce_liste', ['offre' => $offre, 'page' => 1]);
         }
 
-        return $this->render('default/list.html.twig', ['annoncesList' => $allAnnonces, 'annonces' => $annonces, 'offre' => $offre, 'villes' => $villes, 'page' => $page]);
+        return $this->render('default/list.html.twig', ['annoncesList' => $allAnnonces, 'annonces' => $annonces, 'offre' => $offre, 'page' => $page]);
+    }
+
+    /**
+     * @Route("/anciennes-annonces-immobilier-{page}.html", name="old_ads", methods={"GET"})
+     */
+    public function oldAds(PaginatorInterface $paginator, $page = 1) {
+
+        $query = $this->getDoctrine()
+                ->getRepository(Annonces::class)
+                ->findOldAdsQuery();
+
+        $annonces = $paginator->paginate(
+                $query, // ⚡ ici c’est une Query, pas un tableau
+                $page,
+                24
+        );
+        
+        if ((count($annonces->getItems()) === 0) && ($page > 1)) {
+            return $this->redirectToRoute('annonce_liste', ['page' => 1]);
+        }
+        
+        foreach ($annonces as $k => $annonce) {
+            $annonces[$k]->photo = (isset($photo)) ? $photo->getNom() : 'default-img.png';
+        }
+        
+        return $this->render('default/list.html.twig', [
+                    'annonces' => $annonces,
+                    'page' => $page,
+        ]);
     }
 
     /**
@@ -368,8 +381,6 @@ class DefaultController extends AbstractController {
                 ->getRepository(Annonces::class)
                 ->findByBienType(ucfirst($offre), $oType);
 
-        $villes = $this->villes();
-
         $allAnnonces = $this->getFeaturedPhoto($allAnnonces);
 
         $annonces = $paginator->paginate(
@@ -381,7 +392,7 @@ class DefaultController extends AbstractController {
             return $this->redirectToRoute('annonce_liste_type', ['offre' => $offre, 'type' => $type, 'page' => 1]);
         }
 
-        return $this->render('default/list.html.twig', ['annoncesList' => $allAnnonces, 'annonces' => $annonces, 'offre' => $offre, 'type' => $oType, 'page' => $page, 'villes' => $villes]);
+        return $this->render('default/list.html.twig', ['annoncesList' => $allAnnonces, 'annonces' => $annonces, 'offre' => $offre, 'type' => $oType, 'page' => $page]);
     }
 
     public function getFeaturedPhoto($annonces) {
@@ -408,8 +419,6 @@ class DefaultController extends AbstractController {
                 ->getRepository(Annonces::class)
                 ->findBy(['offre' => ucfirst($offre), 'type' => $type], array('id' => 'DESC'));
 
-        $villes = $this->villes();
-
         $allAnnonces = $this->getFeaturedPhoto($annoncesList);
 
         $annonces = $paginator->paginate(
@@ -418,7 +427,7 @@ class DefaultController extends AbstractController {
                 10 /* limit per page */
         );
 
-        return $this->render('default/mailing.html.twig', ['annoncesList' => $allAnnonces, 'annonces' => $annonces, 'offre' => $offre, 'type' => $type, 'page' => $page, 'villes' => $villes]);
+        return $this->render('default/mailing.html.twig', ['annoncesList' => $allAnnonces, 'annonces' => $annonces, 'offre' => $offre, 'type' => $type, 'page' => $page]);
     }
 
     public function countListing(Request $request, $offre) {
@@ -428,13 +437,6 @@ class DefaultController extends AbstractController {
                 ->findByBien($offre);
 
         return new Response(count($annonces));
-    }
-
-    public function listingVille(Request $request) {
-
-        $villes = $this->villes();
-
-        return $this->render('default/_villes.html.twig', ['villes' => $villes]);
     }
 
     public function listingGouvernorat(Request $request) {

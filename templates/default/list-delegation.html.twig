@@ -54,6 +54,10 @@
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                                     {% include 'default/__annonce.html.twig' %}
                                 </div><!-- .col -->
+                            {% else %}
+                                <div class="col-12 text-center text-muted py-3">
+                                    Aucune annonce immobilière n’est disponible dans cette section pour le moment. <br>Revenez bientôt pour découvrir de nouvelles offres !
+                                </div>    
                             {% endfor %}
                             {{ knp_pagination_render(annonces) }}
                         </section>

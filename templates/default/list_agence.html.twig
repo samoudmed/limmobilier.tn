@@ -74,6 +74,10 @@
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                                     {% include 'default/__annonce.html.twig' %}
                                 </div><!-- .col -->
+                            {% else %}
+                                <div class="col-12 text-center text-muted py-3">
+                                    Aucune annonce immobilière n’est disponible dans cette section pour le moment. <br>Revenez bientôt pour découvrir de nouvelles offres !
+                                </div>    
                             {% endfor %}
                             {{ knp_pagination_render(annonces) }}
                         </section>
@@ -167,7 +171,7 @@
                         if (item.surface_3) {
                             html += '<li class="property-label-areasize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Surface" aria-describedby="tooltip386929"><i class="icon-property-areasize"></i><span class="label-content">' + item.surface_3 + ' m<sup>2</sup></span></li>';
                         }
-                        html += '</ul></div></div><a href="#"><img itemprop="logo" src="/public/uploads/logos/' + item.logo + '" alt="" style="width: 50px;"></a></div></div></div></div></div>';
+                        html += '</ul></div></div><a href="#"><img itemprop="logo" src="/public/uploads/logos/' + item.logo + '" alt="" loading="lazy" width="50" height="50" itemprop="logo" style="width: 50px; height: 50px; object-fit: contain;"></a></div></div></div></div></div>';
 
                         $(".main-listing-list").prepend(html);
                     });
