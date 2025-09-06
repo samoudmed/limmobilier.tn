@@ -18,12 +18,14 @@ jobs:
       - name: Upload files via FTP
         uses: appleboy/scp-action@v0.1.5
         with:
-          server: 62.171.189.251
+          host: 62.171.189.251
           username: test
           password: rJie{W8oiZgP^{r
-          server-dir: /home/test/public_html/releases/${{ github.run_id }}/
-          local-dir: ./
-          dangerous-clean-slate: false   
+          port: 22                            # default SSH port
+          source: "./"                        # folder to upload
+          target: "/home/test/public_html/releases/${{ github.run_id }}/"
+          overwrite: true                     # optional, overwrite existing files
+          strip_components: 1                  # optional, to strip leading folder in archive   
 
       # 3. SSH into server and finalize deployment
       - name: SSH finalize deployment
