@@ -19,9 +19,9 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: 62.171.189.251
-          username: ${{ vars.FTP_USER }}
-          password: ${{ vars.FTP_PASSWORD }}
-          server-dir: ${{ vars.FTP_PATH }}/releases/${{ github.run_id }}
+          username: test
+          password: uI0sIrezf@nq2Sv0
+          server-dir: /home/test/public_html/releases/${{ github.run_id }}
           local-dir: ./
           dangerous-clean-slate: false   
 
@@ -29,8 +29,8 @@ jobs:
       - name: SSH finalize deployment
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
+          host: 62.171.189.251
+          username: root
           key: ${{ secrets.SSH_KEY }}
           script: |
             APP_PATH=${{ secrets.FTP_PATH }}
