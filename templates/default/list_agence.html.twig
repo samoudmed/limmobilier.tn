@@ -36,9 +36,12 @@
                         <ul class="famous-agents__contact agents-single__contact">
                             <li class="famous-agents__phone">
                                 <!-- Phone icon SVG -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M3.654 1.328a.678.678 0 0 1 .737-.092l2.527 1.01c.245.098.39.348.364.608l-.42 3.63a.678.678 0 0 1-.673.598l-1.024-.072a11.72 11.72 0 0 0 5.292 5.292l.072-1.024a.678.678 0 0 1 .598-.673l3.63-.42a.678.678 0 0 1 .608.364l1.01 2.527a.678.678 0 0 1-.092.737l-2.2 2.2a1.745 1.745 0 0 1-1.915.418c-2.22-1.018-4.413-3.21-5.43-5.43a1.745 1.745 0 0 1 .418-1.915l2.2-2.2z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Téléphone">
+                                    <title>Téléphone</title>
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.11 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12 1.05.42 2.07.9 3.02a2 2 0 0 1-.45 2.11L8.91 10.09a16 16 0 0 0 6 6l1.24-1.24a2 2 0 0 1 2.11-.45c.95.48 1.97.78 3.02.9A2 2 0 0 1 22 16.92z"/>
                                 </svg>
+
+
                                 <a href="tel:{{ user.telephone }}">{{ user.telephone }}</a>
                             </li>
                         </ul>
@@ -150,7 +153,7 @@
             $(".loading").show();
             $.ajax({
                 type: 'POST', // Le type de la requête HTTP, ici devenu POST
-                data: 'user=' +     {{ user.id }} +'&offre=' + $('input[name$="offre-type"]:checked').val() + '&type=' + $('input[name$="property-type"]:checked').val() + '&ville=' + $('#listing-city').val() + '&chambres=' + $('#listing-bedroom').val() + '&surfaceMin=' + $('#min-area').val() + '&surfaceMax=' + $('#max-area').val() + '&keyWord=' + $('#main-listing-keyword').val() + '&sort=' + $('#sort-type').val(),
+                data: 'user=' +      {{ user.id }} +'&offre=' + $('input[name$="offre-type"]:checked').val() + '&type=' + $('input[name$="property-type"]:checked').val() + '&ville=' + $('#listing-city').val() + '&chambres=' + $('#listing-bedroom').val() + '&surfaceMin=' + $('#min-area').val() + '&surfaceMax=' + $('#max-area').val() + '&keyWord=' + $('#main-listing-keyword').val() + '&sort=' + $('#sort-type').val(),
                 url: "{{ app.request.schemeAndHttpHost }}{{ path('search_list') }}",
                 dataType: 'json', // ** ensure you add this line **
                 success: function (data) { // code_html contient le HTML renvoyé
