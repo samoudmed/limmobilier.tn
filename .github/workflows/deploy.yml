@@ -41,7 +41,7 @@ jobs:
           APP_PATH=/home/test/public_html
           cd $APP_PATH
 
-          php bin/console cache:clear --env=prod || true
-          php bin/console cache:warmup --env=prod
+          php bin/console cache:clear --env=dev || true
+          php bin/console cache:warmup --env=dev
 
           echo "✅ Deployment finished"
