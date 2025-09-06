@@ -7,70 +7,41 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted   # Utilise ton runner installé sur le serveur
+    runs-on: self-hosted   # Use your self-hosted runner
 
     steps:
       # 1️⃣ Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Upload code to temporary folder (exclude cache & uploads)
-      - name: Upload files via rsync
+      # 2️⃣ Sync only src/ and templates/ to a temporary folder
+      - name: Sync files to temporary folder
         run: |
           TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
           mkdir -p $TMP_DEPLOY
-          rsync -a --exclude 'var/cache/*' --exclude 'var/http_cache/*' --exclude 'public/uploads/*' ./ $TMP_DEPLOY/
-      
-      # 3️⃣ Finalize deployment
-      - name: Finalize deployment
+          rsync -a --delete ./src/ $TMP_DEPLOY/src/
+          rsync -a --delete ./templates/ $TMP_DEPLOY/templates/
+
+      # 3️⃣ Deploy synced files to live project
+      - name: Move files to live project
         run: |
-          set -e
-      
           APP_PATH=/home/test/public_html
           TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
-          TMP_VENDOR=/tmp/composer_${GITHUB_RUN_ID}
-      
-          # Check if composer.json or composer.lock changed
-          if git diff --name-only HEAD~1 HEAD | grep -E 'composer.json|composer.lock'; then
-            echo "📦 Composer files changed – running composer install"
-            rm -rf $TMP_VENDOR
-            mkdir -p $TMP_VENDOR
-            cp $TMP_DEPLOY/composer.json $TMP_DEPLOY/composer.lock $TMP_VENDOR/
-            cd $TMP_VENDOR
-            composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-scripts
-            COMPOSER_UPDATED=true
-          else
-            echo "✅ Composer files not changed – skip composer install"
-            COMPOSER_UPDATED=false
-          fi
-      
-          # Move project files
-          rsync -a --exclude 'var/cache/*' --exclude 'var/http_cache/*' --exclude 'public/uploads/*' $TMP_DEPLOY/ $APP_PATH/
-          
-          # Move vendor only if composer was updated
-          if [ "$COMPOSER_UPDATED" = true ]; then
-            rsync -a $TMP_VENDOR/vendor/ $APP_PATH/vendor/
-            rm -rf $TMP_VENDOR
-          fi
-      
+
+          # Move src/ and templates/
+          rsync -a --delete $TMP_DEPLOY/src/ $APP_PATH/src/
+          rsync -a --delete $TMP_DEPLOY/templates/ $APP_PATH/templates/
+
+          # Remove temporary folder
           rm -rf $TMP_DEPLOY
 
+      # 4️⃣ Clear and warmup Symfony cache
+      - name: Clear Symfony cache
+        run: |
+          APP_PATH=/home/test/public_html
           cd $APP_PATH
 
-          # --- 🔧 4. Permissions ---          
-          mkdir -p var/http_cache
-          chown -R www-data:www-data var
-          chmod -R 775 var vendor
-
-          # --- ⚡ 5. Symfony cache ---
           php bin/console cache:clear --env=prod || true
           php bin/console cache:warmup --env=prod
 
-          # --- 📦 6. Migrations ---
-          php bin/console doctrine:migrations:migrate --no-interaction || true
-
-          # --- 🔄 7. Reload services ---
-          sudo systemctl reload php8.2-fpm || true
-          sudo systemctl reload nginx || true
-
-          echo "✅ Deploy terminé !"
+          echo "✅ Deployment finished"
