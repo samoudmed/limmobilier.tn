@@ -14,14 +14,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Upload code to server (temp folder)
+      # 2️⃣ Upload code to temporary folder (exclude cache & uploads)
       - name: Upload files via rsync
         run: |
           TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
           mkdir -p $TMP_DEPLOY
-          rsync -a --exclude 'var/*' --exclude 'public/uploads/*' ./ $TMP_DEPLOY/
+          rsync -a --exclude 'var/cache/*' --exclude 'var/http_cache/*' --exclude 'public/uploads/*' ./ $TMP_DEPLOY/
 
-      # 3️⃣ SSH finalize deployment
+      # 3️⃣ Finalize deployment
       - name: Finalize deployment
         run: |
           set -e  # stop on errors
@@ -46,7 +46,8 @@ jobs:
           composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-scripts
 
           # --- 🏗️ 3. Move vendor and project files ---
-          rsync -a --delete $TMP_DEPLOY/ $APP_PATH/
+          # Exclude cache & uploads
+          rsync -a --exclude 'var/cache/*' --exclude 'var/http_cache/*' --exclude 'public/uploads/*' $TMP_DEPLOY/ $APP_PATH/
           rsync -a $TMP_VENDOR/vendor/ $APP_PATH/vendor/
           rm -rf $TMP_DEPLOY $TMP_VENDOR
 
@@ -58,7 +59,7 @@ jobs:
           chmod -R 775 var vendor
 
           # --- ⚡ 5. Symfony cache ---
-          php bin/console cache:clear --env=prod
+          php bin/console cache:clear --env=prod || true
           php bin/console cache:warmup --env=prod
 
           # --- 📦 6. Migrations ---
