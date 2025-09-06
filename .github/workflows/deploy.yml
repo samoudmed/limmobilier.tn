@@ -1,4 +1,4 @@
-name: Deploy Symfony App (Self-Hosted)
+name: Deploy Symfony App (Zero Downtime)
 
 on:
   push:
@@ -7,54 +7,76 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted  # ✅ ton runner privé
+    runs-on: self-hosted   # Utilise ton runner installé sur le serveur
 
     steps:
-      # 1️⃣ Checkout GitHub repo
+      # 1️⃣ Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Deploy files to public_html
-      - name: Deploy code to website folder
-        run: |
-          APP_PATH="/home/test/public_html"
-          echo "📂 Copying files to $APP_PATH..."
-          rsync -a --delete --exclude 'vendor/' --exclude 'var/' ./ $APP_PATH/
-          echo "✅ Files deployed."
-        shell: bash
+      # 2️⃣ Upload code to server (dans un dossier temporaire)
+      - name: Upload files via SCP
+        uses: appleboy/scp-action@v0.1.5
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+          source: "./"
+          target: "/home/test/deploy_tmp/${{ github.run_id }}/"
+          overwrite: true
+          strip_components: 1
 
-      # 3️⃣ Backup database
-      - name: Backup database
-        run: |
-          BACKUP_DIR="/home/test/public_html/backups"
-          mkdir -p $BACKUP_DIR
-          TIMESTAMP=$(date +%F-%H-%M-%S)
-          echo "💾 Backing up DB to $BACKUP_DIR/db-$TIMESTAMP.sql"
-          mysqldump -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} ${{ secrets.DB_NAME }} > $BACKUP_DIR/db-$TIMESTAMP.sql || true
-          # Keep last 7 backups
-          ls -1tr $BACKUP_DIR/db-*.sql | head -n -7 | xargs -d '\n' rm -f --
-        shell: bash
+      # 3️⃣ SSH sur le serveur pour finaliser le déploiement
+      - name: SSH finalize deployment
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            set -e  # stop on errors
 
-      # 4️⃣ Install Composer dependencies & Symfony cache
-      - name: Install Composer dependencies safely
-        run: |
-          cd /home/test/public_html
-          TMP_DIR="/tmp/composer-deploy"
-          rm -rf $TMP_DIR
-          mkdir -p $TMP_DIR
-          # Copier le composer.json + composer.lock
-          cp composer.* $TMP_DIR/
-          cd $TMP_DIR
-          composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
-          # Supprimer l'ancien vendor
-          rm -rf /home/test/public_html/vendor
-          # Déplacer le nouveau vendor
-          mv vendor /home/test/public_html/
-        shell: bash
+            # Variables
+            APP_PATH=/home/test/public_html
+            TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
+            BACKUP_DIR=$APP_PATH/backups
 
-      # 5️⃣ Run Doctrine migrations
-      - name: Run Doctrine Migrations
-        run: |
-          cd /home/test/public_html
-          php bin/console doctrine:migrations:migrate --no-interaction || true
-        shell: bash
+            mkdir -p $BACKUP_DIR
+
+            # 1️⃣ Backup DB
+            TIMESTAMP=$(date +%F-%H-%M-%S)
+            mysqldump -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} ${{ secrets.DB_NAME }} > $BACKUP_DIR/db-$TIMESTAMP.sql || true
+
+            # 2️⃣ Installer les dépendances Composer dans un dossier temporaire
+            TMP_VENDOR=/tmp/composer_${GITHUB_RUN_ID}
+            rm -rf $TMP_VENDOR
+            mkdir -p $TMP_VENDOR
+            cp $TMP_DEPLOY/composer.* $TMP_VENDOR/
+            cd $TMP_VENDOR
+            composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-scripts
+
+            # 3️⃣ Déplacer vendor et fichiers sur le projet
+            rsync -a --delete $TMP_DEPLOY/ $APP_PATH/
+            rsync -a --delete $TMP_VENDOR/vendor/ $APP_PATH/vendor/
+            rm -rf $TMP_DEPLOY $TMP_VENDOR
+
+            cd $APP_PATH
+
+            # 4️⃣ Permissions
+            mkdir -p var/http_cache
+            chown -R www-data:www-data var vendor
+            chmod -R 775 var vendor
+
+            # 5️⃣ Cache Symfony
+            php bin/console cache:clear --env=prod
+            php bin/console cache:warmup --env=prod
+
+            # 6️⃣ Migrations
+            php bin/console doctrine:migrations:migrate --no-interaction || true
+
+            # 7️⃣ Reload services
+            sudo systemctl reload php8.2-fpm || true
+            sudo systemctl reload nginx || true
+
+            echo "✅ Deploy terminé !"
