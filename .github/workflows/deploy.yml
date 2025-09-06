@@ -16,22 +16,24 @@ jobs:
 
       # 2. Upload build to timestamped release folder
       - name: Upload files via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: appleboy/scp-action@v0.1.5
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./                  
-          server-dir: ${{ secrets.FTP_PATH }}/releases/${{ github.run_id }}
-          dangerous-clean-slate: false   
+          host: 62.171.189.251
+          username: test
+          password: rJie{W8oiZgP^{r
+          port: 22                            # default SSH port
+          source: "./"                        # folder to upload
+          target: "/home/test/public_html/releases/${{ github.run_id }}/"
+          overwrite: true                     # optional, overwrite existing files
+          strip_components: 1                  # optional, to strip leading folder in archive   
 
       # 3. SSH into server and finalize deployment
       - name: SSH finalize deployment
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
+          host: 62.171.189.251
+          username: root
+          password: uI0sIrezf@nq2Sv0
           script: |
             APP_PATH=${{ secrets.FTP_PATH }}
             RELEASE_DIR=$APP_PATH/releases/${{ github.run_id }}
