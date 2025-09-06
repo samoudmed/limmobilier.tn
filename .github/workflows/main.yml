@@ -2,8 +2,8 @@ name: Deploy Symfony App (Zero Downtime)
 
 on:
   push:
-    tags:
-      - '*'   # trigger on any tag
+    branches:
+      - test-deploy
 
 jobs:
   deploy:
