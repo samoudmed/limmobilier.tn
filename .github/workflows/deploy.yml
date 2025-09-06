@@ -36,15 +36,20 @@ jobs:
         shell: bash
 
       # 4️⃣ Install Composer dependencies & Symfony cache
-      - name: Install dependencies and warmup cache
+      - name: Install Composer dependencies safely
         run: |
           cd /home/test/public_html
+          TMP_DIR="/tmp/composer-deploy"
+          rm -rf $TMP_DIR
+          mkdir -p $TMP_DIR
+          # Copier le composer.json + composer.lock
+          cp composer.* $TMP_DIR/
+          cd $TMP_DIR
           composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
-          mkdir -p var/http_cache
-          chown -R www-data:www-data var
-          chmod -R 775 var
-          php bin/console cache:clear --env=prod
-          php bin/console cache:warmup --env=prod
+          # Supprimer l'ancien vendor
+          rm -rf /home/test/public_html/vendor
+          # Déplacer le nouveau vendor
+          mv vendor /home/test/public_html/
         shell: bash
 
       # 5️⃣ Run Doctrine migrations
