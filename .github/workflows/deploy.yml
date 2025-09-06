@@ -21,7 +21,7 @@ jobs:
           server: 62.171.189.251
           username: test
           password: uI0sIrezf@nq2Sv0
-          server-dir: /home/test/public_html/releases/${{ github.run_id }}
+          server-dir: /home/test/public_html/releases/${{ github.run_id }}/
           local-dir: ./
           dangerous-clean-slate: false   
 
