@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block meta %}{{ render(controller('App\\Controller\\Admin\\MetaController::getMeta', {'idEntity' : annonce.id, 'entity': 'annonce'})) }}{% endblock %}
 {% block open_graph %}
-    <link rel="canonical" href="https://limmobilier.tn{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}" />
+    <link rel="canonical" href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}" />
     <meta property="og:url" content="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{{annonce.label|capitalize}}" />
@@ -16,10 +16,10 @@
             <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border col-md-12">
                 <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
                 <li class="ht-breadcrumbs__item"><a href="{{ path('annonce_liste', {'offre': annonce.offre|lower, 'page': 1}) }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">{{annonce.offre}}</span></a></li>
-                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type', {'offre': annonce.offre|lower, 'type': annonce.kind.label|slugify|lower, 'page': 1}) }}" class="ht-breadcrumbs__link">{{annonce.kind.label | capitalize}}</a></span></li>
-                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type_gouvernorat', {'offre': annonce.offre|lower, 'type': annonce.kind.label|slugify|lower, 'slug': annonce.gouvernorat.slug|lower ,'page': 1}) }}" class="ht-breadcrumbs__link">{{annonce.gouvernorat | capitalize}}</a></span></li>
-                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type_delegation', {'offre': annonce.offre|lower, 'type' : annonce.kind.label|slugify|lower, 'slug': annonce.delegation.slug|lower, 'page': '1' }) }}" class="ht-breadcrumbs__link">{{annonce.delegation| capitalize}}</a></span></li>
-                {% if annonce.ville is not null %}<li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type_ville', {'offre': annonce.offre|lower, 'type' : annonce.kind.label|slugify|lower, 'ville': annonce.ville.label|lower|slugify, 'idVille': annonce.ville.id, 'page': '1' }) }}" class="ht-breadcrumbs__link">{{annonce.ville| capitalize}}</a></span></li>{% endif %}
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type', {'offre': annonce.offre|lower, 'type': annonce.kind|slugify|lower, 'page': 1}) }}" class="ht-breadcrumbs__link">{{annonce.kind | capitalize}}</a></span></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type_gouvernorat', {'offre': annonce.offre|lower, 'type': annonce.kind|slugify|lower, 'slug': annonce.gouvernorat|slugify|lower ,'page': 1}) }}" class="ht-breadcrumbs__link">{{annonce.gouvernorat | capitalize}}</a></span></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type_delegation', {'offre': annonce.offre|lower, 'type' : annonce.kind|slugify|lower, 'slug': annonce.delegation|slugify|lower, 'page': '1' }) }}" class="ht-breadcrumbs__link">{{annonce.delegation| capitalize}}</a></span></li>
+                {% if annonce.ville is not null %}<li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page"><a href="{{ path('annonce_liste_type_ville', {'offre': annonce.offre|lower, 'type' : annonce.kind|slugify|lower, 'ville': annonce.ville|lower|slugify, 'idVille': annonce.villeId, 'page': '1' }) }}" class="ht-breadcrumbs__link">{{annonce.ville| capitalize}}</a></span></li>{% endif %}
                 <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">{{annonce.label| capitalize}}</span></li>
             </ul><!-- ht-breadcrumb -->
         </div><!-- .container -->
@@ -29,7 +29,7 @@
                     <ul class="property__main">
                         <li class="property__title property__main-item">
                             <div class="property__meta">
-                                <span class="property__offer">{{annonce.offre}} / {{annonce.kind.label}} </span>
+                                <span class="property__offer">{{annonce.offre}} / {{annonce.kind}} </span>
                             </div><!-- .property__meta -->
                             <h1 class="property__name">{{annonce.label| capitalize}}</h1>
                             <span class="property__address"><i class="ion-ios-location-outline property__address-icon"></i>{{annonce.adresse| capitalize}} {{annonce.gouvernorat| capitalize}}, {{annonce.delegation}}, {{annonce.ville}}</span>
@@ -77,28 +77,22 @@
         <div class="property__container">
             <div class="container">
                 <div class="row">
-                        <main class="col-md-9">
-                            {% if annonce.photos|length > 0 %}
-                                <div class="main_img">
-                                    <div class="product-images demo-gallery">
-                                        <div class="main-img-slider">
-                                            {% for photo in annonce.photos %}
-                                                <div class="property__slider-image">
-                                                    <a data-fancybox="gallery" href="{{ asset('https://limmobilier.tn/uploads/photos/848x682/webp/'~photo) }}.webp">
-                                                        <picture>
-                                                            <img src="{{ asset('https://limmobilier.tn/uploads/photos/848x682/webp/'~photo) }}.webp" title="{{annonce.offre}} {{annonce.kind.label}}" alt="{{annonce.offre}} {{annonce.kind.label}}" class="img-fluid">
-                                                        </picture>
-                                                    </a>
-                                                </div><!-- .property__slider-image -->
-                                            {% endfor %}
-                                        </div>
-                                        <ul class="thumb-nav">
-                                            {% for photo in annonce.photos %}
-                                                <li><img src="{{ asset('https://limmobilier.tn/uploads/photos/848x682/webp/'~photo) }}.webp" title="{{annonce.offre}} {{annonce.kind.label}}" alt="{{annonce.offre}} {{annonce.kind.label}}" class="img-fluid"></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
+                    <main class="col-md-9">
+                        {% if annonce.photos|length > 0 %}
+                            <div class="swiper main-slider">
+                                <div class="swiper-wrapper">
+                                    {% for photo in annonce.photos %}
+                                        <div class="swiper-slide"><img src="{{ asset('uploads/photos/848x682/webp/'~photo) }}.webp" alt="Image 1"></div>
+                                        {% endfor %}
                                 </div>
+                            </div>
+                            <div class="swiper thumb-nav">
+                                <div class="swiper-wrapper">
+                                    {% for photo in annonce.photos %}
+                                        <div class="swiper-slide"><img src="{{ asset('uploads/photos/848x682/webp/'~photo) }}.webp" alt="Thumbnail 1"></div>
+                                        {% endfor %}
+                                </div>
+                            </div>
                         {% endif %}    
                         <div class="property__feature-container">
                             {% if( (annonce.description|striptags) !='') %}
@@ -110,105 +104,107 @@
                             <div class="property__feature">
                                 <h3 class="property__feature-title property__feature-title--b-spacing">Commodités</h3>
                                 <ul class="property__features-list">
-                                        {% if annonce.anneeConstruction != 0 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-calendar"></i></span> Année de construction {{annonce.anneeConstruction}}</li>
-                                        {% endif %}
-                                        {% if annonce.capacite > 0 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-users"></i></span>  Capacité : {{  annonce.capacite }} personnes</li>
-                                        {% endif %}
-                                        {% if annonce.salleBain == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-bath"></i></span> Salle de bain </li>
-                                        {% endif %}
-                                        {% if annonce.jacuzzi == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-tint"></i></span> Jacuzzi</li>
-                                        {% endif %}
-                                        {% if annonce.cuisineEquipe == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-cutlery"></i></span> Cuisine équipée</li>
-                                        {% endif %}
-                                        {% if annonce.chauffage == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-fire"></i></span> Chauffage</li>
-                                        {% endif %}
-                                        {% if annonce.cheminee == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-fire-extinguisher"></i></span> Cheminée</li>
-                                        {% endif %}
-                                        {% if annonce.meuble == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-bed"></i></span> Meuble</li>
-                                        {% endif %}
-                                        {% if annonce.parking == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-car"></i></span> Parking</li>
-                                        {% endif %}
-                                        {% if annonce.ascenseur == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-sort-asc"></i></span> Ascenseur</li>
-                                        {% endif %}
-                                        {% if annonce.internet == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-wifi"></i></span> Internet</li>
-                                        {% endif %}
-                                        {% if annonce.securite == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-lock"></i></span> Sécurisé</li>
-                                        {% endif %}
-                                        {% if annonce.piscine == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-life-ring"></i></span> Piscine</li>
-                                        {% endif %}
-                                        {% if annonce.jardin == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-tree"></i></span> Jardin</li>
-                                        {% endif %}
-                                        {% if annonce.climatiseur == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-thermometer-three-quarters"></i></span> Climatiseur</li>
-                                        {% endif %}
-                                        {% if annonce.vue == 1 %}
-                                        <li class="property__features-item"><span class="property__features-icon"><i class="fa fa-eye"></i></span> Vue mer / dégagée</li>
-                                        {% endif %}
-                                        {% if annonce.orientation != 0 %}
-                                            <li class="property__features-item">
-                                                {% if annonce.orientation == 1 %}
-                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Nord
-                                                {% elseif annonce.orientation == 2 %}
-                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Nord-Est
-                                                {% elseif annonce.orientation == 3 %}
-                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Est
-                                                {% elseif annonce.orientation == 4 %}
-                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Sud-Est
-                                                {% elseif annonce.orientation == 5 %}
-                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Sud
-                                                {% elseif annonce.orientation == 6 %}
-                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Sud-Ouest
-                                                {% elseif annonce.orientation == 7 %}
-                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Ouest
-                                                {% elseif annonce.orientation == 8 %}
-                                                    <span class="property__features-icon"><i class="fa fa-compass"></i></span> Orientation Nord-Ouest
-                                                {% endif %}
-                                            </li>
-                                        {% endif %}    
+                                    {% if annonce.anneeConstruction != 0 %}
+                                        <li class="property__features-item">
+                                            <span class="property__features-icon">
+                                                <!-- Calendar icon SVG -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16" fill="#33cc33" style="margin-right: 0.75rem; vertical-align: -0.125em;">
+                                                <path d="M12 192h424c6.6 0 12 5.4 12 12v268c0 6.6-5.4 12-12 12H12c-6.6 0-12-5.4-12-12V204c0-6.6 5.4-12 12-12zm436-64H0c-6.6 0-12-5.4-12-12V48C-12 21.5-3.5 0 20 0h36V32c0 17.7 14.3 32 32 32h32c17.7 0 32-14.3 32-32V0h160V32c0 17.7 14.3 32 32 32h32c17.7 0 32-14.3 32-32V0h36c23.5 0 32 21.5 32 48v68c0 6.6-5.4 12-12 12z"/>
+                                                </svg>
+                                            </span>
+                                            Année de construction {{ annonce.anneeConstruction }}
+                                        </li>
+                                    {% endif %}
+                                    {# Define a reusable macro for the compass icon to keep the code DRY (Don't Repeat Yourself) #}
+                                    {% macro icon_compass() %}
+                                        <span class="property__features-icon">
+                                            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:1em; height:1em; vertical-align:-0.125em;">
+                                            <path fill="currentColor" d="M256 0c17.7 0 32 14.3 32 32V66.7C368.2 82.2 430 157.9 430 248c0 97.2-78.8 176-176 176s-176-78.8-176-176c0-90.1 61.8-165.8 144-181.3V32c0-17.7 14.3-32 32-32zm-9.4 256l-64-16c-4.4-1.1-7.4-5.2-6.3-9.6s5.2-7.4 9.6-6.3l64 16c2.4 .6 4.4 2.6 5.1 5.1l16 64c1.1 4.4-2 8.5-6.3 9.6s-8.5-2-9.6-6.3l-16-64c-.7-2.4-2.6-4.4-5.1-5.1z"></path>
+                                            </svg>
+                                        </span>
+                                    {% endmacro %}
+
+                                    {# Import the macro for use in this file #}
+                                    {% import _self as icons %}
+
+                                    {% if annonce.capacite > 0 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" style="width:1.25em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.7 0-32 14.3-32 32v128c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V288c0-17.7-14.3-32-32-32zm-256 0h-64c-17.7 0-32 14.3-32 32v128c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V288c0-17.7-14.3-32-32-32zm-208 32v128c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V288c0-17.7-14.3-32-32-32H80c-17.7 0-32 14.3-32 32z"></path></svg></span> Capacité : {{ annonce.capacite }} personnes</li>
+                                            {% endif %}
+                                            {% if annonce.salleBain == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:1em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M32 32a32 32 0 0 0-32 32v384a32 32 0 0 0 32 32h128v-64a64 64 0 0 1 64-64h64a64 64 0 0 1 64 64v64h128a32 32 0 0 0 32-32V64a32 32 0 0 0-32-32H32zm224 96a32 32 0 0 1 32 32v32a32 32 0 0 1-64 0v-32a32 32 0 0 1 32-32zm160-64v32a16 16 0 0 1-16 16h-32a16 16 0 0 1-16-16V64a16 16 0 0 1 16-16h32a16 16 0 0 1 16 16z"></path></svg></span> Salle de bain </li>
+                                            {% endif %}
+                                            {% if annonce.jacuzzi == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" style="width:0.75em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M192 512C86 512 0 426 0 320C0 228.8 130.2 57.7 161 11.4C172.5-1.1 190.3-3.6 202.9 6.2s17.1 27.8 8.7 41.2C192.3 72.8 128 171.3 128 240c0 35.3 28.7 64 64 64s64-28.7 64-64c0-68.7-64.3-167.2-83.6-192.6c-8.4-13.4-6.1-31.4 6.2-41.2S211.5-1.1 223 11.4C253.8 57.7 384 228.8 384 320c0 106-86 192-192 192z"></path></svg></span> Jacuzzi</li>
+                                            {% endif %}
+                                            {% if annonce.cuisineEquipe == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:1em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M224.2 364.3c-28.5 0-51.5-23-51.5-51.5s23-51.5 51.5-51.5c28.5 0 51.5 23 51.5 51.5s-23 51.5-51.5 51.5zM452.2 16H60.2c-6.2 0-11.2 5.1-11.2 11.2v34.4c0 6.2 5.1 11.2 11.2 11.2h11.2v396.5c0 18.2 14.8 33 33 33h245.8c18.2 0 33-14.8 33-33V72.9h11.2c6.2 0 11.2-5.1 11.2-11.2V27.2c0-6.1-5-11.2-11.2-11.2zM288.5 312.8c0-35.4-28.7-64-64.3-64-35.6 0-64.3 28.6-64.3 64s28.7 64 64.3 64c35.6 .1 64.3-28.6 64.3-64zM321.7 128H190.8c-11.2 0-21.4 8.7-22.3 19.9l-12.8 155.1c-1.3 15.8 9.9 29.8 25.6 29.8h138.2c15.8 0 26.9-14 25.6-29.8L344 147.9c-.9-11.2-11.1-19.9-22.3-19.9z"></path></svg></span> Cuisine équipée</li>
+                                            {% endif %}
+                                            {% if annonce.chauffage == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" style="width:0.75em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M192 0c-53 0-96 43-96 96c0 17.7 14.3 32 32 32s32-14.3 32-32c0-17.7-14.3-32-32-32s32 14.3 32 32v32c0 17.7-14.3 32-32 32s-32-14.3-32-32c0-53-43-96-96-96S0 43 0 96c0 17.7 14.3 32 32 32s32-14.3 32-32c0-17.7-14.3-32-32-32S32 78.3 32 96v32c0 17.7-14.3 32-32 32s-32-14.3-32-32C0 43 43 0 96 0h96zm48 240a16 16 0 1 0 -32 0 16 16 0 1 0 32 0zm-16 96a16 16 0 1 0 0-32 16 16 0 1 0 0 32zm-64-16a16 16 0 1 0 -32 0 16 16 0 1 0 32 0zm16 64a16 16 0 1 0 0-32 16 16 0 1 0 0 32zm80-16a16 16 0 1 0 -32 0 16 16 0 1 0 32 0zm-16 48a16 16 0 1 0 0-32 16 16 0 1 0 0 32zm-64-16a16 16 0 1 0 -32 0 16 16 0 1 0 32 0zM384 96c0-53-43-96-96-96s-96 43-96 96c0 17.7 14.3 32 32 32s32-14.3 32-32c0-17.7-14.3-32-32-32s32 14.3 32 32v32c0 17.7-14.3 32-32 32s-32-14.3-32-32c0-53-43-96-96-96s-96 43-96 96c0 17.7 14.3 32 32 32s32-14.3 32-32c0-17.7-14.3-32-32-32S256 78.3 256 96v32c0 17.7-14.3 32-32 32s-32-14.3-32-32c0-53-43-96-96-96S0 43 0 96v320c0 53 43 96 96 96h192c53 0 96-43 96-96V96z"></path></svg></span> Chauffage</li>
+                                            {% endif %}
+                                            {% if annonce.cheminee == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:1em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M32 32c-9.2-18.4-21.3-34.1-32-47.3V32c0 17.7 14.3 32 32 32zm0 96c-17.7 0-32-14.3-32-32s14.3-32 32-32V32h64v64H32zm160-32c0 17.7-14.3 32-32 32H96V32h64c17.7 0 32 14.3 32 32v32zm64-64h-3.4c-7.9 16.4-16.7 32.2-26.1 47.3c-1.3 2.1-2.1 4.6-2.1 7.1V128c0 17.7 14.3 32 32 32h16c17.7 0 32-14.3 32-32V7.4c-9.1-4.2-18.6-7.4-28.6-7.4zm160 32c-17.7 0-32-14.3-32-32V0H320v96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32zM32 160h64v64H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h384c17.7 0 32-14.3 32-32s-14.3-32-32-32h-64v-64h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H160v64h64v64h-64c-17.7 0-32 14.3-32 32v32h128v-32c0-17.7-14.3-32-32-32h-64v-64H96v128c0 17.7 14.3 32 32 32h32v64H128c-17.7 0-32 14.3-32 32v32h192v-32c0-17.7-14.3-32-32-32h-32v-64h32c17.7 0 32-14.3 32-32V320H224v32c0 17.7 14.3 32 32 32h64v96h64c17.7 0 32-14.3 32-32V256c-17.7 0-32 14.3-32 32v32h-64v-32c0-17.7-14.3-32-32-32h-64v-64h192c17.7 0 32-14.3 32-32s-14.3-32-32-32z"></path></svg></span> Cheminée</li>
+                                            {% endif %}
+                                            {% if annonce.meuble == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" style="width:1.25em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M32 32c-17.7 0-32 14.3-32 32V288c0 17.7 14.3 32 32 32h64v128c0 17.7 14.3 32 32 32h384c17.7 0 32-14.3 32-32V320h64c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32H32zm96 224H64V96h64v160zm384-64h-64V96h64v96z"></path></svg></span> Meuble</li>
+                                            {% endif %}
+                                            {% if annonce.parking == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:1em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M132.3 121.7c-2.3-2.6-5.3-4-8.5-4H12.9C5.8 117.7 0 123.5 0 130.6v250.8c0 7.1 5.8 12.9 12.9 12.9h110.9c3.2 0 6.2-1.4 8.5-4l83.2-96.1c2.3-2.6 2.3-6.5 0-9.2L132.3 121.7zM499.1 117.7H216.3c-3.2 0-6.2 1.4-8.5 4l-83.2 96.1c-2.3 2.6-2.3 6.5 0 9.2l83.2 96.1c2.3 2.6 5.3 4 8.5 4h282.8c7.1 0 12.9-5.8 12.9-12.9V130.6c0-7.1-5.8-12.9-12.9-12.9z"></path></svg></span> Parking</li>
+                                            {% endif %}
+                                            {% if annonce.ascenseur == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="width:0.625em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M160 480c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32s32 14.3 32 32v384c0 17.7-14.3 32-32 32zM48 208c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32s32 14.3 32 32v112c0 17.7-14.3 32-32 32zm224 0c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32s32 14.3 32 32v112c0 17.7-14.3 32-32 32z"></path></svg></span> Ascenseur</li>
+                                            {% endif %}
+                                            {% if annonce.internet == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" style="width:1.25em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M320 32a320 320 0 1 0 0 640 320 320 0 1 0 0-640zm21.1 278.9c25.5-12.5 45.1-39.2 45.1-70.9c0-44.2-35.8-80-80-80s-80 35.8-80 80c0 31.7 19.6 58.4 45.1 70.9C199.3 321.1 128 396.2 128 496c0 17.7 14.3 32 32 32h288c17.7 0 32-14.3 32-32c0-99.8-71.3-174.9-148.9-185.1zM112 160c0-53 43-96 96-96s96 43 96 96c0 53-43 96-96 96s-96-43-96-96zM352 416c0 35.3-28.7 64-64 64s-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64z"></path></svg></span> Internet</li>
+                                            {% endif %}
+                                            {% if annonce.securite == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width:0.875em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M144 144v-32c0-44.2 35.8-80 80-80s80 35.8 80 80v32h48c26.5 0 48 21.5 48 48v192c0 26.5-21.5 48-48 48H96c-26.5 0-48-21.5-48-48V192c0-26.5 21.5-48 48-48h48zM224 80c-26.5 0-48 21.5-48 48v32h96v-32c0-26.5-21.5-48-48-48zm-112 96v192c0 8.8 7.2 16 16 16h288c8.8 0 16-7.2 16-16V176c0-8.8-7.2-16-16-16H96c-8.8 0-16 7.2-16 16z"></path></svg></span> Sécurisé</li>
+                                            {% endif %}
+                                            {% if annonce.piscine == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:1em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path></svg></span> Piscine</li>
+                                            {% endif %}
+                                            {% if annonce.jardin == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:1em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M464 256h-80v-64c0-35.3-28.7-64-64-64h-80V16c0-8.8-7.2-16-16-16h-16c-8.8 0-16 7.2-16 16v112h-80c-35.3 0-64 28.7-64 64v64H48c-26.5 0-48 21.5-48 48v64c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48v-64c0-26.5-21.5-48-48-48zM272 416H240c-8.8 0-16-7.2-16-16v-64h64v64c0 8.8-7.2 16-16 16z"></path></svg></span> Jardin</li>
+                                            {% endif %}
+                                            {% if annonce.climatiseur == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="width:0.625em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M160 512a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm0-128a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm0-128a32 32 0 1 0 0-64 32 32 0 1 0 0 64zM128 0a32 32 0 1 0 64 0A32 32 0 1 0 128 0zM80 64a32 32 0 1 0 64 0A32 32 0 1 0 80 64zm80 64a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"></path></svg></span> Climatiseur</li>
+                                            {% endif %}
+                                            {% if annonce.vue == 1 %}
+                                        <li class="property__features-item"><span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="width:1.125em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226.4 64 268c1.5 52.3 43.1 96 96 96h256c52.9 0 94.5-43.7 96-96c1-41.6-25.6-84.5-65.7-120.3C406.8 109.6 353.2 80 288 80zM224 288c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32zm128 0c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32z"></path></svg></span> Vue mer / dégagée</li>
+                                            {% endif %}
+                                            {% if annonce.orientation != 0 %}
+                                        <li class="property__features-item">
+                                            {% if annonce.orientation == 1 %}
+                                                {{ icons.icon_compass() }} Orientation Nord
+                                            {% elseif annonce.orientation == 2 %}
+                                                {{ icons.icon_compass() }} Orientation Nord-Est
+                                            {% elseif annonce.orientation == 3 %}
+                                                {{ icons.icon_compass() }} Orientation Est
+                                            {% elseif annonce.orientation == 4 %}
+                                                {{ icons.icon_compass() }} Orientation Sud-Est
+                                            {% elseif annonce.orientation == 5 %}
+                                                {{ icons.icon_compass() }} Orientation Sud
+                                            {% elseif annonce.orientation == 6 %}
+                                                {{ icons.icon_compass() }} Orientation Sud-Ouest
+                                            {% elseif annonce.orientation == 7 %}
+                                                {{ icons.icon_compass() }} Orientation Ouest
+                                            {% elseif annonce.orientation == 8 %}
+                                                {{ icons.icon_compass() }} Orientation Nord-Ouest
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
                                     {% if annonce.disponibilite %}
                                         <li class="property__features-item">
-                                            <span class="property__features-icon"><i class="fa fa-calendar-plus-o"></i></span>Date de disponibilité {{annonce.disponibilite|date('Y-m-d')}}
+                                            <span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width:0.875em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M352 160v-32C352 57.4 294.6 0 224 0S96 57.4 96 128v32H0v288c0 35.3 28.7 64 64 64h320c35.3 0 64-28.7 64-64V160H352zm-48-32c0-26.5-21.5-48-48-48s-48 21.5-48 48v32h96v-32zm48 352H64c-8.8 0-16-7.2-16-16V208h48v40c0 13.3 10.7 24 24 24s24-10.7 24-24v-40h160v40c0 13.3 10.7 24 24 24s24-10.7 24-24v-40h48v256c0 8.8-7.2 16-16 16z"></path></svg></span>Date de disponibilité {{annonce.disponibilite|date('Y-m-d')}}
                                         </li>
                                     {% endif %}
                                     {% if annonce.etage is not null and annonce.etage >= 0 %}
                                         <li class="property__features-item">
-                                            <span class="property__features-icon"><i class="fa fa-building-o"></i></span> 
-                                            {% if annonce.etage == 0 %} 
-						RDC
-                                            {% elseif annonce.etage == 1 %}
-                                                1er étage
-                                            {% elseif annonce.etage == 2 %}
-                                                2ème étage
-                                            {% elseif annonce.etage == 3 %}
-                                                3ème étage
-                                            {% elseif annonce.etage == 4 %}
-                                                4ème étage
-                                            {% elseif annonce.etage == 5 %}
-                                                5ème étage
-                                            {% elseif annonce.etage == 6 %}
-                                                6ème étage
-                                            {% elseif annonce.etage == 7 %}
-                                                7ème étage
-                                            {% elseif annonce.etage == 8 %}
-                                                8ème étage
-                                            {% elseif annonce.etage == 9 %}
-                                                9ème étage
-                                            {% elseif annonce.etage == 10 %}
-                                                10ème étage
+                                            <span class="property__features-icon"><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width:0.875em; height:1em; vertical-align:-0.125em;"><path fill="currentColor" d="M32 32v448h384V32H32zm160 128h64v32h-64v-32zm-96 0h64v32h-64v-32zm192 128h-64v-32h64v32zm0 64h-64v-32h64v32zm-96 64h-64v-32h64v32zm0-64h-64v-32h64v32zm0-64h-64v-32h64v32zm-96 128H96v-32h64v32zm0-64H96v-32h64v32zm0-64H96v-32h64v32z"></path></svg></span> 
+                                                {% if annonce.etage == 0 %} 
+                                                RDC
+                                            {% else %}
+                                                {{ annonce.etage }}{% if annonce.etage == 1 %}er{% else %}ème{% endif %} étage
                                             {% endif %}
                                         </li>
                                     {% endif %}
@@ -231,18 +227,18 @@
 
                                 <div class="contact-form__header">
                                     <div class="contact-form__header-container">
-                                        {% if(annonce.user.logo  != NULL) %}
-                                            <img itemprop="logo" src="{{ asset('uploads/logos/'~annonce.user.logo) }}" alt="{{annonce.user.agence}}" style="width: 70px;margin: 10px;">
+                                        {% if(annonce.userLogo  != NULL) %}
+                                            <img itemprop="logo" src="{{ asset('uploads/logos/'~annonce.userLogo) }}" alt="{{annonce.userAgence}}" style="width: 50px;height: 50px;object-fit: contain;">
                                         {% else %}
-                                            <div class="avatar75">{{ annonce.user.prenom }}</div>
+                                            <div class="avatar75">{{ annonce.user }}</div>
                                         {% endif %}
                                         <div class="contact-info">
                                             <h3 class="contact-name">
-                                                {% if annonce.user.agence != NULL %}
-                                                    <a href="{{ path('liste_agence', {'label': annonce.user.agence|slugify, 'id': annonce.user.id, 'page': 1} )  }} ">{{annonce.user.agence}}</a>
+                                                {% if annonce.userAgence != NULL %}
+                                                    <a href="{{ path('liste_agence', {'label': annonce.userAgence|slugify, 'id': annonce.userId, 'page': 1} )  }} ">{{annonce.userAgence}}</a>
                                                 {% endif %}
                                             </h3>
-                                            <a itemprop="telephone" href="tel:{{annonce.user.telephone}}" class="contact-number">Tél : {{annonce.user.telephone}}</a>
+                                            <a itemprop="telephone" href="tel:{{annonce.userPhone}}" class="contact-number">Tél : {{annonce.userPhone}}</a>
                                         </div><!-- .contact-info -->
                                     </div><!-- .contact-form__header-container -->
                                 </div><!-- .contact-form__header -->
@@ -279,20 +275,28 @@
                                     <h3 class="widget__title">Simulateur de crédit</h3>
                                     <form class="form-calculator">
                                         <div class="form-calculator__group">
-                                            <label for="home-price" class="form-calculator__label">Montant de l'emprunt</label>
-                                            <span class="form-calculator__icon form-calculator__currency">DT</span>
-                                            <input id="home-price" type="text" class="form-calculator__field" required value="{{annonce.prix}}">
+                                            <div class="input-with-unit">
+                                                <label for="annual-rate" class="form-calculator__label">Montant</label>
+                                                <input id="home-price" type="text" class="form-calculator__field" required value="{{annonce.prix}}">
+                                                <span class="unit">DT</span>
+                                            </div>
                                         </div><!-- .form-calculator__group --> 
-
                                         <div class="form-calculator__group">
-                                            <label for="annual-rate" class="form-calculator__label">Taux d'intérêt</label>
+                                            <div class="input-with-unit">
+                                                <label for="annual-rate" class="form-calculator__label">Taux d'intérêt</label>
+                                                <input id="annual-rate" type="text" class="form-calculator__field" required value="10.5">
+                                                <span class="unit">%</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-calculator__group">
+
                                             <span class="form-calculator__icon form-calculator__percent">%</span>
-                                            <input id="annual-rate" type="text" class="form-calculator__field" required value="10.5">
+
                                         </div><!-- .form-calculator__group -->
 
                                         <div class="form-calculator__group">
                                             <label for="loan-term" class="form-calculator__label">Durée de remboursement(ans)</label>
-                                            <select id="loan-term" class="ht-field" required>
+                                            <select id="loan-term" class="select2-selection__rendered" required style="display: none">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -331,7 +335,7 @@
             </div><!-- .container -->
         </div><!-- .property__container -->
     </section><!-- .property -->
-    
+
 
 {% endblock %}
 {% block javascripts %}
@@ -339,6 +343,8 @@
     <script src="{{ asset('asset/js/jquery.fancybox.min.js') }}"></script>
     <script src="{{ asset('asset/js/slick.min.js') }}"></script>
     <script src="{{ asset('asset/js/slick-config.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script>
         $("#favorite").on("click", function () {
             $.ajax({
@@ -361,5 +367,42 @@
             $(".mensualite").html(((c * (t / 12)) / (1 - (Math.pow((1 + (t / 12)), -d)))).toFixed(3) + ' DT');
             $(".form-calculator__result").show('slow');
         });
+
+        // First, initialize the thumbnail navigation
+        var thumbNav = new Swiper(".thumb-nav", {
+            // Default settings (for screens larger than 1024px)
+            spaceBetween: 10,
+            slidesPerView: 5, // Show 5 thumbnails on desktop
+            freeMode: true,
+            watchSlidesProgress: true,
+
+            // Responsive settings
+            breakpoints: {
+                // when window width is >= 320px
+                320: {
+                    slidesPerView: 5, // Show 3 thumbnails
+                    spaceBetween: 10
+                },
+                // when window width is >= 768px
+                768: {
+                    slidesPerView: 10, // Show 4 thumbnails
+                    spaceBetween: 10
+                },
+                // when window width is >= 1024px
+                1024: {
+                    slidesPerView: 10, // Show 5 thumbnails
+                    spaceBetween: 10
+                }
+            }
+        });
+
+// Then, initialize the main slider and connect it to the thumbnails
+        var mainSlider = new Swiper(".main-slider", {
+            spaceBetween: 10,
+            thumbs: {
+                swiper: thumbNav, // Link to the thumbNav instance
+            },
+        });
+
     </script>
 {% endblock %}

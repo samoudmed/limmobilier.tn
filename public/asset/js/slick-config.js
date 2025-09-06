@@ -1,1 +1,46 @@
-$(".property .main-img-slider").slick({slidesToShow:1,slidesToScroll:1,infinite:!0,arrows:!0,fade:!0,autoplay:!0,autoplaySpeed:4e3,speed:300,lazyLoad:"ondemand",asNavFor:".thumb-nav",prevArrow:'<div class="slick-prev"><i class="i-prev"></i><span class="sr-only sr-only-focusable"><</span></div>',nextArrow:'<div class="slick-next"><i class="i-next"></i><span class="sr-only sr-only-focusable">></span></div>'}),$(".thumb-nav").slick({slidesToShow:8,slidesToScroll:1,infinite:!0,centerPadding:"10px",asNavFor:".main-img-slider",dots:!1,centerMode:!1,draggable:!0,speed:200,focusOnSelect:!0,prevArrow:'<div class="slick-prev"><i class="i-prev"></i><span class="sr-only sr-only-focusable"><</span></div>',nextArrow:'<div class="slick-next"><i class="i-next"></i><span class="sr-only sr-only-focusable">></span></div>'}),$(".main-img-slider").on("afterChange",function(s,l,i,a){$(".thumb-nav .slick-slide").removeClass("slick-current"),$(".thumb-nav .slick-slide:not(.slick-cloned)").eq(i).addClass("slick-current")});
+$(document).ready(function() {
+
+  // Initialize the main image slider
+  $(".property .main-img-slider").slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    infinite: true,
+    arrows: true,
+    fade: true,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    speed: 300,
+    lazyLoad: "ondemand",
+    asNavFor: ".thumb-nav",
+    prevArrow: '<div class="slick-prev"><i class="i-prev"></i><span class="sr-only sr-only-focusable"><</span></div>',
+    nextArrow: '<div class="slick-next"><i class="i-next"></i><span class="sr-only sr-only-focusable">></span></div>'
+  });
+
+  // Initialize the thumbnail navigation slider
+$(".thumb-nav").slick({
+  slidesToShow: 4, // Default for large screens
+  slidesToScroll: 1,
+  // ... other settings
+  responsive: [
+    {
+      breakpoint: 1024, // For screens smaller than 1024px
+      settings: {
+        slidesToShow: 5 // It will show 5 slides, not 8!
+      }
+    },
+    {
+      breakpoint: 600, // For screens smaller than 600px
+      settings: {
+        slidesToShow: 3 // It will show 3 slides
+      }
+    }
+  ]
+});
+
+  // Custom event to add a 'slick-current' class to the active thumb
+  $(".main-img-slider").on("afterChange", function(event, slick, currentSlide) {
+    $(".thumb-nav .slick-slide").removeClass("slick-current");
+    $(".thumb-nav .slick-slide:not(.slick-cloned)").eq(currentSlide).addClass("slick-current");
+  });
+
+});

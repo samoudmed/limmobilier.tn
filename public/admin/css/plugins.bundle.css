@@ -342,7 +342,7 @@
   display: none; }
 
 .fv-plugins-framework input::-ms-clear,
-.fv-plugins-framework textarea::-ms-clear {
+.fv-plugins-framework texea::-ms-clear {
   display: none;
   height: 0;
   width: 0; }
@@ -487,9 +487,9 @@
   top: -7px; }
 
 .fv-plugins-bootstrap1.form-inline .form-group {
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start;
+  -webkit-box-align: st;
+  -ms-flex-align: st;
+  align-items: flex-st;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
@@ -529,12 +529,12 @@
   top: -4px; }
 
 .fv-plugins-bulma .fv-has-error .input,
-.fv-plugins-bulma .fv-has-error .textarea {
+.fv-plugins-bulma .fv-has-error .texea {
   border: 1px solid #ff3860;
   /* Same as .input.is-danger */ }
 
 .fv-plugins-bulma .fv-has-success .input,
-.fv-plugins-bulma .fv-has-success .textarea {
+.fv-plugins-bulma .fv-has-success .texea {
   border: 1px solid #23d160;
   /* Same as .input.is-success */ }
 
@@ -2082,7 +2082,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.focus {
   font-size: 80%;
   color: #ccc; }
 
-.daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date {
+.daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.st-date, .daterangepicker td.off.end-date {
   background-color: #fff;
   border-color: transparent;
   color: #999; }
@@ -2093,13 +2093,13 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.focus {
   color: #000;
   border-radius: 0; }
 
-.daterangepicker td.start-date {
+.daterangepicker td.st-date {
   border-radius: 4px 0 0 4px; }
 
 .daterangepicker td.end-date {
   border-radius: 0 4px 4px 0; }
 
-.daterangepicker td.start-date.end-date {
+.daterangepicker td.st-date.end-date {
   border-radius: 4px; }
 
 .daterangepicker td.active, .daterangepicker td.active:hover {
@@ -3251,7 +3251,7 @@ select.selectpicker {
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(50%, white), to(#eeeeee));
   background-image: linear-gradient(to bottom, white 50%, #eeeeee 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFF', endColorstr='#FFEEEEEE', GradientType=0); }
+  filter: progid:DXImageTransform.Microsoft.gradient(stColorstr='#FFFFFFFF', endColorstr='#FFEEEEEE', GradientType=0); }
 
 .select2-container--classic .select2-selection--single:focus {
   border: 1px solid #5897fb; }
@@ -3283,7 +3283,7 @@ select.selectpicker {
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #eeeeee), to(#cccccc));
   background-image: linear-gradient(to bottom, #eeeeee 50%, #cccccc 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFEEEEEE', endColorstr='#FFCCCCCC', GradientType=0); }
+  filter: progid:DXImageTransform.Microsoft.gradient(stColorstr='#FFEEEEEE', endColorstr='#FFCCCCCC', GradientType=0); }
 
 .select2-container--classic .select2-selection--single .select2-selection__arrow b {
   border-color: #888 transparent transparent transparent;
@@ -3327,7 +3327,7 @@ select.selectpicker {
   background-image: -webkit-gradient(linear, left top, left bottom, from(white), color-stop(50%, #eeeeee));
   background-image: linear-gradient(to bottom, white 0%, #eeeeee 50%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFF', endColorstr='#FFEEEEEE', GradientType=0); }
+  filter: progid:DXImageTransform.Microsoft.gradient(stColorstr='#FFFFFFFF', endColorstr='#FFEEEEEE', GradientType=0); }
 
 .select2-container--classic.select2-container--open.select2-container--below .select2-selection--single {
   border-bottom: none;
@@ -3336,7 +3336,7 @@ select.selectpicker {
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #eeeeee), to(white));
   background-image: linear-gradient(to bottom, #eeeeee 50%, white 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFEEEEEE', endColorstr='#FFFFFFFF', GradientType=0); }
+  filter: progid:DXImageTransform.Microsoft.gradient(stColorstr='#FFEEEEEE', endColorstr='#FFFFFFFF', GradientType=0); }
 
 .select2-container--classic .select2-selection--multiple {
   background-color: white;
@@ -4134,8 +4134,8 @@ Build date: 2019-12-19 16:51:02
  * These styles are required for noUiSlider to function.
  * You don't need to change these rules to apply your design.
  */
-.noUi-target,
-.noUi-target * {
+.noUi-get,
+.noUi-get * {
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-user-select: none;
@@ -4147,7 +4147,7 @@ Build date: 2019-12-19 16:51:02
   -webkit-box-sizing: border-box;
   box-sizing: border-box; }
 
-.noUi-target {
+.noUi-get {
   position: relative; }
 
 .noUi-base,
@@ -4247,7 +4247,7 @@ Build date: 2019-12-19 16:51:02
 /* Styling;
  * Giving the connect element a border radius causes issues with using transform: scale
  */
-.noUi-target {
+.noUi-get {
   background: #FAFAFA;
   border-radius: 4px;
   border: 1px solid #D3D3D3;
@@ -4311,7 +4311,7 @@ Build date: 2019-12-19 16:51:02
 [disabled] .noUi-connect {
   background: #B8B8B8; }
 
-[disabled].noUi-target,
+[disabled].noUi-get,
 [disabled].noUi-handle,
 [disabled] .noUi-handle {
   cursor: not-allowed; }
@@ -4539,7 +4539,7 @@ Build date: 2019-12-19 16:51:02
 .dropzone.dz-clickable .dz-message, .dropzone.dz-clickable .dz-message * {
   cursor: pointer; }
 
-.dropzone.dz-started .dz-message {
+.dropzone.dz-sted .dz-message {
   display: none; }
 
 .dropzone.dz-drag-hover {
@@ -5742,9 +5742,9 @@ Build date: 2019-12-19 16:51:02
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start;
+  -webkit-box-align: st;
+  -ms-flex-align: st;
+  align-items: flex-st;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   border: 1px solid #ddd;
@@ -5830,7 +5830,7 @@ Build date: 2019-12-19 16:51:02
 .tagify--loading .tagify__input:empty::after {
   margin-left: 0; }
 
-.tagify + input, .tagify + textarea {
+.tagify + input, .tagify + texea {
   display: none !important; }
 
 .tagify__tag {
@@ -6981,7 +6981,7 @@ Build date: 2019-12-19 16:51:02
   min-height: 10px;
   overflow: auto; }
 
-.md-editor > textarea {
+.md-editor > texea {
   font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
   font-size: 14px;
   outline: 0;
@@ -6997,7 +6997,7 @@ Build date: 2019-12-19 16:51:02
   box-shadow: none;
   background: #eee; }
 
-.md-editor > textarea:focus {
+.md-editor > texea:focus {
   -webkit-box-shadow: none;
   box-shadow: none;
   background: #fff; }
@@ -11164,9 +11164,9 @@ button.toast-close-button {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
+  -webkit-box-pack: st;
+  -ms-flex-pack: st;
+  justify-content: flex-st;
   margin: 0 0.6em;
   font-size: 1em; }
 
@@ -11182,9 +11182,9 @@ button.toast-close-button {
   line-height: 0.8; }
 
 .swal2-popup.swal2-toast .swal2-content {
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
+  -webkit-box-pack: st;
+  -ms-flex-pack: st;
+  justify-content: flex-st;
   padding: 0;
   font-size: 1em; }
 
@@ -11337,22 +11337,22 @@ button.toast-close-button {
   background: transparent !important; }
 
 .swal2-container.swal2-top {
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start; }
+  -webkit-box-align: st;
+  -ms-flex-align: st;
+  align-items: flex-st; }
 
-.swal2-container.swal2-top-start, .swal2-container.swal2-top-left {
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start; }
+.swal2-container.swal2-top-st, .swal2-container.swal2-top-left {
+  -webkit-box-align: st;
+  -ms-flex-align: st;
+  align-items: flex-st;
+  -webkit-box-pack: st;
+  -ms-flex-pack: st;
+  justify-content: flex-st; }
 
 .swal2-container.swal2-top-end, .swal2-container.swal2-top-right {
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start;
+  -webkit-box-align: st;
+  -ms-flex-align: st;
+  align-items: flex-st;
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end; }
@@ -11362,13 +11362,13 @@ button.toast-close-button {
   -ms-flex-align: center;
   align-items: center; }
 
-.swal2-container.swal2-center-start, .swal2-container.swal2-center-left {
+.swal2-container.swal2-center-st, .swal2-container.swal2-center-left {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start; }
+  -webkit-box-pack: st;
+  -ms-flex-pack: st;
+  justify-content: flex-st; }
 
 .swal2-container.swal2-center-end, .swal2-container.swal2-center-right {
   -webkit-box-align: center;
@@ -11383,13 +11383,13 @@ button.toast-close-button {
   -ms-flex-align: end;
   align-items: flex-end; }
 
-.swal2-container.swal2-bottom-start, .swal2-container.swal2-bottom-left {
+.swal2-container.swal2-bottom-st, .swal2-container.swal2-bottom-left {
   -webkit-box-align: end;
   -ms-flex-align: end;
   align-items: flex-end;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start; }
+  -webkit-box-pack: st;
+  -ms-flex-pack: st;
+  justify-content: flex-st; }
 
 .swal2-container.swal2-bottom-end, .swal2-container.swal2-bottom-right {
   -webkit-box-align: end;
@@ -11399,7 +11399,7 @@ button.toast-close-button {
   -ms-flex-pack: end;
   justify-content: flex-end; }
 
-.swal2-container.swal2-bottom > :first-child, .swal2-container.swal2-bottom-start > :first-child, .swal2-container.swal2-bottom-left > :first-child, .swal2-container.swal2-bottom-end > :first-child, .swal2-container.swal2-bottom-right > :first-child {
+.swal2-container.swal2-bottom > :first-child, .swal2-container.swal2-bottom-st > :first-child, .swal2-container.swal2-bottom-left > :first-child, .swal2-container.swal2-bottom-end > :first-child, .swal2-container.swal2-bottom-right > :first-child {
   margin-top: auto; }
 
 .swal2-container.swal2-grow-fullscreen > .swal2-modal {
@@ -11442,10 +11442,10 @@ button.toast-close-button {
   -ms-flex-align: center;
   align-items: center; }
 
-.swal2-container.swal2-grow-column.swal2-top-start, .swal2-container.swal2-grow-column.swal2-center-start, .swal2-container.swal2-grow-column.swal2-bottom-start, .swal2-container.swal2-grow-column.swal2-top-left, .swal2-container.swal2-grow-column.swal2-center-left, .swal2-container.swal2-grow-column.swal2-bottom-left {
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start; }
+.swal2-container.swal2-grow-column.swal2-top-st, .swal2-container.swal2-grow-column.swal2-center-st, .swal2-container.swal2-grow-column.swal2-bottom-st, .swal2-container.swal2-grow-column.swal2-top-left, .swal2-container.swal2-grow-column.swal2-center-left, .swal2-container.swal2-grow-column.swal2-bottom-left {
+  -webkit-box-align: st;
+  -ms-flex-align: st;
+  align-items: flex-st; }
 
 .swal2-container.swal2-grow-column.swal2-top-end, .swal2-container.swal2-grow-column.swal2-center-end, .swal2-container.swal2-grow-column.swal2-bottom-end, .swal2-container.swal2-grow-column.swal2-top-right, .swal2-container.swal2-grow-column.swal2-center-right, .swal2-container.swal2-grow-column.swal2-bottom-right {
   -webkit-box-align: end;
@@ -11469,7 +11469,7 @@ button.toast-close-button {
   -webkit-transition: none !important;
   transition: none !important; }
 
-.swal2-container:not(.swal2-top):not(.swal2-top-start):not(.swal2-top-end):not(.swal2-top-left):not(.swal2-top-right):not(.swal2-center-start):not(.swal2-center-end):not(.swal2-center-left):not(.swal2-center-right):not(.swal2-bottom):not(.swal2-bottom-start):not(.swal2-bottom-end):not(.swal2-bottom-left):not(.swal2-bottom-right):not(.swal2-grow-fullscreen) > .swal2-modal {
+.swal2-container:not(.swal2-top):not(.swal2-top-st):not(.swal2-top-end):not(.swal2-top-left):not(.swal2-top-right):not(.swal2-center-st):not(.swal2-center-end):not(.swal2-center-left):not(.swal2-center-right):not(.swal2-bottom):not(.swal2-bottom-st):not(.swal2-bottom-end):not(.swal2-bottom-left):not(.swal2-bottom-right):not(.swal2-grow-fullscreen) > .swal2-modal {
   margin: auto; }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -11707,7 +11707,7 @@ button.toast-close-button {
 
 .swal2-input,
 .swal2-file,
-.swal2-textarea,
+.swal2-texea,
 .swal2-select,
 .swal2-radio,
 .swal2-checkbox {
@@ -11715,7 +11715,7 @@ button.toast-close-button {
 
 .swal2-input,
 .swal2-file,
-.swal2-textarea {
+.swal2-texea {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   width: 100%;
@@ -11733,34 +11733,34 @@ button.toast-close-button {
 
 .swal2-input.swal2-inputerror,
 .swal2-file.swal2-inputerror,
-.swal2-textarea.swal2-inputerror {
+.swal2-texea.swal2-inputerror {
   border-color: #f27474 !important;
   -webkit-box-shadow: 0 0 2px #f27474 !important;
   box-shadow: 0 0 2px #f27474 !important; }
 
 .swal2-input:focus,
 .swal2-file:focus,
-.swal2-textarea:focus {
+.swal2-texea:focus {
   border: 1px solid #b4dbed;
   outline: none;
   -webkit-box-shadow: 0 0 3px #c4e6f5;
   box-shadow: 0 0 3px #c4e6f5; }
 
-.swal2-input::-moz-placeholder, .swal2-file::-moz-placeholder, .swal2-textarea::-moz-placeholder {
+.swal2-input::-moz-placeholder, .swal2-file::-moz-placeholder, .swal2-texea::-moz-placeholder {
   color: #cccccc; }
 
-.swal2-input:-ms-input-placeholder, .swal2-file:-ms-input-placeholder, .swal2-textarea:-ms-input-placeholder {
+.swal2-input:-ms-input-placeholder, .swal2-file:-ms-input-placeholder, .swal2-texea:-ms-input-placeholder {
   color: #cccccc; }
 
-.swal2-input::-ms-input-placeholder, .swal2-file::-ms-input-placeholder, .swal2-textarea::-ms-input-placeholder {
+.swal2-input::-ms-input-placeholder, .swal2-file::-ms-input-placeholder, .swal2-texea::-ms-input-placeholder {
   color: #cccccc; }
 
-.swal2-input::-webkit-input-placeholder, .swal2-file::-webkit-input-placeholder, .swal2-textarea::-webkit-input-placeholder {
+.swal2-input::-webkit-input-placeholder, .swal2-file::-webkit-input-placeholder, .swal2-texea::-webkit-input-placeholder {
   color: #cccccc; }
 
 .swal2-input::placeholder,
 .swal2-file::placeholder,
-.swal2-textarea::placeholder {
+.swal2-texea::placeholder {
   color: #cccccc; }
 
 .swal2-range {
@@ -11794,7 +11794,7 @@ button.toast-close-button {
   background: inherit;
   font-size: 1.125em; }
 
-.swal2-textarea {
+.swal2-texea {
   height: 6.75em;
   padding: 0.75em; }
 
@@ -12483,7 +12483,7 @@ body.swal2-no-backdrop .swal2-container.swal2-top {
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%); }
 
-body.swal2-no-backdrop .swal2-container.swal2-top-start, body.swal2-no-backdrop .swal2-container.swal2-top-left {
+body.swal2-no-backdrop .swal2-container.swal2-top-st, body.swal2-no-backdrop .swal2-container.swal2-top-left {
   top: 0;
   left: 0; }
 
@@ -12497,7 +12497,7 @@ body.swal2-no-backdrop .swal2-container.swal2-center {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%); }
 
-body.swal2-no-backdrop .swal2-container.swal2-center-start, body.swal2-no-backdrop .swal2-container.swal2-center-left {
+body.swal2-no-backdrop .swal2-container.swal2-center-st, body.swal2-no-backdrop .swal2-container.swal2-center-left {
   top: 50%;
   left: 0;
   -webkit-transform: translateY(-50%);
@@ -12515,7 +12515,7 @@ body.swal2-no-backdrop .swal2-container.swal2-bottom {
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%); }
 
-body.swal2-no-backdrop .swal2-container.swal2-bottom-start, body.swal2-no-backdrop .swal2-container.swal2-bottom-left {
+body.swal2-no-backdrop .swal2-container.swal2-bottom-st, body.swal2-no-backdrop .swal2-container.swal2-bottom-left {
   bottom: 0;
   left: 0; }
 
@@ -12548,13 +12548,13 @@ body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .s
   bottom: auto;
   left: auto; }
 
-body.swal2-toast-shown .swal2-container.swal2-top-start, body.swal2-toast-shown .swal2-container.swal2-top-left {
+body.swal2-toast-shown .swal2-container.swal2-top-st, body.swal2-toast-shown .swal2-container.swal2-top-left {
   top: 0;
   right: auto;
   bottom: auto;
   left: 0; }
 
-body.swal2-toast-shown .swal2-container.swal2-center-start, body.swal2-toast-shown .swal2-container.swal2-center-left {
+body.swal2-toast-shown .swal2-container.swal2-center-st, body.swal2-toast-shown .swal2-container.swal2-center-left {
   top: 50%;
   right: auto;
   bottom: auto;
@@ -12578,7 +12578,7 @@ body.swal2-toast-shown .swal2-container.swal2-center-end, body.swal2-toast-shown
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%); }
 
-body.swal2-toast-shown .swal2-container.swal2-bottom-start, body.swal2-toast-shown .swal2-container.swal2-bottom-left {
+body.swal2-toast-shown .swal2-container.swal2-bottom-st, body.swal2-toast-shown .swal2-container.swal2-bottom-left {
   top: auto;
   right: auto;
   bottom: 0;
@@ -13849,7 +13849,7 @@ readers do not read off random characters that represent icons */
 .la-dev:before {
   content: "\f6cc"; }
 
-.la-deviantart:before {
+.la-deviant:before {
   content: "\f1bd"; }
 
 .la-dharmachakra:before {
@@ -14551,7 +14551,7 @@ readers do not read off random characters that represent icons */
 .la-grin-squint-tears:before {
   content: "\f586"; }
 
-.la-grin-stars:before {
+.la-grin-ss:before {
   content: "\f587"; }
 
 .la-grin-tears:before {
@@ -14587,7 +14587,7 @@ readers do not read off random characters that represent icons */
 .la-grunt:before {
   content: "\f3ad"; }
 
-.la-guitar:before {
+.la-gui:before {
   content: "\f7a6"; }
 
 .la-gulp:before {
@@ -14785,7 +14785,7 @@ readers do not read off random characters that represent icons */
 .la-hourglass-half:before {
   content: "\f252"; }
 
-.la-hourglass-start:before {
+.la-hourglass-st:before {
   content: "\f251"; }
 
 .la-house-damage:before {
@@ -14938,10 +14938,10 @@ readers do not read off random characters that represent icons */
 .la-khanda:before {
   content: "\f66d"; }
 
-.la-kickstarter:before {
+.la-kickster:before {
   content: "\f3bb"; }
 
-.la-kickstarter-k:before {
+.la-kickster-k:before {
   content: "\f3bc"; }
 
 .la-kiss:before {
@@ -15292,7 +15292,7 @@ readers do not read off random characters that represent icons */
 .la-moon:before {
   content: "\f186"; }
 
-.la-mortar-pestle:before {
+.la-mor-pestle:before {
   content: "\f5a7"; }
 
 .la-mosque:before {
@@ -16201,22 +16201,22 @@ readers do not read off random characters that represent icons */
 .la-stamp:before {
   content: "\f5bf"; }
 
-.la-star:before {
+.la-s:before {
   content: "\f005"; }
 
-.la-star-and-crescent:before {
+.la-s-and-crescent:before {
   content: "\f699"; }
 
-.la-star-half:before {
+.la-s-half:before {
   content: "\f089"; }
 
-.la-star-half-alt:before {
+.la-s-half-alt:before {
   content: "\f5c0"; }
 
-.la-star-of-david:before {
+.la-s-of-david:before {
   content: "\f69a"; }
 
-.la-star-of-life:before {
+.la-s-of-life:before {
   content: "\f621"; }
 
 .la-staylinked:before {
@@ -17060,11 +17060,11 @@ readers do not read off random characters that represent icons */
   font-family: 'Line Awesome Brands';
   font-weight: 400; }
 
-.la.la-star-o {
+.la.la-s-o {
   font-family: 'Line Awesome Free';
   font-weight: 400; }
 
-.la.la-star-o:before {
+.la.la-s-o:before {
   content: "\f005"; }
 
 .la.la-remove:before {
@@ -17615,25 +17615,25 @@ readers do not read off random characters that represent icons */
 .la.la-mail-reply-all:before {
   content: "\f122"; }
 
-.la.la-star-half-o {
+.la.la-s-half-o {
   font-family: 'Line Awesome Free';
   font-weight: 400; }
 
-.la.la-star-half-o:before {
+.la.la-s-half-o:before {
   content: "\f089"; }
 
-.la.la-star-half-empty {
+.la.la-s-half-empty {
   font-family: 'Line Awesome Free';
   font-weight: 400; }
 
-.la.la-star-half-empty:before {
+.la.la-s-half-empty:before {
   content: "\f089"; }
 
-.la.la-star-half-full {
+.la.la-s-half-full {
   font-family: 'Line Awesome Free';
   font-weight: 400; }
 
-.la.la-star-half-full:before {
+.la.la-s-half-full:before {
   content: "\f089"; }
 
 .la.la-code-fork:before {
@@ -18033,7 +18033,7 @@ readers do not read off random characters that represent icons */
 .la.la-bank:before {
   content: "\f19c"; }
 
-.la.la-mortar-board:before {
+.la.la-mor-board:before {
   content: "\f19d"; }
 
 .la.la-yahoo {
@@ -18116,7 +18116,7 @@ readers do not read off random characters that represent icons */
 .la.la-envelope-o:before {
   content: "\f0e0"; }
 
-.la.la-deviantart {
+.la.la-deviant {
   font-family: 'Line Awesome Brands';
   font-weight: 400; }
 
@@ -19559,7 +19559,7 @@ readers do not read off random characters that represent icons */
 .flaticon-edit:before {
   content: "\f169"; }
 
-.flaticon-avatar:before {
+.flaticon-ava:before {
   content: "\f16a"; }
 
 .flaticon-download:before {
@@ -19778,7 +19778,7 @@ readers do not read off random characters that represent icons */
 .flaticon-sound:before {
   content: "\f1b2"; }
 
-.flaticon-star:before {
+.flaticon-s:before {
   content: "\f1b3"; }
 
 .flaticon-placeholder-3:before {
@@ -20010,7 +20010,7 @@ readers do not read off random characters that represent icons */
 .flaticon2-paperplane:before {
   content: "\f109"; }
 
-.flaticon2-avatar:before {
+.flaticon2-ava:before {
   content: "\f10a"; }
 
 .flaticon2-bell:before {
@@ -20661,7 +20661,7 @@ readers do not read off random characters that represent icons */
 .flaticon2-pin-1:before {
   content: "\f1e2"; }
 
-.flaticon2-start-up:before {
+.flaticon2-st-up:before {
   content: "\f1e3"; }
 
 .flaticon2-right-arrow:before {
@@ -20821,7 +20821,7 @@ readers do not read off random characters that represent icons */
 .socicon-delicious:before {
   content: "\e028"; }
 
-.socicon-deviantart:before {
+.socicon-deviant:before {
   content: "\e029"; }
 
 .socicon-forrst:before {
@@ -21181,7 +21181,7 @@ readers do not read off random characters that represent icons */
 .socicon-warcraft:before {
   content: "\e08e"; }
 
-.socicon-starcraft:before {
+.socicon-scraft:before {
   content: "\e08f"; }
 
 .socicon-beam:before {
@@ -22430,7 +22430,7 @@ readers do not read off random characters that represent icons */
 .fa-dev:before {
   content: "\f6cc"; }
 
-.fa-deviantart:before {
+.fa-deviant:before {
   content: "\f1bd"; }
 
 .fa-dharmachakra:before {
@@ -23150,7 +23150,7 @@ readers do not read off random characters that represent icons */
 .fa-grin-squint-tears:before {
   content: "\f586"; }
 
-.fa-grin-stars:before {
+.fa-grin-ss:before {
   content: "\f587"; }
 
 .fa-grin-tears:before {
@@ -23186,7 +23186,7 @@ readers do not read off random characters that represent icons */
 .fa-grunt:before {
   content: "\f3ad"; }
 
-.fa-guitar:before {
+.fa-gui:before {
   content: "\f7a6"; }
 
 .fa-gulp:before {
@@ -23414,7 +23414,7 @@ readers do not read off random characters that represent icons */
 .fa-hourglass-half:before {
   content: "\f252"; }
 
-.fa-hourglass-start:before {
+.fa-hourglass-st:before {
   content: "\f251"; }
 
 .fa-house-damage:before {
@@ -23576,10 +23576,10 @@ readers do not read off random characters that represent icons */
 .fa-khanda:before {
   content: "\f66d"; }
 
-.fa-kickstarter:before {
+.fa-kickster:before {
   content: "\f3bb"; }
 
-.fa-kickstarter-k:before {
+.fa-kickster-k:before {
   content: "\f3bc"; }
 
 .fa-kiss:before {
@@ -23945,7 +23945,7 @@ readers do not read off random characters that represent icons */
 .fa-moon:before {
   content: "\f186"; }
 
-.fa-mortar-pestle:before {
+.fa-mor-pestle:before {
   content: "\f5a7"; }
 
 .fa-mosque:before {
@@ -24884,22 +24884,22 @@ readers do not read off random characters that represent icons */
 .fa-stamp:before {
   content: "\f5bf"; }
 
-.fa-star:before {
+.fa-s:before {
   content: "\f005"; }
 
-.fa-star-and-crescent:before {
+.fa-s-and-crescent:before {
   content: "\f699"; }
 
-.fa-star-half:before {
+.fa-s-half:before {
   content: "\f089"; }
 
-.fa-star-half-alt:before {
+.fa-s-half-alt:before {
   content: "\f5c0"; }
 
-.fa-star-of-david:before {
+.fa-s-of-david:before {
   content: "\f69a"; }
 
-.fa-star-of-life:before {
+.fa-s-of-life:before {
   content: "\f621"; }
 
 .fa-staylinked:before {

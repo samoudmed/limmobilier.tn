@@ -1,3 +1,4 @@
+{% cache 'annonce_' ~ annonce.id %}
 <div class="listing-homepage">
     <div class="item-grid__image-container style-hover-zoom clearfix">
         <a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">
@@ -67,19 +68,4 @@
         </div><!-- .listing-content -->
     </div><!-- .item-grid__content-container -->
 </div><!-- .listing -->
-<script>
-window.addEventListener("load", function () {
-    document.querySelectorAll("picture").forEach(picture => {
-        const source = picture.querySelector("source");
-        const img = picture.querySelector("img");
-
-        if (source && source.dataset.srcset) {
-            source.srcset = source.dataset.srcset;
-        }
-
-        if (img && img.dataset.src) {
-            img.src = img.dataset.src;
-        }
-    });
-});
-</script>
+{% endcache %}

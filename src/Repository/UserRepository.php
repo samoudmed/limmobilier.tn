@@ -17,15 +17,13 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, User::class);
     }
 
-    public function add(User $entity, bool $flush = false): void
-    {
+    public function add(User $entity, bool $flush = false): void {
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
@@ -33,8 +31,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
     }
 
-    public function remove(User $entity, bool $flush = false): void
-    {
+    public function remove(User $entity, bool $flush = false): void {
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
@@ -45,8 +42,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
-    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
-    {
+    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
@@ -55,15 +51,42 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         $this->add($user, true);
     }
-    
-    public function findAgences() 
-    {
-        return $this->createQueryBuilder('a')
-                        ->andWhere('a.agence != :val')
-                        ->setParameter('val', '')
-                        ->orderBy('a.id', 'ASC')
+
+    public function findAgences() {
+        
+        $date = new \DateTime('now');
+        return $this->createQueryBuilder('u')
+                        ->select('u as agency, COUNT(a.id) as adsCount')
+                        ->leftJoin('u.annonces', 'a')
+                        ->andWhere('u.type = :type')  // only agencies
+                        ->andWhere('a.published = 1')
+                        ->andWhere('a.statut = 1')
+                        ->andWhere('a.deleted = 0')
+                        ->setParameter('type', '1')
+                        ->groupBy('u.agence')
+                        ->orderBy('adsCount', 'DESC')
                         ->getQuery()
-                        ->getResult()
-        ;
+                        ->getResult();
     }
+
+    public function findTopAgenciesByAds(int $limit = 3): array {
+        
+        $date = new \DateTime('now');
+        return $this->createQueryBuilder('u')
+                        ->select('u as agency, COUNT(a.id) as adsCount')
+                        ->leftJoin('u.annonces', 'a')
+                        ->andWhere('u.type = :type')  // only agencies
+                        ->andWhere('a.published = 1')
+                        ->andWhere('a.statut = 1')
+                        ->andWhere('a.expired_at > :date')
+                        ->andWhere('a.deleted = 0')
+                        ->setParameter('type', '1')
+                        ->setParameter('date', $date->format('Y-m-d'))
+                        ->groupBy('u.agence')
+                        ->orderBy('adsCount', 'DESC')
+                        ->setMaxResults($limit)
+                        ->getQuery()
+                        ->getResult();
+    }
+
 }

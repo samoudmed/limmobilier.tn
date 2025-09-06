@@ -126,7 +126,7 @@ class AnnonceController extends AbstractController {
                     ->findAll();
 
             if ($form->isSubmitted() && $form->isValid()) {
-                dd($request->request);
+
                 $typeOffre = $request->request->get('offre');
 
                 $prix = $request->request->get('prix');
@@ -188,7 +188,7 @@ class AnnonceController extends AbstractController {
             $photos = $this->getDoctrine()
                     ->getRepository(Photos::class)
                     ->findByAnnonce($annonce);
-            
+            dd($photos);
             return $this->render('default/compte/modifier_annonce.html.twig', ['annonce' => $annonce, 'form' => $form->createView(), 'villes' => $villes, 'photos' => $photos]);
         } else {
             return $this->redirectToRoute('mes_annonces');

@@ -11,7 +11,7 @@
     <meta property="og:image" content="{{ asset('uploads/photos/affiche.png') }}" />
 {% endblock %}
 {% block body %}
-   <section class="main-listing">
+    <section class="main-listing">
         <div class="container">
             <div class="row main-listing-list pt15">
                 <div class="col-md-12 item-grid__container">
@@ -22,28 +22,45 @@
                         Nos partenaires vous proposent un service professionnel, une connaissance approfondie du marché local et un large choix de biens adaptés à vos besoins.
                     </p>
                 </div>
-                <div id="listing-ads">
-                    {% for agence in agences %}
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 item-grid__container animated animatedFadeInUp fadeInUp">
+                <div id="listing-ads" class="row">
+                    {% for row in agences %}
+                        {% set agency = row.agency %}
+                        <div class="col-lg-3 col-md-4 col-sm-12 col-12">
                             <div class="listing-homepage">
-                                <div class="item-grid__content-container">
-                                    <div class="listing__content">
-                                        <div class="flex-center space-beetween pb12 list-details">
-                                            <a href="{{ path('liste_agence', {'label': agence|slugify, 'id': agence.id, 'page': 1} )  }} ">
-                                                {% if agence.logo %}
-                                                <img itemprop="logo" src="{{ asset('uploads/logos/'~agence.logo) }}" alt="{{agence.agence}}" style="width:100%" >
-                                                {% else %}                                                            
-                                                    <div class="avatar">{{ agence.agence }}</div>
-                                                {% endif %}
-                                            </a>            
+                                {# Le lien <a> englobe TOUT le contenu pour que la carte soit entièrement cliquable. #}
+                                {# On vérifie une seule fois si on peut générer un lien. #}
+                                {% if agency and agency.agence %}
+                                    <a class="list-details-link" href="{{ path('liste_agence', {'label': agency.agence|slugify, 'id': agency.id, 'page': 1}) }}">
+                                        {# PARTIE 1 : Le logo ou l'avatar (visuellement en haut) #}
+                                        <div class="agency-logo-container">
+                                            {% if agency.logo %}
+                                                {# On supprime le style en ligne, le CSS s'en occupe ! #}
+                                                <img itemprop="logo" src="{{ asset('uploads/logos/' ~ agency.logo) }}" alt="{{ agency.agence }}">
+                                            {% else %}
+                                                <div class="avatar">{{ agency.agence }}</div>
+                                            {% endif %}
                                         </div>
-                                    </div><!-- .listing-content -->
-                                </div><!-- .item-grid__content-container -->
-                            </div><!-- .listing -->
-                        </div><!-- .col -->
+                                        {# PARTIE 2 : Le nom de l'agence (visuellement en bas) #}
+                                        <div class="agency-name">
+                                            <h4>{{ agency.agence }}</h4>
+                                        </div>
+                                    </a>
+                                {% else %}
+                                    {# Optionnel : Gérer le cas où une agence n'a pas de nom ou de données #}
+                                    <div class="list-details-link is-disabled">
+                                        <div class="agency-logo-container">
+                                            <div class="avatar">Données manquantes</div>
+                                        </div>
+                                        <div class="agency-name">
+                                            <h4>Agence invalide</h4>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
-                <div class="row"><div class="col-lg-3"></div><div class="col-lg-9">{{ knp_pagination_render(agences) }}</div></div>
+                <div class="row"></div>
             </div>
             <!-- .row -->
         </div><!-- .container -->

@@ -18,19 +18,8 @@
    ==================== */
 :root {
     /* Couleurs */
-    --primary-color: #252525;
-    --secondary-color: #565656;
-    --text-color: #333;
-    --label-color: #555;
-    --border-color: #dee2e6;
-    --background-color: #f8f9fa;
-    --form-bg-color: #fff;
-    --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --border-radius: 5px;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --primary-color: #007bff; /* Bleu principal */
+    --secondary-color: #2c3e50; /* Couleur des textes et titres foncï¿½s */
     --light-gray: #f8f9fa; /* Arriï¿½re-plan des sections */
     --dark-gray: #343a40; /* Footer et textes foncï¿½s */
     --featured-color: #28a745; /* Vert pour les annonces "featured" */
@@ -101,18 +90,17 @@ dl, ol, ul {
 .ui-icon, btn, img {
     vertical-align: middle;
 }
-
-input[type=email], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=url], input[type=number], select {
+input[type=email], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=url], select {
     padding: 0 15px;
     -webkit-transition: .2s;
     -o-transition: .2s;
     transition: .2s;
     font-size: 14px;
-    color: #000000;
+    color: #878787;
     height: 42px;
     line-height: 1;
     background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
+    border: none;
 }
 /* Container for the entire dropdown */
 .dk-select.main-listing__form-field {
@@ -263,7 +251,7 @@ input[type=email], input[type=password], input[type=search], input[type=tel], in
 .pbr-mainmenu .dropdown-menu {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0.5rem 0;
     background-color: #002462;
     border: 1px solid #001f56;
     border-radius: var(--border-radius);
@@ -271,7 +259,7 @@ input[type=email], input[type=password], input[type=search], input[type=tel], in
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 11;
+    z-index: 10;
     min-width: 200px;
     display: none;
     width: 100%; /* pour le responsive */
@@ -283,7 +271,7 @@ input[type=email], input[type=password], input[type=search], input[type=tel], in
 }
 
 .pbr-mainmenu .dropdown-menu li a {
-    padding: 0.75rem 1rem 12px 20px;
+    padding: 0.75rem 1rem 0.75rem 3rem;
     color: var(--link-color);
     white-space: nowrap;
     display: block;
@@ -708,7 +696,7 @@ input[type=email], input[type=password], input[type=search], input[type=tel], in
     display: flex;
     align-items: center;
     font-size: 0.95rem;
-    color: #353535;
+    color: #555;
     transition: color 0.3s ease;
     user-select: none;
 }
@@ -721,21 +709,21 @@ input[type=email], input[type=password], input[type=search], input[type=tel], in
     height: 18px;
     min-width: 18px; /* Prevents shrinking */
     border-radius: 50%;
-    border: 1px solid #aaa;
+    border: 2px solid #ccc;
     margin-right: 10px;
     transition: all 0.3s ease;
-    background-color: #f5f5f5;
+    background-color: #fff;
 }
 
 /* Style l'ï¿½tat "cochï¿½" */
 .main-listing__form-radio:checked + .main-listing__form-label {
-    color: #33cc33;
+    color: #007bff;
     font-weight: 600;
 }
 
 .main-listing__form-radio:checked + .main-listing__form-label::before {
-    border-color: #33cc33;
-    background-color: #33cc33;
+    border-color: #007bff;
+    background-color: #007bff;
     box-shadow: inset 0 0 0 4px #fff;
 }
 
@@ -1222,7 +1210,19 @@ input[type=email], input[type=password], input[type=search], input[type=tel], in
 }
 /* Custom Properties for consistency */
 :root {
-    
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --text-color: #333;
+    --label-color: #555;
+    --border-color: #dee2e6;
+    --background-color: #f8f9fa;
+    --form-bg-color: #fff;
+    --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --border-radius: 5px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 /* Base Styles */
@@ -1619,7 +1619,7 @@ body {
 
 .bookmarked-listing__headline strong {
     font-weight: 700;
-    color: #33cc33;
+    color: #3182ce;
 }
 /* General styling for each widget section */
 .widget {
@@ -1914,12 +1914,7 @@ body {
     font-weight: 600;
     margin-bottom: 8px;
 }
-.submit-property__label::before {
-    color: #33cc33;
-    font-weight: bold;
-    margin-right: -87px;
-    padding: 0px 0 17px 3px;
-}
+
 .submit-property__field,
 .js-example-basic-single {
     width: 100%;
@@ -1982,7 +1977,7 @@ body {
 }
 
 .submit-property__feature::before {
-    content: '\2713';
+    content: '';
     position: absolute;
     left: 0;
     top: 0;
@@ -2079,6 +2074,17 @@ body {
 
 /* Styles for each individual step */
 /* Styling for a "next step" arrow */
+.progress-step::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 20px; /* Width of the arrow */
+    height: 20px; /* Height of the arrow */
+    background-color: #f0f0f0; /* Match the background of the step */
+    transform: translateY(-50%) skewX(-30deg);
+    z-index: 1; /* Place the arrow behind the step text */
+}
 
 /* Ensure the step has position: relative to contain the arrow */
 .progress-step {
@@ -2106,14 +2112,22 @@ body {
 /* Styles for the active step and the arrow */
 .progress-step.active {
     color: #fff; /* White text for contrast */
-    background-color: #959fa7; /* Blue background for the active step */
-    border-bottom-color: #212529;
+    background-color: #007bff; /* Blue background for the active step */
+    border-bottom-color: #007bff;
     z-index: 2; /* Bring the active step to the front */
+}
+
+.progress-step.active::after {
+    background-color: #007bff; /* Color the arrow with the active color */
 }
 
 /* Styles for steps that have been passed */
 .progress-step.passed {
     background-color: #e0e0e0;
+}
+
+.progress-step.passed::after {
+    background-color: #e0e0e0; /* Color the arrow with the passed color */
 }
 
 /* Media query for smaller screens */
@@ -3248,90 +3262,4 @@ ul.entry-meta li {
     .entry-content {
         font-size: 1em;
     }
-}
-
-/* Select2 single select */
-.select2-container .select2-selection--single {
-  height: 42px;
-  line-height: 42px;
-  padding: 0 15px;
-  background-color: #f5f5f5;
-  border: 1px solid #aaa;
-  border-radius: 6px; /* amélioration: léger arrondi */
-  font-size: 14px;
-  color: #878787;
-  transition: all 0.2s ease-in-out;
-  display: flex;
-  align-items: center;
-}
-
-/* Flèche à droite */
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-  top: 50%;
-  transform: translateY(-50%);
-  right: 10px;
-}
-
-/* Survol et focus */
-.select2-container--default .select2-selection--single:hover,
-.select2-container--default .select2-selection--single:focus {
-  border-color: #009688; /* couleur highlight */
-  background-color: #fff; /* contraste au focus */
-  box-shadow: 0 0 6px rgba(0, 150, 136, 0.2);
-  color: #333;
-}
-
-/* Dropdown list */
-.select2-container--default .select2-results > .select2-results__options {
-  max-height: 250px;
-  overflow-y: auto;
-  background: #fff;
-  border: 1px solid #aaa;
-  border-radius: 0 0 6px 6px;
-}
-
-/* Options */
-.select2-container--default .select2-results__option {
-  padding: 10px 15px;
-  font-size: 14px;
-  color: #555;
-  transition: background 0.2s ease;
-}
-
-/* Option survolée */
-.select2-container--default .select2-results__option--highlighted {
-  background-color: #009688;
-  color: #fff;
-}
-
-/* Option sélectionnée */
-.select2-container--default .select2-results__option[aria-selected="true"] {
-  background-color: #e0f2f1;
-  color: #009688;
-}
-.select2-container--default .select2-search--dropdown .select2-search__field {
-  width: 100% !important;
-  padding: 8px 12px;
-  font-size: 14px;
-  color: #555;
-  border: 1px solid #aaa;
-  border-radius: 6px;
-  background-color: #f9f9f9;
-  transition: all 0.2s ease-in-out;
-  outline: none;
-  box-sizing: border-box;
-}
-
-/* Focus */
-.select2-container--default .select2-search--dropdown .select2-search__field:focus {
-  border-color: #009688;
-  background-color: #fff;
-  box-shadow: 0 0 5px rgba(0, 150, 136, 0.25);
-  color: #333;
-}
-.level-1 {
-    border-bottom: 1px #6c757d solid;
-}
-.padding-15 {
-    padding: 15px;
 }

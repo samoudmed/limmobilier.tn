@@ -3,9 +3,30 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Entity\Annonces;
+use App\Entity\Photos;
+use App\Entity\User;
+use App\Entity\Villes;
+use App\Entity\Gouvernorat;
+use App\Entity\Delegation;
+use App\Entity\Kind;
+use App\Form\MessageType;
+use App\Form\ContactType;
+use App\Form\AnnoncesType;
+use Symfony\Component\Finder\SplFileInfo;
+use App\Form\NewsletterType;
+use App\Entity\Newsletter;
+use App\Entity\Message;
+use App\Entity\Contact;
+use App\Repository\VillesRepository;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\Finder\Finder;
+use Cocur\Slugify\Slugify;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Description of StatistiquesController

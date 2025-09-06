@@ -3403,8 +3403,8 @@
             ],
             "authors": [
                 {
-                    "name": "Ralph Khattar",
-                    "email": "ralph.khattar@gmail.com"
+                    "name": "Ralph Khat",
+                    "email": "ralph.khat@gmail.com"
                 }
             ],
             "description": "A polyfill for getallheaders.",
@@ -4129,7 +4129,7 @@
             "suggest": {
                 "symfony/config": "",
                 "symfony/expression-language": "For using expressions in service container configuration",
-                "symfony/finder": "For using double-star glob patterns or when GLOB_BRACE portability is required",
+                "symfony/finder": "For using double-s glob patterns or when GLOB_BRACE portability is required",
                 "symfony/proxy-manager-bridge": "Generate service proxies to lazy load them",
                 "symfony/yaml": ""
             },
@@ -9138,7 +9138,7 @@
                 "static analysis"
             ],
             "support": {
-                "docs": "https://phpstan.org/user-guide/getting-started",
+                "docs": "https://phpstan.org/user-guide/getting-sted",
                 "forum": "https://github.com/phpstan/phpstan/discussions",
                 "issues": "https://github.com/phpstan/phpstan/issues",
                 "security": "https://github.com/phpstan/phpstan/security/policy",

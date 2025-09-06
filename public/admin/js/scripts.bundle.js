@@ -117,7 +117,7 @@ var KTApp = function() {
         }
 
         $('body').on('show.bs.dropdown', context, function(e) {
-        	dropdownMenu = $(e.target).find('.dropdown-menu');
+        	dropdownMenu = $(e.get).find('.dropdown-menu');
         	$('body').append(dropdownMenu.detach());
         	dropdownMenu.css('display', 'block');
         	dropdownMenu.position({
@@ -126,19 +126,19 @@ var KTApp = function() {
         		'of': $(e.relatedTarget),
         	});
         }).on('hide.bs.dropdown', context, function(e) {
-        	$(e.target).append(dropdownMenu.detach());
+        	$(e.get).append(dropdownMenu.detach());
         	dropdownMenu.hide();
         });
     }
 
     var initAbsoluteDropdowns = function() {
         $('body').on('show.bs.dropdown', function(e) {
-            // e.target is always parent (contains toggler and menu)
-            var $toggler = $(e.target).find("[data-attach='body']");
+            // e.get is always parent (contains toggler and menu)
+            var $toggler = $(e.get).find("[data-attach='body']");
             if ($toggler.length === 0) {
                 return;
             }
-            var $dropdownMenu = $(e.target).find('.dropdown-menu');
+            var $dropdownMenu = $(e.get).find('.dropdown-menu');
             // save detached menu
             var $detachedDropdownMenu = $dropdownMenu.detach();
             // save reference to detached menu inside data of toggler
@@ -154,14 +154,14 @@ var KTApp = function() {
         });
 
         $('body').on('hide.bs.dropdown', function(e) {
-            var $toggler = $(e.target).find("[data-attach='body']");
+            var $toggler = $(e.get).find("[data-attach='body']");
             if ($toggler.length === 0) {
                 return;
             }
             // access to reference of detached menu from data of toggler
             var $detachedDropdownMenu = $toggler.data('dropdown-menu');
             // re-append detached menu inside parent
-            $(e.target).append($detachedDropdownMenu.detach());
+            $(e.get).append($detachedDropdownMenu.detach());
             // hide dropdown
             $detachedDropdownMenu.hide();
         });
@@ -219,8 +219,8 @@ var KTApp = function() {
             initAbsoluteDropdown(context);
         },
 
-        block: function(target, options) {
-            var el = $(target);
+        block: function(get, options) {
+            var el = $(get);
 
             options = $.extend(true, {
                 opacity: 0.05,
@@ -254,7 +254,7 @@ var KTApp = function() {
                 options.width = KTUtil.actualWidth(el) + 10;
                 KTUtil.remove(el);
 
-                if (target == 'body') {
+                if (get == 'body') {
                     html = '<div class="' + classes + '" style="margin-left:-' + (options.width / 2) + 'px;"><span>' + options.message + '</span><span>' + spinner + '</span></div>';
                 }
             } else {
@@ -277,7 +277,7 @@ var KTApp = function() {
                     backgroundColor: options.overlayColor,
                     opacity: options.opacity,
                     cursor: 'wait',
-                    zIndex: (target == 'body' ? 1100 : 10)
+                    zIndex: (get == 'body' ? 1100 : 10)
                 },
                 onUnblock: function() {
                     if (el && el[0]) {
@@ -287,18 +287,18 @@ var KTApp = function() {
                 }
             };
 
-            if (target == 'body') {
+            if (get == 'body') {
                 params.css.top = '50%';
                 $.blockUI(params);
             } else {
-                var el = $(target);
+                var el = $(get);
                 el.block(params);
             }
         },
 
-        unblock: function(target) {
-            if (target && target != 'body') {
-                $(target).unblock();
+        unblock: function(get) {
+            if (get && get != 'body') {
+                $(get).unblock();
             } else {
                 $.unblockUI();
             }
@@ -1258,7 +1258,7 @@ var KTImageInput = function(elementId, options) {
         },
 
         /**
-         * Init avatar
+         * Init ava
          */
         init: function(options) {
             the.element = element;
@@ -1286,7 +1286,7 @@ var KTImageInput = function(elementId, options) {
 	            if (the.input && the.input.files && the.input.files[0]) {
 	                var reader = new FileReader();
 	                reader.onload = function(e) {
-	                    KTUtil.css(the.wrapper, 'background-image', 'url('+e.target.result +')');
+	                    KTUtil.css(the.wrapper, 'background-image', 'url('+e.get.result +')');
 	                }
 	                reader.readAsDataURL(the.input.files[0]);
 
@@ -2099,17 +2099,17 @@ var KTMenu = function(elementId, options) {
         /**
          * Trigger events
          */
-        eventTrigger: function(name, target, e) {
+        eventTrigger: function(name, get, e) {
             for (var i = 0; i < the.events.length; i++ ) {
                 var event = the.events[i];
                 if ( event.name == name ) {
                     if ( event.one == true ) {
                         if ( event.fired == false ) {
                             the.events[i].fired = true;
-                            return event.handler.call(this, target, e);
+                            return event.handler.call(this, get, e);
                         }
                     } else {
-                        return event.handler.call(this, target, e);
+                        return event.handler.call(this, get, e);
                     }
                 }
             }
@@ -2292,7 +2292,7 @@ document.addEventListener("click", function (e) {
                     break;
                 }
 
-                if ( e.target !== element && element.contains(e.target) === false ) {
+                if ( e.get !== element && element.contains(e.get) === false ) {
                     the.hideDropdowns();
                 }
             }
@@ -2352,7 +2352,7 @@ var KTOffcanvas = function(elementId, options) {
             the.attrCustom = the.options.attrCustom;
             the.classShown = the.classBase + '-on';
             the.classOverlay = the.classBase + '-overlay';
-            the.target;
+            the.get;
 
             the.state = KTUtil.hasClass(element, the.classShown) ? 'shown' : 'hidden';
         },
@@ -2363,15 +2363,15 @@ var KTOffcanvas = function(elementId, options) {
                 if (typeof the.options.toggleBy === 'string') {
                     KTUtil.addEvent(KTUtil.getById(the.options.toggleBy), 'click', function(e) {
                         e.preventDefault();
-                        the.target = this;
+                        the.get = this;
                         Plugin.toggle();
                     });
                 } else if (the.options.toggleBy && the.options.toggleBy[0]) {
-                    if (the.options.toggleBy[0].target) {
+                    if (the.options.toggleBy[0].get) {
                         for (var i in the.options.toggleBy) {
-                            KTUtil.addEvent(KTUtil.getById(the.options.toggleBy[i].target), 'click', function(e) {
+                            KTUtil.addEvent(KTUtil.getById(the.options.toggleBy[i].get), 'click', function(e) {
                                 e.preventDefault();
-                                the.target = this;
+                                the.get = this;
                                 Plugin.toggle();
                             });
                         }
@@ -2379,16 +2379,16 @@ var KTOffcanvas = function(elementId, options) {
                         for (var i in the.options.toggleBy) {
                             KTUtil.addEvent(KTUtil.getById(the.options.toggleBy[i]), 'click', function(e) {
                                 e.preventDefault();
-                                the.target = this;
+                                the.get = this;
                                 Plugin.toggle();
                             });
                         }
                     }
 
-                } else if (the.options.toggleBy && the.options.toggleBy.target) {
-                    KTUtil.addEvent( KTUtil.getById(the.options.toggleBy.target), 'click', function(e) {
+                } else if (the.options.toggleBy && the.options.toggleBy.get) {
+                    KTUtil.addEvent( KTUtil.getById(the.options.toggleBy.get), 'click', function(e) {
                         e.preventDefault();
-                        the.target = this;
+                        the.get = this;
                         Plugin.toggle();
                     });
                 }
@@ -2399,7 +2399,7 @@ var KTOffcanvas = function(elementId, options) {
             if (closeBy) {
                 KTUtil.addEvent(closeBy, 'click', function(e) {
                     e.preventDefault();
-                    the.target = this;
+                    the.get = this;
                     Plugin.hide();
                 });
             }
@@ -2446,7 +2446,7 @@ var KTOffcanvas = function(elementId, options) {
                 KTUtil.addEvent(the.overlay, 'click', function(e) {
                     //e.stopPropagation();
                     e.preventDefault();
-                    Plugin.hide(the.target);
+                    Plugin.hide(the.get);
                 });
             }
 
@@ -2479,21 +2479,21 @@ var KTOffcanvas = function(elementId, options) {
         },
 
         toggleClass: function(mode) {
-            var id = KTUtil.attr(the.target, 'id');
+            var id = KTUtil.attr(the.get, 'id');
             var toggleBy;
 
-            if (the.options.toggleBy && the.options.toggleBy[0] && the.options.toggleBy[0].target) {
+            if (the.options.toggleBy && the.options.toggleBy[0] && the.options.toggleBy[0].get) {
                 for (var i in the.options.toggleBy) {
-                    if (the.options.toggleBy[i].target === id) {
+                    if (the.options.toggleBy[i].get === id) {
                         toggleBy = the.options.toggleBy[i];
                     }
                 }
-            } else if (the.options.toggleBy && the.options.toggleBy.target) {
+            } else if (the.options.toggleBy && the.options.toggleBy.get) {
                 toggleBy = the.options.toggleBy;
             }
 
             if (toggleBy) {
-                var el = KTUtil.getById(toggleBy.target);
+                var el = KTUtil.getById(toggleBy.get);
 
                 if (mode === 'show') {
                     KTUtil.addClass(el, toggleBy.state);
@@ -2778,14 +2778,14 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 "use strict";
 
 // Component Definition
-var KTToggle = function(toggleElement, targetElement, options) {
+var KTToggle = function(toggleElement, getElement, options) {
     // Main object
     var the = this;
     var init = false;
 
     // Get element object
     var element = toggleElement;
-    var target = targetElement;
+    var get = getElement;
 
     if (!element) {
         return;
@@ -2793,7 +2793,7 @@ var KTToggle = function(toggleElement, targetElement, options) {
 
     // Default options
     var defaultOptions = {
-        targetToggleMode: 'class' // class|attribute
+        getToggleMode: 'class' // class|attribute
     };
 
     ////////////////////////////
@@ -2831,16 +2831,16 @@ var KTToggle = function(toggleElement, targetElement, options) {
             // Merge default and user defined options
             the.options = KTUtil.deepExtend({}, defaultOptions, options);
 
-            //alert(the.options.target.tagName);
-            the.target = target;
+            //alert(the.options.get.tagName);
+            the.get = get;
 
-            the.targetState = the.options.targetState;
+            the.getState = the.options.getState;
             the.toggleState = the.options.toggleState;
 
-            if (the.options.targetToggleMode == 'class') {
-                the.state = KTUtil.hasClasses(the.target, the.targetState) ? 'on' : 'off';
+            if (the.options.getToggleMode == 'class') {
+                the.state = KTUtil.hasClasses(the.get, the.getState) ? 'on' : 'off';
             } else {
-                the.state = KTUtil.hasAttr(the.target, 'data-' + the.targetState) ? KTUtil.attr(the.target, 'data-' + the.targetState) : 'off';
+                the.state = KTUtil.hasAttr(the.get, 'data-' + the.getState) ? KTUtil.attr(the.get, 'data-' + the.getState) : 'off';
             }
         },
 
@@ -2876,10 +2876,10 @@ var KTToggle = function(toggleElement, targetElement, options) {
         toggleOn: function() {
             Plugin.eventTrigger('beforeOn');
 
-            if (the.options.targetToggleMode == 'class') {
-                KTUtil.addClass(the.target, the.targetState);
+            if (the.options.getToggleMode == 'class') {
+                KTUtil.addClass(the.get, the.getState);
             } else {
-                KTUtil.attr(the.target, 'data-' + the.targetState, 'on');
+                KTUtil.attr(the.get, 'data-' + the.getState, 'on');
             }
 
             if (the.toggleState) {
@@ -2901,10 +2901,10 @@ var KTToggle = function(toggleElement, targetElement, options) {
         toggleOff: function() {
             Plugin.eventTrigger('beforeOff');
 
-            if (the.options.targetToggleMode == 'class') {
-                KTUtil.removeClass(the.target, the.targetState);
+            if (the.options.getToggleMode == 'class') {
+                KTUtil.removeClass(the.get, the.getState);
             } else {
-                KTUtil.removeAttr(the.target, 'data-' + the.targetState);
+                KTUtil.removeAttr(the.get, 'data-' + the.getState);
             }
 
             if (the.toggleState) {
@@ -3455,9 +3455,9 @@ var KTUtil = function() {
          * Simulates delay
          */
         sleep: function(milliseconds) {
-            var start = new Date().getTime();
+            var st = new Date().getTime();
             for (var i = 0; i < 1e7; i++) {
-                if ((new Date().getTime() - start) > milliseconds) {
+                if ((new Date().getTime() - st) > milliseconds) {
                     break;
                 }
             }
@@ -3465,7 +3465,7 @@ var KTUtil = function() {
 
         /**
          * Gets randomly generated integer value within given min and max range
-         * @param {number} min Range start value
+         * @param {number} min Range st value
          * @param {number} max Range end value
          * @returns {number}
          */
@@ -3979,7 +3979,7 @@ var KTUtil = function() {
             var change = to - from;
 
             function loop(timestamp) {
-                var time = (timestamp || +new Date()) - start;
+                var time = (timestamp || +new Date()) - st;
 
                 if (time >= 0) {
                     update(easing(time, from, change, duration));
@@ -3994,8 +3994,8 @@ var KTUtil = function() {
 
             update(from);
 
-            // Start animation loop
-            var start = window.performance && window.performance.now ? window.performance.now() : +new Date();
+            // St animation loop
+            var st = window.performance && window.performance.now ? window.performance.now() : +new Date();
 
             rAF(loop);
         },
@@ -4216,17 +4216,17 @@ var KTUtil = function() {
             var eventId = KTUtil.getUniqueID('event');
 
             window.KTUtilDelegatedEventHandlers[eventId] = function(e) {
-                var targets = element.querySelectorAll(selector);
-                var target = e.target;
+                var gets = element.querySelectorAll(selector);
+                var get = e.get;
 
-                while (target && target !== element) {
-                    for (var i = 0, j = targets.length; i < j; i++) {
-                        if (target === targets[i]) {
-                            handler.call(target, e);
+                while (get && get !== element) {
+                    for (var i = 0, j = gets.length; i < j; i++) {
+                        if (get === gets[i]) {
+                            handler.call(get, e);
                         }
                     }
 
-                    target = target.parentNode;
+                    get = get.parentNode;
                 }
             }
 
@@ -4248,8 +4248,8 @@ var KTUtil = function() {
         one: function onetime(el, type, callback) {
             el.addEventListener(type, function callee(e) {
                 // remove event
-                if (e.target && e.target.removeEventListener) {
-                    e.target.removeEventListener(e.type, callee);
+                if (e.get && e.get.removeEventListener) {
+                    e.get.removeEventListener(e.type, callee);
                 }
 
                 // need to verify from https://themeforest.net/author_dashboard#comment_23615588
@@ -4355,9 +4355,9 @@ var KTUtil = function() {
             }
         },
 
-        scrollTo: function(target, offset, duration) {
+        scrollTo: function(get, offset, duration) {
             var duration = duration ? duration : 500;
-            var targetPos = target ? KTUtil.offset(target).top : 0;
+            var getPos = get ? KTUtil.offset(get).top : 0;
             var scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
             var from, to;
 
@@ -4366,7 +4366,7 @@ var KTUtil = function() {
             }
 
             from = scrollPos;
-            to = targetPos;
+            to = getPos;
 
             KTUtil.animate(from, to, duration, function(value) {
                 document.documentElement.scrollTop = value;
@@ -4855,7 +4855,7 @@ var KTWizard = function(elementId, options) {
 
     // Default options
     var defaultOptions = {
-        startStep: 1,
+        stStep: 1,
         clickableSteps: false // to make steps clickable this set value true and add data-wizard-clickable="true" in HTML for class="wizard" element
     };
 
@@ -4910,8 +4910,8 @@ var KTWizard = function(elementId, options) {
             the.totalSteps = the.steps.length;
 
             // Init current step
-            if (the.options.startStep > 1) {
-                Plugin.goTo(the.options.startStep);
+            if (the.options.stStep > 1) {
+                Plugin.goTo(the.options.stStep);
             }
 
             // Init UI
@@ -5009,7 +5009,7 @@ var KTWizard = function(elementId, options) {
 
             // After next and prev events
             if (eventHandle === true) {
-                if (number > the.startStep) {
+                if (number > the.stStep) {
                     Plugin.eventTrigger('afterNext');
                 } else {
                     Plugin.eventTrigger('afterPrev');
@@ -5029,7 +5029,7 @@ var KTWizard = function(elementId, options) {
         /**
          * Resume
          */
-        start: function() {
+        st: function() {
             the.stopped = false;
         },
 
@@ -5224,8 +5224,8 @@ var KTWizard = function(elementId, options) {
     /**
      * Resume step
      */
-    the.start = function() {
-        return Plugin.start();
+    the.st = function() {
+        return Plugin.st();
     };
 
     /**
@@ -5537,7 +5537,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 			dropdownFix: function() {
 				var dropdownMenu;
 				$('body').on('show.bs.dropdown', '.' + pfx + 'datatable .' + pfx + 'datatable-body', function(e) {
-					dropdownMenu = $(e.target).find('.dropdown-menu');
+					dropdownMenu = $(e.get).find('.dropdown-menu');
 					$('body').append(dropdownMenu.detach());
 					dropdownMenu.css('display', 'block');
 					dropdownMenu.position({
@@ -5551,7 +5551,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 						dropdownMenu.css('z-index', '2000');
 					}
 				}).on('hide.bs.dropdown', '.' + pfx + 'datatable .' + pfx + 'datatable-body', function(e) {
-					$(e.target).append(dropdownMenu.detach());
+					$(e.get).append(dropdownMenu.detach());
 					dropdownMenu.hide();
 				});
 
@@ -5758,20 +5758,20 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 			 */
 			dragResize: function() {
 				var pressed = false;
-				var start = undefined;
-				var startX, startWidth;
+				var st = undefined;
+				var stX, stWidth;
 				$(datatable.tableHead).find('.' + pfx + 'datatable-cell').mousedown(function(e) {
-					start = $(this);
+					st = $(this);
 					pressed = true;
-					startX = e.pageX;
-					startWidth = $(this).width();
-					$(start).addClass(pfx + 'datatable-cell-resizing');
+					stX = e.pageX;
+					stWidth = $(this).width();
+					$(st).addClass(pfx + 'datatable-cell-resizing');
 
 				}).mousemove(function(e) {
 					if (pressed) {
-						var i = $(start).index();
+						var i = $(st).index();
 						var tableBody = $(datatable.tableBody);
-						var ifLocked = $(start).closest('.' + pfx + 'datatable-lock');
+						var ifLocked = $(st).closest('.' + pfx + 'datatable-lock');
 
 						if (ifLocked) {
 							var lockedIndex = $(ifLocked).index();
@@ -5779,19 +5779,19 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 						}
 
 						$(tableBody).find('.' + pfx + 'datatable-row').each(function(tri, tr) {
-							$(tr).find('.' + pfx + 'datatable-cell').eq(i).width(startWidth + (e.pageX - startX)).children().width(startWidth + (e.pageX - startX));
+							$(tr).find('.' + pfx + 'datatable-cell').eq(i).width(stWidth + (e.pageX - stX)).children().width(stWidth + (e.pageX - stX));
 						});
 
-						$(start).children().css('width', startWidth + (e.pageX - startX));
+						$(st).children().css('width', stWidth + (e.pageX - stX));
 					}
 
 				}).mouseup(function() {
-					$(start).removeClass(pfx + 'datatable-cell-resizing');
+					$(st).removeClass(pfx + 'datatable-cell-resizing');
 					pressed = false;
 				});
 
 				$(document).mouseup(function() {
-					$(start).removeClass(pfx + 'datatable-cell-resizing');
+					$(st).removeClass(pfx + 'datatable-cell-resizing');
 					pressed = false;
 				});
 			},
@@ -6383,9 +6383,9 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 						meta.perpage = options.data.pageSize || 10;
 					}
 					meta.total = datatable.dataSet.length;
-					var start = Math.max(meta.perpage * (meta.page - 1), 0);
-					var end = Math.min(start + meta.perpage, meta.total);
-					datatable.dataSet = $(datatable.dataSet).slice(start, end);
+					var st = Math.max(meta.perpage * (meta.page - 1), 0);
+					var end = Math.min(st + meta.perpage, meta.total);
+					datatable.dataSet = $(datatable.dataSet).slice(st, end);
 					return meta;
 				};
 
@@ -6400,11 +6400,11 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 							ctx.init(meta);
 						});
 
-						var start = Math.max(meta.perpage * (meta.page - 1), 0);
-						var end = Math.min(start + meta.perpage, meta.total);
+						var st = Math.max(meta.perpage * (meta.page - 1), 0);
+						var end = Math.min(st + meta.perpage, meta.total);
 
 						Plugin.localDataUpdate();
-						datatable.dataSet = $(datatable.dataSet).slice(start, end);
+						datatable.dataSet = $(datatable.dataSet).slice(st, end);
 
 						// insert data into table content
 						Plugin.insertData();
@@ -6462,11 +6462,11 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 				// get row attributes
 				var pagination = params.pagination;
-				var start = (Math.max(pagination.page, 1) - 1) * pagination.perpage;
+				var st = (Math.max(pagination.page, 1) - 1) * pagination.perpage;
 				var end = Math.min(pagination.page, pagination.pages) * pagination.perpage;
 				var rowProps = {};
 				if (typeof options.data.attr.rowProps !== 'undefined' && options.data.attr.rowProps.length) {
-					rowProps = options.data.attr.rowProps.slice(start, end);
+					rowProps = options.data.attr.rowProps.slice(st, end);
 				}
 
 				var tableBody = document.createElement('tbody');
@@ -6716,17 +6716,17 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 						var pagesNumber = Plugin.getOption('toolbar.items.pagination.pages.desktop.pagesNumber');
 						var end = Math.ceil(pg.meta.page / pagesNumber) * pagesNumber;
-						var start = end - pagesNumber;
+						var st = end - pagesNumber;
 						if (end > pg.meta.pages) {
 							end = pg.meta.pages;
 						}
 
 						// keep pagination 1 if there is no records
-						if (start < 0) {
-							start = 0;
+						if (st < 0) {
+							st = 0;
 						}
 
-						for (var x = start; x < (end || 1); x++) {
+						for (var x = st; x < (end || 1); x++) {
 							var pageNumber = x + 1;
 							$('<li/>').
 								append($('<a/>').
@@ -6829,7 +6829,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 						// event from text input
 						if (typeof page === 'undefined') {
-							page = $(e.target).attr('data-page');
+							page = $(e.get).attr('data-page');
 						}
 
 						pg.openPage(parseInt(page));
@@ -6935,13 +6935,13 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 						});
 					},
 					updateInfo: function() {
-						var start = Math.max(pg.meta.perpage * (pg.meta.page - 1) + 1, 1);
-						var end = Math.min(start + pg.meta.perpage - 1, pg.meta.total);
+						var st = Math.max(pg.meta.perpage * (pg.meta.page - 1) + 1, 1);
+						var end = Math.min(st + pg.meta.perpage - 1, pg.meta.total);
 						// page info update
 						$(pg.pager).find('.' + pfx + 'datatable-pager-info').find('.' + pfx + 'datatable-pager-detail').html(Plugin.dataPlaceholder(
 							Plugin.getOption('translate.toolbar.pagination.items.info'), {
-								// set start page 0 if the is no records. eg. Showing 0 - 0 of 0
-								start: pg.meta.total === 0 ? 0 : start,
+								// set st page 0 if the is no records. eg. Showing 0 - 0 of 0
+								st: pg.meta.total === 0 ? 0 : st,
 								end: pg.meta.perpage === -1 ? pg.meta.total : end,
 								pageSize: pg.meta.perpage === -1 ||
 								pg.meta.perpage >= pg.meta.total
@@ -6973,7 +6973,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 										case 'desktop':
 										case 'tablet':
 											var end = Math.ceil(currentPage / option.pagesNumber) * option.pagesNumber;
-											var start = end - option.pagesNumber;
+											var st = end - option.pagesNumber;
 											$(pagerInput).hide();
 											pg.meta = Plugin.getDataSourceParam('pagination');
 											pg.paginationUpdate();
@@ -7244,10 +7244,10 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 			/**
 			 * BlockUI spinner callback
 			 * @param block
-			 * @param target
+			 * @param get
 			 */
-			spinnerCallback: function(block, target) {
-				if (typeof target === 'undefined') target = datatable;
+			spinnerCallback: function(block, get) {
+				if (typeof get === 'undefined') get = datatable;
 				// get spinner options
 				var spinnerOptions = Plugin.getOption('layout.spinner');
 				// spinner is disabled
@@ -7262,13 +7262,13 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 						}
 						Plugin.isSpinning = true;
 						if (typeof app !== 'undefined') {
-							app.block(target, spinnerOptions);
+							app.block(get, spinnerOptions);
 						}
 					}
 				} else {
 					Plugin.isSpinning = false;
 					if (typeof app !== 'undefined') {
-						app.unblock(target);
+						app.unblock(get);
 					}
 				}
 			},
@@ -8819,7 +8819,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 							select: 'Select page size',
 							all: 'all',
 						},
-						info: 'Showing {{start}} - {{end}} of {{total}}',
+						info: 'Showing {{st}} - {{end}} of {{total}}',
 					},
 				},
 			},
@@ -9259,7 +9259,7 @@ var KTLayoutChat = function () {
 		});
 
 		// attach events
-		KTUtil.on(element, '.card-footer textarea', 'keydown', function(e) {
+		KTUtil.on(element, '.card-footer texea', 'keydown', function(e) {
 			if (e.keyCode == 13) {
 				_handeMessaging(element);
 				e.preventDefault();
@@ -9276,9 +9276,9 @@ var KTLayoutChat = function () {
 	var _handeMessaging = function(element) {
 		var messagesEl = KTUtil.find(element, '.messages');
 		var scrollEl = KTUtil.find(element, '.scroll');
-        var textarea = KTUtil.find(element, 'textarea');
+        var texea = KTUtil.find(element, 'texea');
 
-        if (textarea.value.length === 0 ) {
+        if (texea.value.length === 0 ) {
             return;
         }
 
@@ -9295,11 +9295,11 @@ var KTLayoutChat = function () {
 		html += '		<img alt="Pic" src="assets/media/users/300_12.jpg"/>';
 		html += '	</div>';
 		html += '</div>';
-		html += '<div class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">' + textarea.value + '</div>';
+		html += '<div class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">' + texea.value + '</div>';
 
 		KTUtil.setHTML(node, html);
 		messagesEl.appendChild(node);
-		textarea.value = '';
+		texea.value = '';
 		scrollEl.scrollTop = parseInt(KTUtil.css(messagesEl, 'height'));
 
 		var ps;
@@ -9309,7 +9309,7 @@ var KTLayoutChat = function () {
 
 		setTimeout(function() {
 			var node = document.createElement("DIV");
-			KTUtil.addClass(node, 'd-flex flex-column mb-5 align-items-start');
+			KTUtil.addClass(node, 'd-flex flex-column mb-5 align-items-st');
 
 			var html = '';
 			html += '<div class="d-flex align-items-center">';
@@ -9327,7 +9327,7 @@ var KTLayoutChat = function () {
 
 			KTUtil.setHTML(node, html);
 			messagesEl.appendChild(node);
-			textarea.value = '';
+			texea.value = '';
 			scrollEl.scrollTop = parseInt(KTUtil.css(messagesEl, 'height'));
 
 			var ps;
@@ -9492,7 +9492,7 @@ var KTLayoutExamples = function() {
             var copy = KTUtil.find(example, '.example-copy');
 
             var clipboard = new ClipboardJS(copy, {
-                target: function(trigger) {
+                get: function(trigger) {
                     var example = trigger.closest('.example');
                     var el = KTUtil.find(example, '.example-code .tab-pane.active');
 
@@ -9550,7 +9550,7 @@ var KTLayoutExamples = function() {
 
             // Handle copy
             var clipboard = new ClipboardJS(copy, {
-                target: function(trigger) {
+                get: function(trigger) {
                     var example = trigger.closest('.example');
                     var el = KTUtil.find(example, '.example-code .tab-pane.active');
 
@@ -10124,7 +10124,7 @@ if (typeof module !== 'undefined') {
 
 var KTLayoutSearch = function() {
     // Private properties
-    var _target;
+    var _get;
     var _form;
     var _input;
     var _closeIcon;
@@ -10182,7 +10182,7 @@ var KTLayoutSearch = function() {
     var _processSearch = function() {
         if (_hasResult && _query === _input.value) {
             _hideProgress();
-            KTUtil.addClass(_target, _resultClass);
+            KTUtil.addClass(_get, _resultClass);
             _showDropdown();
             KTUtil.scrollUpdate(_resultWrapper);
 
@@ -10191,7 +10191,7 @@ var KTLayoutSearch = function() {
 
         _query = _input.value;
 
-        KTUtil.removeClass(_target, _resultClass);
+        KTUtil.removeClass(_get, _resultClass);
         _showProgress();
         _hideDropdown();
 
@@ -10205,7 +10205,7 @@ var KTLayoutSearch = function() {
                 success: function(res) {
                     _hasResult = true;
                     _hideProgress();
-                    KTUtil.addClass(_target, _resultClass);
+                    KTUtil.addClass(_get, _resultClass);
                     KTUtil.setHTML(_resultWrapper, res);
                     _showDropdown();
                     KTUtil.scrollUpdate(_resultWrapper);
@@ -10213,7 +10213,7 @@ var KTLayoutSearch = function() {
                 error: function(res) {
                     _hasResult = false;
                     _hideProgress();
-                    KTUtil.addClass(_target, _resultClass);
+                    KTUtil.addClass(_get, _resultClass);
                     KTUtil.setHTML(_resultWrapper, '<span class="font-weight-bold text-muted">Connection error. Please try again later..</div>');
                     _showDropdown();
                     KTUtil.scrollUpdate(_resultWrapper);
@@ -10227,7 +10227,7 @@ var KTLayoutSearch = function() {
         _query = '';
         _hasResult = false;
         KTUtil.hide(_closeIcon);
-        KTUtil.removeClass(_target, _resultClass);
+        KTUtil.removeClass(_get, _resultClass);
         _hideDropdown();
     }
 
@@ -10255,20 +10255,20 @@ var KTLayoutSearch = function() {
     // Public methods
     return {
         init: function(id) {
-            _target = KTUtil.getById(id);
+            _get = KTUtil.getById(id);
 
-            if (!_target) {
+            if (!_get) {
                 return;
             }
 
-            _form = KTUtil.find(_target, '.quick-search-form');
-            _input = KTUtil.find(_target, '.form-control');
-            _closeIcon = KTUtil.find(_target, '.quick-search-close');
-            _resultWrapper = KTUtil.find(_target, '.quick-search-wrapper');
-            _resultDropdown = KTUtil.find(_target, '.dropdown-menu');
-            _resultDropdownToggle = KTUtil.find(_target, '[data-toggle="dropdown"]');
-            _inputGroup = KTUtil.find(_target, '.input-group');
-            _closeIconContainer = KTUtil.find(_target, '.input-group .input-group-append');
+            _form = KTUtil.find(_get, '.quick-search-form');
+            _input = KTUtil.find(_get, '.form-control');
+            _closeIcon = KTUtil.find(_get, '.quick-search-close');
+            _resultWrapper = KTUtil.find(_get, '.quick-search-wrapper');
+            _resultDropdown = KTUtil.find(_get, '.dropdown-menu');
+            _resultDropdownToggle = KTUtil.find(_get, '[data-toggle="dropdown"]');
+            _inputGroup = KTUtil.find(_get, '.input-group');
+            _closeIconContainer = KTUtil.find(_get, '.input-group .input-group-append');
 
             // Attach input keyup handler
             KTUtil.addEvent(_input, 'keyup', _handleSearch);
@@ -10407,7 +10407,7 @@ var KTLayoutAsideToggle = function() {
 	// Initialize
 	var _init = function() {
 		_toggleObject = new KTToggle(_element, _body, {
-			targetState: 'aside-minimize',
+			getState: 'aside-minimize',
 			toggleState: 'active'
 		});
 
@@ -10495,7 +10495,7 @@ var KTLayoutAside = function() {
 			overlay: true,
 			closeBy: 'kt_aside_close_btn',
 			toggleBy: {
-				target: 'kt_aside_mobile_toggle',
+				get: 'kt_aside_mobile_toggle',
 				state: 'mobile-toggle-active'
 			}
 		});
@@ -10738,7 +10738,7 @@ var KTLayoutHeaderMenu = function() {
 			baseClass: 'header-menu-wrapper',
 			closeBy: 'kt_header_menu_mobile_close_btn',
 			toggleBy: {
-				target: 'kt_header_mobile_toggle',
+				get: 'kt_header_mobile_toggle',
 				state: 'mobile-toggle-active'
 			}
 		});
@@ -10822,7 +10822,7 @@ var KTLayoutHeaderTopbar = function() {
     // Private functions
     var _init = function() {
 			_toggleObject = new KTToggle(_toggleElement, KTUtil.getBody(), {
-				targetState: 'topbar-mobile-on',
+				getState: 'topbar-mobile-on',
 				toggleState: 'active',
 			});
     }

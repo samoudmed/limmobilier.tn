@@ -159,58 +159,16 @@ class ApiController extends AbstractController {
             return $this->json(['error' => 'Invalid credentials'], 200);
         }
 
-        // Generate and return an API token here (e.g., JWT or custom)
+// Generate and return an API token here (e.g., JWT or custom)
         $token = bin2hex(random_bytes(32));
+//$user->setApiToken($token); // Assuming your User entity has setApiToken()
+//$userRepository->save($user, true);
 
         return $this->json([
                     'token' => $token,
                     'user' => $user->getEmail(),
                     'id' => $user->getId(),
         ]);
-    }
-
-    /**
-     * @Route("/api/signup", name="api-signup", methods={"POST"})
-     */
-    public function signup(Request $request, UserPasswordHasherInterface $passwordHasher): JsonResponse {
-
-        $data = json_decode($request->getContent(), true);
-
-        $email = $request->request->get('email') ?? '';
-        $password = $request->request->get('password') ?? '';
-        $firstName = $request->request->get('firstName') ?? '';
-        $lastName = $request->request->get('lastName') ?? '';
-        $phone = $request->request->get('phone') ?? '';
-        $company = $request->request->get('company') ?? '';
-
-        $user = new User();
-
-        // encode the plain password
-        $oldUser = $this->getDoctrine()
-                ->getRepository(User::class)
-                ->findOneByEmail($user->getEmail());
-        if ($oldUser) {
-            $user = $oldUser;
-        }
-
-        $user->setPassword($passwordHasher->hashPassword($user, $password));
-        $em = $this->getDoctrine()->getManager();
-        $user->setNom($lastName);
-        $user->setPrenom($firstName);
-        $user->setEmail($email);
-        $user->setTelephone($phone);
-        $user->setAgence($company);
-        $user->setLogo('avatar.png');
-        $user->setIp($request->getClientIp());
-        $user->setRegistredAt(new \DateTime('now'));
-        $user->setActive(false);
-        $referer = $request->getSession()->get('firstVisitReferer');
-        $user->setReferer($referer);
-        $em->persist($user);
-        $em->flush();
-
-        // generate a signed url and email it to the user
-        return $this->json($request->request->get('email'));
     }
 
     /**
@@ -358,6 +316,15 @@ class ApiController extends AbstractController {
                 dd("❌ Format de donnée invalide pour la photo : $name");
             }
         }
+
+        mail('samoud.mohamed@gmail.com', 'annonce new ', 'annonce new');
+
+        $this->addFlash(
+                'success', 'Votre Annonce a été ajoutée avec succès!'
+        );
+
+        //$event = new AnnoncePublishedEvent($annonce);
+        //$this->dispatcher->dispatch($event, 'annonce.published');
 
         return new JsonResponse(['message' => 'Message reçu !'], 200);
     }

@@ -41,31 +41,32 @@
         <div class="main-listing__main">
             <div class="container">
                 <div class="row"> 
-                        <!-- J'ai ajouté la classe "fixed-aside" ici -->
-                        {% include 'default/__aside.html.twig' %}
-                        <main class="col-md-9">
-                            <div class="main-listing__tags">
-                                <!-- .main-listing__list -->
-                                {% if(offre is defined) %}<a href="{{ path('annonce_liste', {'offre': offre, 'page': '1'}) }}" class="main-listing__clear" style="display: none">Initialiser</a>{% endif %}
-                            </div><!-- .main-listing__tags -->
-                            <section class="main-listing-list row">
-                                <div class="loading" style="display: none;text-align: center;">
-                                    <img src="{{ asset('asset/images/load.gif') }}" alt="Loading">
-                                </div>
-                                {% for annonce in annonces %}
-                                    <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-                                        {% include 'default/__annonce.html.twig' %}
-                                    </div><!-- .col -->
-                                {% endfor %}
-                                {{ knp_pagination_render(annonces) }}
-                            </section>
-                        </main><!-- .col -->
+                    <!-- J'ai ajouté la classe "fixed-aside" ici -->
+                    {% include 'default/__aside.html.twig' %}
+                    <main class="col-md-9">
+                        <section class="main-listing-list row">
+                            <div class="loading" style="display: none;text-align: center;">
+                                <img src="{{ asset('asset/images/load.gif') }}" alt="Loading">
+                            </div>
+                            {% for annonce in annonces %}
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                                    {% include 'default/__annonce.html.twig' %}
+                                </div><!-- .col -->
+                            {% else %}
+                                <div class="col-12 text-center text-muted py-3">
+                                    Aucune annonce immobilière n’est disponible dans cette section pour le moment. <br>Revenez bientôt pour découvrir de nouvelles offres !
+                                </div>    
+                            {% endfor %}
+                            {{ knp_pagination_render(annonces) }}
+                        </section>
+                    </main><!-- .col -->
                 </div><!-- row -->
             </div><!-- .container -->
         </div><!-- .main-listing__main -->
     </section>
 
 {% endblock %}
+
 {% block text_footer %}
     <p class="footer__desc">
         Parcourez toutes nos annonces de {% if offre is defined %}{{offre}}{%else%}vente ou loucation{% endif %} immobilière en Tunisie et trouvez le bien qui vous convient : appartement, maison, villa, studio ou local commercial. Sur Limmobilier.tn, nous mettons à jour quotidiennement les offres pour vous proposer les dernières opportunités de {% if offre is defined %}{{offre}}{%else%}vente ou loucation{% endif %} dans toutes les villes comme Tunis, Sousse, Nabeul, Sfax ou Djerba. Utilisez les filtres pour affiner votre recherche par ville, prix, surface ou type de bien, et contactez directement les annonceurs. Trouvez rapidement votre futur logement ou espace professionnel grâce à notre plateforme simple, rapide et fiable.
@@ -95,10 +96,26 @@
                         if (item.surface_3) {
                             html += '<li class="property-label-areasize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Surface" aria-describedby="tooltip386929"><i class="icon-property-areasize"></i><span class="label-content">' + item.surface_3 + ' m<sup>2</sup></span></li>';
                         }
-                        html += '</ul></div></div><a href="#"><img itemprop="logo" src="/public/uploads/logos/' + item.logo + '" alt="" style="width: 50px; height: 50px; object-fit: contain;"></a></div></div></div></div></div>';
+                        html += '</ul></div></div><a href="#"><img itemprop="logo" src="/public/uploads/logos/' + item.logo + '" alt="" loading="lazy" width="50" height="50" itemprop="logo" style="width: 50px; height: 50px; object-fit: contain;"></a></div></div></div></div></div>';
 
                         $(".main-listing-list").prepend(html);
                     });
+                }
+            });
+        });
+    </script>
+    <script>
+        window.addEventListener("load", function () {
+            document.querySelectorAll("picture").forEach(picture => {
+                const source = picture.querySelector("source");
+                const img = picture.querySelector("img");
+
+                if (source && source.dataset.srcset) {
+                    source.srcset = source.dataset.srcset;
+                }
+
+                if (img && img.dataset.src) {
+                    img.src = img.dataset.src;
                 }
             });
         });

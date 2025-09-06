@@ -116,6 +116,20 @@ class AnnoncesRepository extends EntityRepository {
 
         return $annonce;
     }
+    
+    public function findOldAdsQuery()
+    {
+        $date = new \DateTime('now');
+
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.published = 1')
+            ->andWhere('a.statut = 1')
+            ->andWhere('a.deleted = 0')
+            ->andWhere('a.expired_at < :date')
+            ->setParameter('date', $date->format('Y-m-d'))
+            ->orderBy('a.id', 'DESC')
+            ->getQuery();
+    }
 
     public function findByBienVille($type_offre, $ville) {
 
@@ -418,19 +432,18 @@ class AnnoncesRepository extends EntityRepository {
         return $qb->getQuery()->getResult();
     }
 
-    public function createIsSearchableQueryBuilder()
-    {
+    public function createIsSearchableQueryBuilder() {
         $date = new \DateTime('now');
         $qb = $this->createQueryBuilder('a')
-            ->andWhere('a.published = 1')
-            ->andWhere('a.statut = 1')
-            ->andWhere('a.deleted = 0')
-            ->andWhere('a.expired_at > :date')
-            ->setParameter('date', $date->format('Y-m-d'));
+                ->andWhere('a.published = 1')
+                ->andWhere('a.statut = 1')
+                ->andWhere('a.deleted = 0')
+                ->andWhere('a.expired_at > :date')
+                ->setParameter('date', $date->format('Y-m-d'));
 
         return $qb;
     }
-    
+
     public function findAllActive() {
 
         $date = new \DateTime('now');
@@ -489,4 +502,5 @@ class AnnoncesRepository extends EntityRepository {
                         ->getQuery()
                         ->getSingleScalarResult();
     }
+
 }

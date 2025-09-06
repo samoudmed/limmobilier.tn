@@ -33,9 +33,6 @@
                 <div class="row">
                     {% include 'default/__aside.html.twig' %}
                     <main class="col-md-9">
-                        <div class="main-listing__tags">
-                            {% if(offre is defined) %}<a href="{{ path('annonce_liste', {'offre': offre, 'page': '1'}) }}" class="main-listing__clear" style="display: none">Initialiser</a>{% endif %}
-                        </div><!-- .main-listing__tags -->
                         <section class="main-listing-list row">
                             <div class="loading" style="display: none;text-align: center;">
                                 <img src="{{ asset('asset/images/load.gif') }}" alt="Loading">
@@ -45,6 +42,10 @@
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                                     {% include 'default/__annonce.html.twig' %}
                                 </div><!-- .col -->
+                            {% else %}
+                                <div class="col-12 text-center text-muted py-3">
+                                    Aucune annonce immobilière n’est disponible dans cette section pour le moment. <br>Revenez bientôt pour découvrir de nouvelles offres !
+                                </div>
                             {% endfor %}
                             {{ knp_pagination_render(annonces) }}
                         </section>
@@ -80,7 +81,6 @@
     {{ parent() }}
     <script type="text/javascript">
         $(":input").on("change", function () {
-
             $(".main-listing-list").empty();
             $(".pagination").empty();
             $(".loading").show();
@@ -91,31 +91,36 @@
                 dataType: 'json', // ** ensure you add this line **
                 success: function (data) { // code_html contient le HTML renvoyé
                     var result = jQuery.parseJSON(JSON.stringify(data));
-                    if ($('input[name$="property-type"]:checked').val() != 'ALL') {
-                        $(".main-listing__tag_type").show();
-                        $(".main-listing__clear").show();
-                        $(".main-listing__tag-value_Type").html($('input[name$="property-type"]:checked').val());
-                    }
-                    /*if ($('#listing-city').val() != 'ALL') {
-                     $(".main-listing__tag_city").show();
-                     var villes =  {#{ villes|json_encode }#};
-                     //$(".main-listing__tag-value_City").html('{#{villes.0.label}#}');
-                     }*/
-
                     $(".listing-sort__list").html(data.length + ' résultats');
                     $(".loading").hide();
                     jQuery.each(data, function (index, item) {
-                        var html = '<div class="col-md-4 item-grid__container"><div class="listing-homepage"><div class="item-grid__image-container style-hover-zoom clearfix"><a href="/annonce-' + item.slug + '-' + item.id_1 + '.html"><div class="item-grid__image-overlay" style="background: url(\'/uploads/photos/263x175/' + item.photo + '\');width: 100%;height: 175px;background-position: 50% 50%;background-repeat: no-repeat;background-size: cover;"></div></a></div><div class="absolute"><ul class="property-status"><li class="property-status-item property-status-rent"><span>' + item.tlabel + '</span></li></ul><div class="property-group-label"><span class="label-featured label label-success">' + item.offre_2 + '</span></div></div><div class="item-grid__content-container"><div class="listing__content"><div class="listing__header"><div class="listing__header-primary"><div><h3 class="listing__title  h-70"><a href="/annonce-' + item.slug + '-' + item.id_1 + '.html">' + item.label_2 + '</a></h3></div><span class="listing__type"><a href="#">' + item.delegation + '</a></span><div class="property-price"><p class="listing__price">' + item.prix_3 + ' DT</p></div></div></div><div class="flex-center space-beetween pb12 list-details"><div class="clearfix"><div class="property-meta"><ul class="property-meta-list list-inline">';
+                        var html = '<div class="col-md-4 item-grid__container"><div class="listing-homepage"><div class="item-grid__image-container style-hover-zoom clearfix"><a href="https://limmobilier.tn/annonce/' + item.slug + '-' + item.id_1 + '.html"><div class="item-grid__image-overlay" style="background: url(\'/uploads/photos/263x175/' + item.photo + '\');width: 100%;height: 175px;background-position: 50% 50%;background-repeat: no-repeat;background-size: cover;"></div></a></div><div class="absolute"><ul class="property-status"><li class="property-status-item property-status-rent"><span>' + item.tlabel + '</span></li></ul><div class="property-group-label"><span class="label-featured label label-success">' + item.offre_2 + '</span></div></div><div class="item-grid__content-container"><div class="listing__content"><div class="listing__header"><div class="listing__header-primary"><div><h3 class="listing__title  h-70"><a href="https://limmobilier.tn/annonce/' + item.slug + '-' + item.id_1 + '.html">' + item.label_2 + '</a></h3></div><span class="listing__type"><a href="#">' + item.delegation + '</a></span><div class="property-price"><p class="listing__price">' + item.prix_3 + ' DT</p></div></div></div><div class="flex-center space-beetween pb12 list-details"><div class="clearfix"><div class="property-meta"><ul class="property-meta-list list-inline">';
                         if (item.nbrPieces) {
                             html += '<li class="property-label-bedrooms" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pièces"><i class="icon-property-bedrooms"></i><span class="label-content">' + item.nbrPieces + ' pièces</span></li>';
                         }
                         if (item.surface_3) {
                             html += '<li class="property-label-areasize" data-toggle="tooltip" data-placement="top" title="" data-original-title="Surface" aria-describedby="tooltip386929"><i class="icon-property-areasize"></i><span class="label-content">' + item.surface_3 + ' m<sup>2</sup></span></li>';
                         }
-                        html += '</ul></div></div><a href="#"><img itemprop="logo" src="/uploads/logos/' + item.logo + '" alt="" style="width: 50px;"></a></div></div></div></div></div>';
+                        html += '</ul></div></div><a href="#"><img itemprop="logo" src="/public/uploads/logos/' + item.logo + '" alt="" loading="lazy" width="50" height="50" itemprop="logo" style="width: 50px; height: 50px; object-fit: contain;"></a></div></div></div></div></div>';
 
                         $(".main-listing-list").prepend(html);
                     });
+                }
+            });
+        });
+    </script>
+    <script>
+        window.addEventListener("load", function () {
+            document.querySelectorAll("picture").forEach(picture => {
+                const source = picture.querySelector("source");
+                const img = picture.querySelector("img");
+
+                if (source && source.dataset.srcset) {
+                    source.srcset = source.dataset.srcset;
+                }
+
+                if (img && img.dataset.src) {
+                    img.src = img.dataset.src;
                 }
             });
         });

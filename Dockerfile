@@ -31,12 +31,8 @@ RUN apt-get update && \
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install Webpack and Symfony Webpack Encore
-RUN npm install --global webpack webpack-cli && \
-    npm install --save-dev
-
 # Expose port 80 to the outside world
 EXPOSE 80
 
-# CMD specifies the command to run on container start
+# CMD specifies the command to run on container st
 CMD ["apache2-foreground"]

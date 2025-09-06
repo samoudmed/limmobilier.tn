@@ -39,7 +39,6 @@ class AnnoncesType extends AbstractType
             ])
             ->add('localisationMap')
             ->add('description', CKEditorType::class, [
-                'config_name' => 'my_config',
                 'required' => true
             ])
             ->add('offre', ChoiceType::class, [

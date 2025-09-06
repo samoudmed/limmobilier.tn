@@ -195,10 +195,10 @@
 .fa-heart:before {
   content: "\f004";
 }
-.fa-star:before {
+.fa-s:before {
   content: "\f005";
 }
-.fa-star-o:before {
+.fa-s-o:before {
   content: "\f006";
 }
 .fa-user:before {
@@ -579,7 +579,7 @@
 .fa-thumbs-o-down:before {
   content: "\f088";
 }
-.fa-star-half:before {
+.fa-s-half:before {
   content: "\f089";
 }
 .fa-heart-o:before {
@@ -989,9 +989,9 @@
 .fa-reply-all:before {
   content: "\f122";
 }
-.fa-star-half-empty:before,
-.fa-star-half-full:before,
-.fa-star-half-o:before {
+.fa-s-half-empty:before,
+.fa-s-half-full:before,
+.fa-s-half-o:before {
   content: "\f123";
 }
 .fa-location-arrow:before {
@@ -1355,7 +1355,7 @@
 .fa-university:before {
   content: "\f19c";
 }
-.fa-mortar-board:before,
+.fa-mor-board:before,
 .fa-graduation-cap:before {
   content: "\f19d";
 }
@@ -1448,7 +1448,7 @@
 .fa-spotify:before {
   content: "\f1bc";
 }
-.fa-deviantart:before {
+.fa-deviant:before {
   content: "\f1bd";
 }
 .fa-soundcloud:before {
@@ -1886,7 +1886,7 @@
   content: "\f250";
 }
 .fa-hourglass-1:before,
-.fa-hourglass-start:before {
+.fa-hourglass-st:before {
   content: "\f251";
 }
 .fa-hourglass-2:before,

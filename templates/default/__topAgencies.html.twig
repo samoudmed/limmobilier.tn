@@ -1,0 +1,16 @@
+<section class="top-agences">
+    <h2>🏆 Top Agences Immobilières</h2>
+    <div class="agence-grid">
+        {% for row in topAgenciesByAds %}
+            {% set agency = row.agency %}
+            <div class="agence-card">
+                {% if agency.logo %}
+                    <a href="{{ path('liste_agence', {'label': agency.agence|slugify, 'id': agency.id, 'page': 1} )  }} "><img itemprop="logo" src="https://limmobilier.tn{{ asset('uploads/logos/' ~ agency.logo) }}" class="header__logo"></a>
+                {% else %}
+                    <a href="{{ path('liste_agence', {'label': agency.agence|slugify, 'id': agency.id, 'page': 1} )  }} "><img itemprop="logo" src="{{ asset('uploads/logos/avatar.png') }}" alt="Avatar" class="header__logo"></a>
+                {% endif %}
+                <a href="{{ path('liste_agence', {'label': agency.agence|slugify, 'id': agency.id, 'page': 1} )  }} "><h3>{{ agency.agence }}</h3></a>
+            </div>
+        {% endfor %}
+    </div>
+</section>

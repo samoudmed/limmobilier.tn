@@ -17,7 +17,13 @@
                 <div class="col-md-9">
                     <ul class="manage-list manage-list--my-property">
                         <li class="manage-list__header">
-                            <span class="manage-list__title"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Annonces</span>
+                            <span class="manage-list__title">
+                                <!-- Bookmark icon SVG -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M2 2v13l6-5.5 6 5.5V2H2zm6 6.5L3.5 12V3h9v9L8 8.5z"/>
+                                </svg>
+                                Annonces
+                            </span>
                         </li>
                         {% for annonce in annonces %}
                             <li class="manage-list__item">

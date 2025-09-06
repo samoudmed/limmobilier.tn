@@ -12,7 +12,7 @@ var KTBootstrapSwitch = function () {
                 $.ajax({
                     type: 'POST', // Le type de la requête HTTP, ici devenu POST
                     data: 'id=' + $(this).data('id') + '&statut=' + $(this).is(':checked'),
-                    url: "https://limmobilier.tn/admin/annonces/validate",
+                    url: "https://test.limmobilier.tn/admin/annonces/validate",
                     dataType: 'json', // ** ensure you add this line **
                     success: function (data) { // code_html contient le HTML renvoyé
                         toastr.options = {
