@@ -33,7 +33,7 @@ jobs:
         with:
           host: 62.171.189.251
           username: root
-          key: ${{ secrets.SSH_KEY }}
+          password: uI0sIrezf@nq2Sv0
           script: |
             APP_PATH=${{ secrets.FTP_PATH }}
             RELEASE_DIR=$APP_PATH/releases/${{ github.run_id }}
