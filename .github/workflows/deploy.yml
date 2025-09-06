@@ -53,9 +53,9 @@ jobs:
 
           cd $APP_PATH
 
-          # --- 🔧 4. Permissions ---
+          # --- 🔧 4. Permissions ---          
           mkdir -p var/http_cache
-          chown -R www-data:www-data var vendor
+          chown -R www-data:www-data var
           chmod -R 775 var vendor
 
           # --- ⚡ 5. Symfony cache ---
