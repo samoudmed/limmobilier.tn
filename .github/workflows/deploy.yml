@@ -18,11 +18,11 @@ jobs:
       - name: Upload files via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
-          server: ${{ secrets.SERVER }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ vars.FTP_HOST }}
+          username: ${{ vars.FTP_USER }}
+          password: ${{ vars.FTP_PASSWORD }}
+          server-dir: ${{ vars.FTP_PATH }}/releases/${{ github.run_id }}
           local-dir: ./
-          server-dir: ${{ secrets.FTP_PATH }}/releases/${{ github.run_id }}
           dangerous-clean-slate: false   
 
       # 3. SSH into server and finalize deployment
