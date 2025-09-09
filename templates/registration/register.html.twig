@@ -94,13 +94,13 @@
                     </div>
 
                     <div class="form-group text-center">
-                        <input type="hidden" 
-       id="{{ registrationForm._token.vars.id }}" 
-       name="{{ registrationForm._token.vars.full_name }}" 
-       value="{{ registrationForm._token.vars.value }}">
+                         <input type="hidden" 
+                            id="{{ registrationForm._token.vars.id }}" 
+                            name="{{ registrationForm._token.vars.full_name }}" 
+                            value="{{ registrationForm._token.vars.value }}">
                         <button type="submit" class="sign-up__submit">Inscription</button>
                     </div>
-                   {{ form_end(registrationForm) }}
+                   {{ form_end(registrationForm, {'render_rest': false}) }}
                 </div>
             </div>
         </div>
