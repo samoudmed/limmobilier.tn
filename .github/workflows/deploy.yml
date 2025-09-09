@@ -19,6 +19,8 @@ jobs:
         run: |
           TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
           mkdir -p $TMP_DEPLOY
+          mkdir -p $TMP_DEPLOY/public
+          mkdir -p $TMP_DEPLOY/public/asset
           rsync -a --delete ./src/ $TMP_DEPLOY/src/
           rsync -a --delete ./templates/ $TMP_DEPLOY/templates/
           rsync -a --delete ./public/asset $TMP_DEPLOY/public/asset
