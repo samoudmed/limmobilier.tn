@@ -10,11 +10,16 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      # 1️⃣ Checkout code
+      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Set up PHP
+      # 2️⃣ Mark repo as safe for Git
+      - name: Configure safe directory
+        run: |
+          git config --global --add safe.directory $GITHUB_WORKSPACE
+
+      # 3️⃣ Set up PHP
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -23,8 +28,8 @@ jobs:
           ini-values: post_max_size=256M, upload_max_filesize=256M
           tools: composer:v2
 
-      # 3️⃣ Check if composer files changed
-      - name: Check if composer changed
+      # 4️⃣ Check if composer files changed
+      - name: Check if composer.json or composer.lock changed
         id: composer
         run: |
           git fetch origin ${{ github.base_ref }}
@@ -34,55 +39,51 @@ jobs:
             echo "composer_changed=false" >> $GITHUB_OUTPUT
           fi
 
-      # 4️⃣ Install or update Composer dependencies only if changed
+      # 5️⃣ Install Composer dependencies only if needed
       - name: Install Composer dependencies
         if: steps.composer.outputs.composer_changed == 'true'
         run: composer install --no-interaction --optimize-autoloader
 
-      # 5️⃣ Run PHPUnit tests
+      # 6️⃣ Run PHPUnit tests
       - name: Run Unit & Functional Tests
         run: |
           echo "Running PHPUnit tests..."
           ./vendor/bin/phpunit --stop-on-failure
 
-      # 6️⃣ Run Static Analysis
+      # 7️⃣ Run Static Analysis (optional)
       - name: Static Analysis
         run: |
           echo "Running PHPStan..."
           ./vendor/bin/phpstan analyse -l max src
 
-      # 7️⃣ Check if migrations changed
-      - name: Check if migrations changed
+      # 8️⃣ Check if database migrations are needed
+      - name: Check if migrations are needed
         id: migrations
         run: |
+          # Check if Doctrine migrations folder changed
           git fetch origin ${{ github.base_ref }}
-          if git diff --name-only origin/${{ github.base_ref }} | grep -qE '^migrations/|^src/Migrations/'; then
+          if git diff --name-only origin/${{ github.base_ref }} | grep -qE 'migrations/'; then
             echo "migrations_changed=true" >> $GITHUB_OUTPUT
           else
             echo "migrations_changed=false" >> $GITHUB_OUTPUT
           fi
 
-      # 8️⃣ Run database migrations only if changed
-      - name: Run database migrations
+      # 9️⃣ Run Doctrine migrations only if needed
+      - name: Run Doctrine migrations
         if: steps.migrations.outputs.migrations_changed == 'true'
-        run: |
-          APP_PATH=/home/test/public_html
-          cd $APP_PATH
-          php bin/console doctrine:migrations:migrate --no-interaction
+        run: php bin/console doctrine:migrations:migrate --no-interaction
 
-      # 9️⃣ Sync files to temporary folder
+      # 🔟 Sync files to temporary folder
       - name: Sync files to temporary folder
         run: |
           TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
-          mkdir -p $TMP_DEPLOY
-          mkdir -p $TMP_DEPLOY/public
           mkdir -p $TMP_DEPLOY/public/asset
           rsync -a --delete ./src/ $TMP_DEPLOY/src/
           rsync -a --delete ./templates/ $TMP_DEPLOY/templates/
           rsync -a --delete ./public/asset/ $TMP_DEPLOY/public/asset/
           rsync -a --delete ./vendor/ $TMP_DEPLOY/vendor/
 
-      # 🔟 Deploy synced files to live project
+      # 1️⃣1️⃣ Deploy synced files to live project
       - name: Move files to live project
         run: |
           APP_PATH=/home/test/public_html
@@ -93,9 +94,10 @@ jobs:
           rsync -a --delete $TMP_DEPLOY/public/asset/ $APP_PATH/public/asset/
           rsync -a --delete $TMP_DEPLOY/vendor/ $APP_PATH/vendor/
 
+          # Remove temporary folder
           rm -rf $TMP_DEPLOY
 
-      # 1️⃣1️⃣ Clear and warmup Symfony cache
+      # 1️⃣2️⃣ Clear and warmup Symfony cache
       - name: Clear Symfony cache
         run: |
           APP_PATH=/home/test/public_html
