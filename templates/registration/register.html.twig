@@ -97,7 +97,7 @@
                         <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('registrationForm') }}">
                         <button type="submit" class="sign-up__submit">Inscription</button>
                     </div>
-                   {{ form_end(registrationForm, {'render_rest': false}) }}
+                   {{ form_end(registrationForm) }}
                 </div>
             </div>
         </div>
