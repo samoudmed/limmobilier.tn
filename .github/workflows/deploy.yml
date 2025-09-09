@@ -21,6 +21,7 @@ jobs:
           mkdir -p $TMP_DEPLOY
           rsync -a --delete ./src/ $TMP_DEPLOY/src/
           rsync -a --delete ./templates/ $TMP_DEPLOY/templates/
+          rsync -a --delete ./public/asset $TMP_DEPLOY/public/asset
 
       # 3️⃣ Deploy synced files to live project
       - name: Move files to live project
