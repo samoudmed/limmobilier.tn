@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-group">
                         <label for="username" class="form-label">Type de compte</label>
-                        <div class="main-listing__form-radio type">
+                        <div class="form-check">
                             {% for choice in registrationForm.type %}
                                 {# Récupérer l'ID et la valeur #}
                                 {% set id = choice.vars.id %}
