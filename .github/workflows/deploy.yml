@@ -1,4 +1,4 @@
-name: Zero-Downtime Symfony Deploy (Single Release)
+name: Zero-Downtime Symfony Deploy
 
 on:
   push:
@@ -9,58 +9,79 @@ jobs:
   deploy:
     runs-on: self-hosted
 
+    env:
+      APP_PATH: /home/test/public_html
+      RELEASES_PATH: /home/test/releases
+      SHARED_PATH: /home/test/shared
+      COMPOSER_ALLOW_SUPERUSER: 1
+
     steps:
-      # 1️⃣ Checkout repository
+      # 1️⃣ Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Prepare release folder
-      - name: Prepare release folder
+      # 2️⃣ Create release folder
+      - name: Create release directory
         run: |
-          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
           mkdir -p $RELEASE_DIR
 
-      # 3️⃣ Clean tmp and cache folders
-      - name: Clean tmp and cache
+      # 3️⃣ Rsync project files to release folder
+      - name: Rsync project
         run: |
-          rm -rf ./tmp
-          rm -rf ./var/cache
+          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
+          rsync -a --delete \
+            --exclude .git \
+            --exclude node_modules \
+            --exclude var/log \
+            --exclude public/uploads \
+            ./ $RELEASE_DIR/
 
-      # 4️⃣ Rsync project to release folder
-      - name: Sync project to release folder
+      # 4️⃣ Link shared directories & files
+      - name: Link shared directories
         run: |
-          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
-          rsync -a --delete --exclude .git --exclude node_modules ./ $RELEASE_DIR/
+          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
+          mkdir -p $SHARED_PATH/var/log $SHARED_PATH/public/uploads
+          [ -f $SHARED_PATH/.env.local ] || touch $SHARED_PATH/.env.local
+
+          ln -sfn $SHARED_PATH/var/log $RELEASE_DIR/var/log
+          ln -sfn $SHARED_PATH/public/uploads $RELEASE_DIR/public/uploads
+          ln -sfn $SHARED_PATH/.env.local $RELEASE_DIR/.env.local
 
       # 5️⃣ Install composer dependencies
       - name: Composer install
         run: |
-          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
           cd $RELEASE_DIR
-          composer install --no-dev --optimize-autoloader
+          composer install --no-dev --optimize-autoloader --no-interaction
 
-      # 6️⃣ Clear and warmup Symfony cache
-      - name: Clear Symfony cache
+      # 6️⃣ Build & warmup Symfony cache
+      - name: Warmup Symfony cache
         run: |
-          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
           cd $RELEASE_DIR
-          php bin/console cache:clear --env=prod || true
-          php bin/console cache:warmup --env=prod
+          php bin/console cache:clear --env=prod --no-debug || true
+          php bin/console cache:warmup --env=prod --no-debug
 
-      # 7️⃣ Switch symlink to new release
-      - name: Switch live release
+      # 7️⃣ Run migrations (optional)
+      - name: Run Doctrine migrations
         run: |
-          APP_PATH=/home/test/public_html
-          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
+          cd $RELEASE_DIR
+          php bin/console doctrine:migrations:migrate --no-interaction --env=prod || true
 
-          # Remove previous release
-          if [ -L $APP_PATH/current ]; then
-            OLD_RELEASE=$(readlink $APP_PATH/current)
-            rm -rf $OLD_RELEASE
-          fi
-
-          # Atomically switch symlink
+      # 8️⃣ Switch symlink atomically
+      - name: Switch current symlink
+        run: |
+          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
           ln -sfn $RELEASE_DIR $APP_PATH/current
 
+      # 9️⃣ Cleanup old releases (keep last 3)
+      - name: Cleanup old releases
+        run: |
+          cd $RELEASES_PATH
+          ls -1dt */ | tail -n +4 | xargs rm -rf || true
+
+      # 🔟 Done
       - name: Deployment finished
-        run: echo "✅ Deployment complete. Only the last release is kept."
+        run: echo "✅ Deployment complete. Zero downtime with rollback support."
