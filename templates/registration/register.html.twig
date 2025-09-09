@@ -52,9 +52,19 @@
                         <label for="username" class="form-label">Type de compte</label>
                         <div class="main-listing__form-radio type">
                             {% for choice in registrationForm.type %}
-                                <label class="custom-radio">
-                                    {{ form_widget(choice, {'attr': {'class': 'custom-radio__input'}}) }}
-                                    {{ form_label(choice, null, {'label_attr': {'class': 'custom-radio__label'}}) }}
+                                {# Récupérer l'ID et la valeur #}
+                                {% set id = choice.vars.id %}
+                                {% set value = choice.vars.value %}
+                                {% set checked = choice.vars.checked ? 'checked="checked"' : '' %}
+
+                                <input type="radio"
+                                    id="{{ id }}"
+                                    name="{{ choice.vars.full_name }}"
+                                    value="{{ value }}"
+                                    class="main-listing__form-radio type"
+                                    {{ checked }}>
+                                <label for="{{ id }}" class="main-listing__form-label">
+                                    {{ choice.vars.label }}
                                 </label>
                             {% endfor %}
                         </div>
