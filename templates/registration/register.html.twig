@@ -50,7 +50,14 @@
                     </div>
                     <div class="form-group">
                         <label for="username" class="form-label">Type de compte</label>
-                        {{ form_widget(registrationForm.type, {'attr': {'class': 'main-listing__form-radio type'}}) }}
+                        <div class="main-listing__form-radio type">
+                            {% for choice in registrationForm.type %}
+                                <label>
+                                    {{ form_widget(choice, {'attr': {'class': 'main-listing__form-radio type'}}) }}
+                                    {{ form_label(choice, {'attr': {'class': 'main-listing__form-label'}}) }}
+                                </label>
+                            {% endfor %}
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="username" class="form-label">Agence</label>
