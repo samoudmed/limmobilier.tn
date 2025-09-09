@@ -1,4 +1,4 @@
-name: Zero-Downtime Symfony Deploy (Single Release)
+name: Deploy Symfony App (Zero Downtime)
 
 on:
   push:
@@ -7,54 +7,68 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: self-hosted   # Use your self-hosted runner
 
     steps:
-      # 1️⃣ Checkout repository
+      # 1️⃣ Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Prepare release folder
-      - name: Prepare release folder
-        run: |
-          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
-          mkdir -p $RELEASE_DIR
+      # 2️⃣ Set up PHP
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, pdo_mysql, xml, curl
+          ini-values: post_max_size=256M, upload_max_filesize=256M
+          tools: composer:v2
 
-      # 3️⃣ Rsync project to release folder
-      - name: Sync project to release folder
-        run: |
-          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
-          rsync -a --delete --exclude .git --exclude tmp --exclude var/cache --exclude node_modules ./ $RELEASE_DIR/
+      # 3️⃣ Install dependencies
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --optimize-autoloader
 
-      # 4️⃣ Install composer dependencies
-      - name: Composer install
+      # 4️⃣ Run PHPUnit tests
+      - name: Run Unit & Functional Tests
         run: |
-          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
-          cd $RELEASE_DIR
-          composer install --no-dev --optimize-autoloader
+          echo "Running PHPUnit tests..."
+          ./vendor/bin/phpunit --stop-on-failure
 
-      # 5️⃣ Clear and warmup Symfony cache
-      - name: Clear Symfony cache
+      # 5️⃣ Run Static Analysis (optional but recommended)
+      - name: Static Analysis
         run: |
-          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
-          cd $RELEASE_DIR
-          php bin/console cache:clear --env=prod || true
-          php bin/console cache:warmup --env=prod
+          echo "Running PHPStan..."
+          ./vendor/bin/phpstan analyse -l max src
 
-      # 6️⃣ Switch symlink to new release
-      - name: Switch live release
+      # 6️⃣ Only if tests pass, sync files to temporary folder
+      - name: Sync files to temporary folder
+        run: |
+          TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
+          mkdir -p $TMP_DEPLOY
+          mkdir -p $TMP_DEPLOY/public
+          mkdir -p $TMP_DEPLOY/public/asset
+          rsync -a --delete ./src/ $TMP_DEPLOY/src/
+          rsync -a --delete ./templates/ $TMP_DEPLOY/templates/
+          rsync -a --delete ./public/asset/ $TMP_DEPLOY/public/asset/
+          rsync -a --delete ./vendor/ $TMP_DEPLOY/vendor/
+
+      # 7️⃣ Deploy synced files to live project
+      - name: Move files to live project
         run: |
           APP_PATH=/home/test/public_html
-          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
 
-          # Remove previous release
-          if [ -L $APP_PATH/current ]; then
-            OLD_RELEASE=$(readlink $APP_PATH/current)
-            rm -rf $OLD_RELEASE
-          fi
+          rsync -a --delete $TMP_DEPLOY/src/ $APP_PATH/src/
+          rsync -a --delete $TMP_DEPLOY/templates/ $APP_PATH/templates/
+          rsync -a --delete $TMP_DEPLOY/public/asset/ $APP_PATH/public/asset/
+          rsync -a --delete $TMP_DEPLOY/vendor/ $APP_PATH/vendor/
 
-          # Atomically switch symlink
-          ln -sfn $RELEASE_DIR $APP_PATH/current
+          rm -rf $TMP_DEPLOY
 
-      - name: Deployment finished
-        run: echo "✅ Deployment complete. Only the last release is kept."
+      # 8️⃣ Clear and warmup Symfony cache
+      - name: Clear Symfony cache
+        run: |
+          APP_PATH=/home/test/public_html
+          cd $APP_PATH
+          php bin/console cache:clear --env=dev || true
+          php bin/console cache:warmup --env=dev
+          echo "✅ Deployment finished"
