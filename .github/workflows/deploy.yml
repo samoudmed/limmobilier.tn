@@ -33,4 +33,4 @@ jobs:
 
       # 4️⃣ Deployment finished
       - name: Done
-        run: echo "✅ Partial deploy finished: only templates/src/assets updated"
+        run: echo "✅ Partial deploy finished"
