@@ -1,4 +1,4 @@
-name: Deploy Symfony App (Zero Downtime)
+name: Partial Symfony Deploy (Templates & Assets)
 
 on:
   push:
@@ -7,42 +7,30 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted   # Use your self-hosted runner
+    runs-on: self-hosted
+
+    env:
+      APP_PATH: /home/test/public_html
 
     steps:
-      # 1️⃣ Checkout code
+      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Sync only src/ and templates/ to a temporary folder
-      - name: Sync files to temporary folder
+      # 2️⃣ Rsync only modified directories
+      - name: Sync modified files
         run: |
-          TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
-          mkdir -p $TMP_DEPLOY
-          rsync -a --delete ./src/ $TMP_DEPLOY/src/
-          rsync -a --delete ./templates/ $TMP_DEPLOY/templates/
-          rsync -a --delete ./public/asset $TMP_DEPLOY/public/asset
+          rsync -a --delete ./templates/ $APP_PATH/templates/
+          rsync -a --delete ./src/ $APP_PATH/src/
+          rsync -a --delete ./public/asset/ $APP_PATH/public/asset/
 
-      # 3️⃣ Deploy synced files to live project
-      - name: Move files to live project
-        run: |
-          APP_PATH=/home/test/public_html
-          TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
-
-          # Move src/ and templates/
-          rsync -a --delete $TMP_DEPLOY/src/ $APP_PATH/src/
-          rsync -a --delete $TMP_DEPLOY/templates/ $APP_PATH/templates/
-
-          # Remove temporary folder
-          rm -rf $TMP_DEPLOY
-
-      # 4️⃣ Clear and warmup Symfony cache
+      # 3️⃣ Clear Symfony cache
       - name: Clear Symfony cache
         run: |
-          APP_PATH=/home/test/public_html
           cd $APP_PATH
+          php bin/console cache:clear --env=prod --no-debug || true
+          php bin/console cache:warmup --env=prod --no-debug
 
-          php bin/console cache:clear --env=dev || true
-          php bin/console cache:warmup --env=dev
-
-          echo "✅ Deployment finished"
+      # 4️⃣ Deployment finished
+      - name: Done
+        run: echo "✅ Partial deploy finished"
