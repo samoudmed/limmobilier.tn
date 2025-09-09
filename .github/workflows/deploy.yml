@@ -58,6 +58,7 @@ jobs:
         run: |
           RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
           cd $RELEASE_DIR
+          composer require --dev symfony/web-profiler-bundle
           composer install --no-dev --optimize-autoloader --no-interaction
 
       # 6️⃣ Clear and warmup Symfony cache (prod, no debug)
