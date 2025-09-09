@@ -47,6 +47,10 @@ jobs:
       # 6️⃣ Run PHPUnit tests
       - name: Run Unit & Functional Tests
         run: |
+          if [ ! -d "vendor" ]; then
+            echo "vendor/ not found, running composer install..."
+            composer install --no-interaction --optimize-autoloader
+          fi
           echo "Running PHPUnit tests..."
           ./vendor/bin/phpunit --stop-on-failure
 
