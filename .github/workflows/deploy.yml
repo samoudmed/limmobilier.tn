@@ -58,6 +58,7 @@ jobs:
         run: |
           RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
           cd $RELEASE_DIR
+          export COMPOSER_ALLOW_SUPERUSER=1
           composer require --dev symfony/web-profiler-bundle
           composer install --no-dev --optimize-autoloader --no-interaction
 
