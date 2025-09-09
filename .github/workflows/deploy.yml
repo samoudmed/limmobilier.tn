@@ -1,4 +1,4 @@
-name: Zero-Downtime Symfony Deploy (Prod Safe)
+name: Partial Symfony Deploy (Templates & Assets)
 
 on:
   push:
@@ -11,91 +11,26 @@ jobs:
 
     env:
       APP_PATH: /home/test/public_html
-      RELEASES_PATH: /home/test/releases
-      SHARED_PATH: /home/test/shared
-      COMPOSER_ALLOW_SUPERUSER: 1
 
     steps:
       # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Create release folder
-      - name: Create release directory
+      # 2️⃣ Rsync only modified directories
+      - name: Sync modified files
         run: |
-          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
-          mkdir -p $RELEASE_DIR
+          rsync -a --delete ./templates/ $APP_PATH/templates/
+          rsync -a --delete ./src/ $APP_PATH/src/
+          rsync -a --delete ./public/asset/ $APP_PATH/public/asset/
 
-      # 3️⃣ Rsync project files (exclude .git, node_modules, var/log, uploads)
-      - name: Sync project to release
+      # 3️⃣ Clear Symfony cache
+      - name: Clear Symfony cache
         run: |
-          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
-          rsync -a --delete \
-            --exclude .git \
-            --exclude node_modules \
-            --exclude var/log \
-            --exclude public/uploads \
-            ./ $RELEASE_DIR/
-
-      # 4️⃣ Prepare shared directories and symlinks
-      - name: Link shared directories
-        run: |
-          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
-          mkdir -p $SHARED_PATH/var/log $SHARED_PATH/public/uploads
-          [ -f $SHARED_PATH/.env.local ] || touch $SHARED_PATH/.env.local
-
-          # Créer les parents nécessaires
-          mkdir -p $RELEASE_DIR/var
-          mkdir -p $RELEASE_DIR/public
-
-          # Symlinks
-          ln -sfn $SHARED_PATH/var/log $RELEASE_DIR/var/log
-          ln -sfn $SHARED_PATH/public/uploads $RELEASE_DIR/public/uploads
-          ln -sfn $SHARED_PATH/.env.local $RELEASE_DIR/.env.local
-
-      # 5️⃣ Install composer dependencies (prod only)
-      - name: Composer install (prod)
-        run: |
-          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
-          cd $RELEASE_DIR
-          export COMPOSER_ALLOW_SUPERUSER=1
-          composer require --dev symfony/web-profiler-bundle
-          composer install --no-dev --optimize-autoloader --no-interaction
-
-      # 6️⃣ Clear and warmup Symfony cache (prod, no debug)
-      - name: Clear and warmup cache
-        run: |
-          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
-          cd $RELEASE_DIR
+          cd $APP_PATH
           php bin/console cache:clear --env=prod --no-debug || true
           php bin/console cache:warmup --env=prod --no-debug
 
-      # 7️⃣ Run Doctrine migrations (optional)
-      - name: Run database migrations
-        run: |
-          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
-          cd $RELEASE_DIR
-          php bin/console doctrine:migrations:migrate --no-interaction --env=prod || true
-
-      # 8️⃣ Set proper permissions for var/
-      - name: Set permissions
-        run: |
-          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
-          chown -R www-data:www-data $RELEASE_DIR/var
-          chmod -R 775 $RELEASE_DIR/var
-
-      # 9️⃣ Switch current symlink atomically
-      - name: Switch current release
-        run: |
-          RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
-          ln -sfn $RELEASE_DIR $APP_PATH/current
-
-      # 🔟 Cleanup old releases (keep last 3)
-      - name: Cleanup old releases
-        run: |
-          cd $RELEASES_PATH
-          ls -1dt */ | tail -n +4 | xargs rm -rf || true
-
-      # ✅ Deployment finished
-      - name: Deployment finished
-        run: echo "✅ Deployment complete. Zero downtime, prod safe."
+      # 4️⃣ Deployment finished
+      - name: Done
+        run: echo "✅ Partial deploy finished: only templates/src/assets updated"
