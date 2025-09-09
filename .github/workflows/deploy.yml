@@ -43,11 +43,16 @@ jobs:
           RELEASE_DIR=$RELEASES_PATH/${GITHUB_RUN_ID}
           mkdir -p $SHARED_PATH/var/log $SHARED_PATH/public/uploads
           [ -f $SHARED_PATH/.env.local ] || touch $SHARED_PATH/.env.local
-
+      
+          # Créer les dossiers parents dans le release
+          mkdir -p $RELEASE_DIR/var
+          mkdir -p $RELEASE_DIR/public
+      
+          # Symlinks
           ln -sfn $SHARED_PATH/var/log $RELEASE_DIR/var/log
           ln -sfn $SHARED_PATH/public/uploads $RELEASE_DIR/public/uploads
           ln -sfn $SHARED_PATH/.env.local $RELEASE_DIR/.env.local
-
+          
       # 5️⃣ Install composer dependencies
       - name: Composer install
         run: |
