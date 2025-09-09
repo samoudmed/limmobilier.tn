@@ -32,6 +32,7 @@ jobs:
           # Move src/ and templates/
           rsync -a --delete $TMP_DEPLOY/src/ $APP_PATH/src/
           rsync -a --delete $TMP_DEPLOY/templates/ $APP_PATH/templates/
+          rsync -a --delete $TMP_DEPLOY/public/asset $APP_PATH/public/asset
 
           # Remove temporary folder
           rm -rf $TMP_DEPLOY
