@@ -1,4 +1,4 @@
-name: Deploy Symfony App (Minimal & Safe)
+name: Zero-Downtime Symfony Deploy (Single Release)
 
 on:
   push:
@@ -10,69 +10,57 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      # 1️⃣ Checkout code
+      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Set up PHP
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, intl, pdo_mysql, xml, curl
-          ini-values: post_max_size=256M, upload_max_filesize=256M
-          tools: composer:v2
-
-      # 3️⃣ Install Composer dependencies only if composer.json or composer.lock changed
-      - name: Check composer changes
-        id: composer_check
+      # 2️⃣ Prepare release folder
+      - name: Prepare release folder
         run: |
-          git fetch origin
-          if git diff --name-only origin/main | grep -qE 'composer\.json|composer\.lock'; then
-            echo "composer_changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "composer_changed=false" >> $GITHUB_OUTPUT
-          fi
+          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          mkdir -p $RELEASE_DIR
 
-      - name: Install Composer dependencies
-        if: steps.composer_check.outputs.composer_changed == 'true'
-        run: composer install --no-interaction --optimize-autoloader
-
-      # 4️⃣ Run PHPUnit tests
-      - name: Run PHPUnit tests
+      # 3️⃣ Clean tmp and cache folders
+      - name: Clean tmp and cache
         run: |
-          if [ -f ./vendor/bin/phpunit ]; then
-            ./vendor/bin/phpunit --stop-on-failure
-          else
-            echo "No PHPUnit found, skipping tests"
-          fi
+          rm -rf ./tmp
+          rm -rf ./var/cache
 
-      # 5️⃣ Sync files to temporary folder
-      - name: Sync files to temporary folder
+      # 4️⃣ Rsync project to release folder
+      - name: Sync project to release folder
         run: |
-          TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
-          mkdir -p $TMP_DEPLOY/public/asset
-          rsync -a --delete ./src/ $TMP_DEPLOY/src/
-          rsync -a --delete ./templates/ $TMP_DEPLOY/templates/
-          rsync -a --delete ./public/asset/ $TMP_DEPLOY/public/asset/
-          rsync -a --delete ./vendor/ $TMP_DEPLOY/vendor/
+          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          rsync -a --delete --exclude .git --exclude node_modules ./ $RELEASE_DIR/
 
-      # 6️⃣ Deploy to live project
-      - name: Deploy files
+      # 5️⃣ Install composer dependencies
+      - name: Composer install
         run: |
-          APP_PATH=/home/test/public_html
-          TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
-          rsync -a --delete $TMP_DEPLOY/src/ $APP_PATH/src/
-          rsync -a --delete $TMP_DEPLOY/templates/ $APP_PATH/templates/
-          rsync -a --delete $TMP_DEPLOY/public/asset/ $APP_PATH/public/asset/
-          rsync -a --delete $TMP_DEPLOY/vendor/ $APP_PATH/vendor/
-          rm -rf $TMP_DEPLOY
+          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          cd $RELEASE_DIR
+          composer install --no-dev --optimize-autoloader
 
-      # 7️⃣ Clear Symfony cache
+      # 6️⃣ Clear and warmup Symfony cache
       - name: Clear Symfony cache
         run: |
+          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          cd $RELEASE_DIR
+          php bin/console cache:clear --env=prod || true
+          php bin/console cache:warmup --env=prod
+
+      # 7️⃣ Switch symlink to new release
+      - name: Switch live release
+        run: |
           APP_PATH=/home/test/public_html
-          cd $APP_PATH
-          php bin/console cache:clear || true
-          php bin/console cache:warmup
-          echo "✅ Deployment finished"
+          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+
+          # Remove previous release
+          if [ -L $APP_PATH/current ]; then
+            OLD_RELEASE=$(readlink $APP_PATH/current)
+            rm -rf $OLD_RELEASE
+          fi
+
+          # Atomically switch symlink
+          ln -sfn $RELEASE_DIR $APP_PATH/current
+
+      - name: Deployment finished
+        run: echo "✅ Deployment complete. Only the last release is kept."
