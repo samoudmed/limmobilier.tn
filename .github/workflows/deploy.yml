@@ -1,4 +1,4 @@
-name: Deploy Symfony App (Zero Downtime)
+name: Zero-Downtime Symfony Deploy (Single Release)
 
 on:
   push:
@@ -10,46 +10,51 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      # 1️⃣ Checkout code
+      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Prepare temporary folder
-      - name: Prepare temporary folder
+      # 2️⃣ Prepare release folder
+      - name: Prepare release folder
         run: |
-          TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
-          rm -rf $TMP_DEPLOY
-          mkdir -p $TMP_DEPLOY/{src,templates,public/asset}
+          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          mkdir -p $RELEASE_DIR
 
-      # 3️⃣ Sync only changed files to temporary folder
-      - name: Sync files to temporary folder
+      # 3️⃣ Rsync project to release folder
+      - name: Sync project to release folder
         run: |
-          TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
-          rsync -a --ignore-existing ./src/ $TMP_DEPLOY/src/
-          rsync -a --ignore-existing ./templates/ $TMP_DEPLOY/templates/
-          rsync -a --ignore-existing ./public/asset/ $TMP_DEPLOY/public/asset/
+          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          rsync -a --delete --exclude .git --exclude tmp --exclude var/cache --exclude node_modules ./ $RELEASE_DIR/
 
-      # 4️⃣ Deploy only changed files to live project
-      - name: Deploy changed files to live project
+      # 4️⃣ Install composer dependencies
+      - name: Composer install
         run: |
-          APP_PATH=/home/test/public_html
-          TMP_DEPLOY=/home/test/deploy_tmp/${GITHUB_RUN_ID}
-
-          # Only copy updated/new files
-          rsync -a --update --delete $TMP_DEPLOY/src/ $APP_PATH/src/
-          rsync -a --update --delete $TMP_DEPLOY/templates/ $APP_PATH/templates/
-          rsync -a --update --delete $TMP_DEPLOY/public/asset/ $APP_PATH/public/asset/
-
-          # Remove temporary folder
-          rm -rf $TMP_DEPLOY
+          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          cd $RELEASE_DIR
+          composer install --no-dev --optimize-autoloader
 
       # 5️⃣ Clear and warmup Symfony cache
       - name: Clear Symfony cache
         run: |
+          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
+          cd $RELEASE_DIR
+          php bin/console cache:clear --env=prod || true
+          php bin/console cache:warmup --env=prod
+
+      # 6️⃣ Switch symlink to new release
+      - name: Switch live release
+        run: |
           APP_PATH=/home/test/public_html
-          cd $APP_PATH
+          RELEASE_DIR=/home/test/releases/${GITHUB_RUN_ID}
 
-          php bin/console cache:clear --env=dev || true
-          php bin/console cache:warmup --env=dev
+          # Remove previous release
+          if [ -L $APP_PATH/current ]; then
+            OLD_RELEASE=$(readlink $APP_PATH/current)
+            rm -rf $OLD_RELEASE
+          fi
 
-          echo "✅ Deployment finished"
+          # Atomically switch symlink
+          ln -sfn $RELEASE_DIR $APP_PATH/current
+
+      - name: Deployment finished
+        run: echo "✅ Deployment complete. Only the last release is kept."
