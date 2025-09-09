@@ -29,11 +29,6 @@
                     {% include 'default/_flash_messages.html.twig' %}
                     {{ form_start(registrationForm) }}
                     <div class="form-group">
-                        <label for="username" class="form-label">Adresse e-mail</label>
-                        {# Using a generic input style class from your CSS #}
-                        <input type="text" name="_username" id="username" class="form-field" placeholder="votre@email.com" value="">
-                    </div>
-                    <div class="form-group">
                         <label for="username" class="form-label">Nom</label>
                         {{ form_widget(registrationForm.nom, {'attr': {'class': 'sign-up__field'}}) }}
                     </div>
@@ -52,6 +47,10 @@
                     <div class="form-group">
                         <label for="username" class="form-label">Téléphone</label>
                         {{ form_widget(registrationForm.telephone, {'attr': {'class': 'sign-up__field'}}) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="username" class="form-label">Type de compte</label>
+                        {{ form_widget(registrationForm.type, {'attr': {'class': 'sign-up__field'}}) }}
                     </div>
                     <div class="form-group">
                         <label for="username" class="form-label">Agence</label>
