@@ -2,7 +2,7 @@
 
 namespace App\EventListener;
 
-use App\Repository\AnnonceRepository;
+use App\Repository\AnnoncesRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
@@ -12,16 +12,16 @@ use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 class SitemapSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var AnnonceRepository
+     * @var AnnoncesRepository
      */
-    private $annonceRepository;
+    private $annoncesRepository;
 
     /**
-     * @param AnnonceRepository $annonceRepository
+     * @param AnnoncesRepository $annoncesRepository
      */
-    public function __construct(AnnonceRepository $annonceRepository)
+    public function __construct(AnnoncesRepository $annoncesRepository)
     {
-        $this->annonceRepository = $annonceRepository;
+        $this->annoncesRepository = $annoncesRepository;
     }
 
     /**
@@ -48,7 +48,7 @@ class SitemapSubscriber implements EventSubscriberInterface
      */
     public function registerAnnoncesUrls(UrlContainerInterface $urls, UrlGeneratorInterface $router): void
     {
-        $annonces = $this->annonceRepository->findAll();
+        $annonces = $this->annoncesRepository->findAll();
 
         foreach ($annonces as $annonce) {
             $urls->addUrl(
