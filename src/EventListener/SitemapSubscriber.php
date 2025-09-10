@@ -12,9 +12,9 @@ use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 class SitemapSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var BlogPostRepository
+     * @var AnnonceRepository
      */
-    private $blogPostRepository;
+    private $annonceRepository;
 
     /**
      * @param AnnonceRepository $annonceRepository
@@ -39,14 +39,14 @@ class SitemapSubscriber implements EventSubscriberInterface
      */
     public function populate(SitemapPopulateEvent $event): void
     {
-        $this->registerBlogPostsUrls($event->getUrlContainer(), $event->getUrlGenerator());
+        $this->registerAnnoncesUrls($event->getUrlContainer(), $event->getUrlGenerator());
     }
 
     /**
      * @param UrlContainerInterface $urls
      * @param UrlGeneratorInterface $router
      */
-    public function registerBlogPostsUrls(UrlContainerInterface $urls, UrlGeneratorInterface $router): void
+    public function registerAnnoncesUrls(UrlContainerInterface $urls, UrlGeneratorInterface $router): void
     {
         $annonces = $this->annonceRepository->findAll();
 
