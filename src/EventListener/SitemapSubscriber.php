@@ -2,7 +2,7 @@
 
 namespace App\EventListener;
 
-use App\Repository\AnnonceRepository;
+use App\Repository\AnnoncesRepository;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
