@@ -9,11 +9,11 @@ use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 
 class SitemapSubscriber implements EventSubscriberInterface
 {
-    private AnnonceRepository $annonceRepository;
+    private AnnoncesRepository $annoncesRepository;
 
-    public function __construct(AnnonceRepository $annonceRepository)
+    public function __construct(AnnoncesRepository $annoncesRepository)
     {
-        $this->annonceRepository = $annonceRepository;
+        $this->annoncesRepository = $annoncesRepository;
     }
 
     public static function getSubscribedEvents(): array
@@ -27,7 +27,7 @@ class SitemapSubscriber implements EventSubscriberInterface
     {
         $urlContainer = $event->getUrlContainer();
 
-        foreach ($this->annonceRepository->findAll() as $annonce) {
+        foreach ($this->annoncesRepository->findAll() as $annonce) {
             $url = $event->getUrlGenerator()->generate('annonce_show', [
                 'slug' => $annonce->getSlug(),
             ]);
