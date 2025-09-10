@@ -3,17 +3,19 @@
 namespace App\EventListener;
 
 use App\Repository\AnnoncesRepository;
+use App\Entity\Annonces;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SitemapSubscriber implements EventSubscriberInterface
 {
-    private AnnoncesRepository $annoncesRepository;
+    private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(AnnoncesRepository $annoncesRepository)
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
-        $this->annoncesRepository = $annoncesRepository;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public static function getSubscribedEvents(): array
@@ -27,10 +29,13 @@ class SitemapSubscriber implements EventSubscriberInterface
     {
         $urlContainer = $event->getUrlContainer();
 
-        foreach ($this->annoncesRepository->findAll() as $annonce) {
-            $url = $event->getUrlGenerator()->generate('annonce_show', [
+        // Fetch active annonces (limit 24)
+        $annonces = $this->getDoctrine()->getRepository(Annonces::class)->findAll();
+
+        foreach ($annonces as $annonce) {
+            $url = $this->urlGenerator->generate('annonce_show', [
                 'slug' => $annonce->getSlug(),
-            ]);
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
 
             $urlContainer->addUrl(
                 new UrlConcrete($url),
@@ -39,3 +44,4 @@ class SitemapSubscriber implements EventSubscriberInterface
         }
     }
 }
+
