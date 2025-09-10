@@ -30,7 +30,7 @@ class SitemapSubscriber implements EventSubscriberInterface
         $urlContainer = $event->getUrlContainer();
 
         // Fetch active annonces (limit 24)
-        $annonces = $this->getDoctrine()->getRepository(Annonces::class)->findAll();
+        $annonces = $this->annoncesRepository->findActive(24);
 
         foreach ($annonces as $annonce) {
             $url = $this->urlGenerator->generate('annonce_details', [
