@@ -2,64 +2,39 @@
 
 namespace App\EventListener;
 
-use App\Repository\AnnoncesRepository;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use App\Repository\AnnonceRepository;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
-use Presta\SitemapBundle\Service\UrlContainerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 
 class SitemapSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var AnnoncesRepository
-     */
-    private $annoncesRepository;
+    private AnnonceRepository $annonceRepository;
 
-    /**
-     * @param AnnoncesRepository $annoncesRepository
-     */
-    public function __construct(AnnoncesRepository $annoncesRepository)
+    public function __construct(AnnonceRepository $annonceRepository)
     {
-        $this->annoncesRepository = $annoncesRepository;
+        $this->annonceRepository = $annonceRepository;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
-            SitemapPopulateEvent::class => 'populate',
+            SitemapPopulateEvent::class => 'onSitemapPopulate',
         ];
     }
 
-    /**
-     * @param SitemapPopulateEvent $event
-     */
-    public function populate(SitemapPopulateEvent $event): void
+    public function onSitemapPopulate(SitemapPopulateEvent $event): void
     {
-        $this->registerAnnoncesUrls($event->getUrlContainer(), $event->getUrlGenerator());
-    }
+        $urlContainer = $event->getUrlContainer();
 
-    /**
-     * @param UrlContainerInterface $urls
-     * @param UrlGeneratorInterface $router
-     */
-    public function registerAnnoncesUrls(UrlContainerInterface $urls, UrlGeneratorInterface $router): void
-    {
-        $annonces = $this->annoncesRepository->findAll();
+        foreach ($this->annonceRepository->findAll() as $annonce) {
+            $url = $event->getUrlGenerator()->generate('annonce_show', [
+                'slug' => $annonce->getSlug(),
+            ]);
 
-        foreach ($annonces as $annonce) {
-            $urls->addUrl(
-                new UrlConcrete(
-                    $router->generate(
-                        'annonce',
-                        ['slug' => $annonce->getSlug()],
-                        UrlGeneratorInterface::ABSOLUTE_URL
-                    )
-                ),
-                'annonce'
+            $urlContainer->addUrl(
+                new UrlConcrete($url),
+                'annonces'
             );
         }
     }
