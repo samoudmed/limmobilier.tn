@@ -33,7 +33,7 @@ class SitemapSubscriber implements EventSubscriberInterface
         $annonces = $this->getDoctrine()->getRepository(Annonces::class)->findAll();
 
         foreach ($annonces as $annonce) {
-            $url = $this->urlGenerator->generate('annonce_show', [
+            $url = $this->urlGenerator->generate('annonce_details', [
                 'slug' => $annonce->getSlug(),
             ], UrlGeneratorInterface::ABSOLUTE_URL);
 
