@@ -15,7 +15,7 @@ class SitemapSubscriber implements EventSubscriberInterface
 
     public function __construct(AnnoncesRepository $annoncesRepository, UrlGeneratorInterface $urlGenerator)
     {
-        $this->annoncesRepository = $annoncesRepository; // must match property name
+        $this->annoncesRepository = $annoncesRepository;
         $this->urlGenerator = $urlGenerator;
     }
 
@@ -29,8 +29,6 @@ class SitemapSubscriber implements EventSubscriberInterface
     public function onSitemapPopulate(SitemapPopulateEvent $event): void
     {
         $urlContainer = $event->getUrlContainer();
-
-        // Use injected repository
         $annonces = $this->annoncesRepository->findActive(24);
 
         foreach ($annonces as $annonce) {
@@ -45,5 +43,3 @@ class SitemapSubscriber implements EventSubscriberInterface
         }
     }
 }
-
-
