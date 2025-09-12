@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\EventListener;
+namespace App\EventSubscriber;
 
 use App\Repository\BlogPostRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
