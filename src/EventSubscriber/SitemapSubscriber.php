@@ -13,9 +13,9 @@ use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 class SitemapSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var Annonces
+     * @var AnnoncesRepository
      */
-    private $annonce;
+    private $annoncesRepository;
 
     /**
      * @param AnnoncesRepository $annoncesRepository
