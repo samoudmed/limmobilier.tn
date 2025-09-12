@@ -24,8 +24,8 @@ class AnnoncesSitemapProvider implements SitemapProviderInterface
             $sitemap->add(
                 new UrlConcrete(
                     $this->urlGenerator->generate(
-                        'annonce_show',           // your route name
-                        ['slug' => $annonce->getSlug()], // adjust params
+                        'annonce_details',           // your route name
+                        ['slug' => $annonce->getSlug(), 'id' => $annonce->getId()], // adjust params
                         UrlGeneratorInterface::ABSOLUTE_URL
                     ),
                     new \DateTime(),
