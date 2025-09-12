@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
 use Presta\SitemapBundle\Service\UrlContainerInterface;
 use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class SitemapSubscriber implements EventSubscriberInterface
 {
@@ -54,11 +55,12 @@ class SitemapSubscriber implements EventSubscriberInterface
         $annonces = $this->annoncesRepository->findAll();
 
         foreach ($annonces as $annonce) {
+            $slug = $slugger->slug($annonce->getLabel())->lower();
             $urls->addUrl(
                 new UrlConcrete(
                     $router->generate(
                         'annonce_details',           // your route name
-                        ['label' => $annonce->getSlug(), 'id' => $annonce->getId()], // adjust params
+                        ['label' => $slug, 'id' => $annonce->getId()], // adjust params
                         UrlGeneratorInterface::ABSOLUTE_URL
                     )
                 ),
