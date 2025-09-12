@@ -4,7 +4,8 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Annonces;
 use App\Entity\Types;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
