@@ -3,7 +3,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Annonces;
+use App\Repository\AnnoncesRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
