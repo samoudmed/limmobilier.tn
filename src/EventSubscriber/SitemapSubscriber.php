@@ -3,7 +3,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Repository\AnnoncesRepository;
+use App\Entity\Annonces;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
@@ -13,9 +13,9 @@ use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 class SitemapSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var AnnoncesRepository
+     * @var Annonces
      */
-    private $annoncesRepository;
+    private $annonce;
 
     /**
      * @param AnnoncesRepository $annoncesRepository
@@ -40,7 +40,7 @@ class SitemapSubscriber implements EventSubscriberInterface
      */
     public function populate(SitemapPopulateEvent $event): void
     {
-        $this->registerBlogPostsUrls($event->getUrlContainer(), $event->getUrlGenerator());
+        $this->registerAnnoncesUrls($event->getUrlContainer(), $event->getUrlGenerator());
     }
 
     /**

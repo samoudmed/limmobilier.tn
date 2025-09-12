@@ -7,8 +7,14 @@ namespace App\Repository;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Types;
 use App\Entity\User;
+use Doctrine\Persistence\ManagerRegistry;
 
 class AnnoncesRepository extends EntityRepository {
+
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Annonces::class);
+    }
 
     public function filter($filters) {
 
