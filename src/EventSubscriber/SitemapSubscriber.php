@@ -3,7 +3,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Repository\BlogPostRepository;
+use App\Repository\AnnoncesRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
@@ -13,16 +13,16 @@ use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 class SitemapSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var BlogPostRepository
+     * @var AnnoncesRepository
      */
-    private $blogPostRepository;
+    private $annoncesRepository;
 
     /**
-     * @param BlogPostRepository $blogPostRepository
+     * @param AnnoncesRepository $annoncesRepository
      */
-    public function __construct(BlogPostRepository $blogPostRepository)
+    public function __construct(AnnoncesRepository $annoncesRepository)
     {
-        $this->blogPostRepository = $blogPostRepository;
+        $this->annoncesRepository = $annoncesRepository;
     }
 
     /**
@@ -47,20 +47,20 @@ class SitemapSubscriber implements EventSubscriberInterface
      * @param UrlContainerInterface $urls
      * @param UrlGeneratorInterface $router
      */
-    public function registerBlogPostsUrls(UrlContainerInterface $urls, UrlGeneratorInterface $router): void
+    public function registerAnnoncesUrls(UrlContainerInterface $urls, UrlGeneratorInterface $router): void
     {
-        $posts = $this->blogPostRepository->findAll();
+        $annonces = $this->annoncesRepository->findAll();
 
-        foreach ($posts as $post) {
+        foreach ($annonces as $annonce) {
             $urls->addUrl(
                 new UrlConcrete(
                     $router->generate(
-                        'blog_post',
-                        ['slug' => $post->getSlug()],
+                        'annonce_show',
+                        ['slug' => $annonce->getSlug()],
                         UrlGeneratorInterface::ABSOLUTE_URL
                     )
                 ),
-                'blog'
+                'annonce'
             );
         }
     }
