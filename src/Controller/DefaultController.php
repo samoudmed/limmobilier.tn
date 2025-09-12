@@ -49,7 +49,7 @@ class DefaultController extends AbstractController {
     }
 
     /**
-     * @Route("/", name="homepage", methods={"GET"}, options: ['sitemap' => true]))
+     * @Route("/", name="homepage", methods={"GET"}, options={"sitemap"=true})
      */
     public function index(Inspector $inspector): Response {
 
