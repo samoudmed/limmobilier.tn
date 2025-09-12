@@ -58,7 +58,7 @@ class SitemapSubscriber implements EventSubscriberInterface
                 new UrlConcrete(
                     $router->generate(
                         'annonce_details',           // your route name
-                        ['slug' => $annonce->getSlug(), 'id' => $annonce->getId()], // adjust params
+                        ['label' => $annonce->getSlug(), 'id' => $annonce->getId()], // adjust params
                         UrlGeneratorInterface::ABSOLUTE_URL
                     )
                 ),
