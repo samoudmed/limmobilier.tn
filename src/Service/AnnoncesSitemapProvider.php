@@ -18,7 +18,7 @@ class AnnoncesSitemapProvider implements SitemapProviderInterface
     {
         $sitemap = new Sitemap();
 
-        $annonces = $this->annoncesRepository->findAll();
+        $annonces = $this->annoncesRepository->findAllAds();
 
         foreach ($annonces as $annonce) {
             $sitemap->add(
