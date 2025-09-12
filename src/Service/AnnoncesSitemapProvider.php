@@ -30,7 +30,7 @@ class AnnoncesSitemapProvider implements SitemapProviderInterface
                     ),
                     new \DateTime(),
                     UrlConcrete::CHANGEFREQ_WEEKLY,
-                    0.8
+                    1
                 )
             );
         }
