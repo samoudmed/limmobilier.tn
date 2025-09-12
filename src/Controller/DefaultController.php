@@ -38,6 +38,7 @@ use Inspector\Inspector;
 use App\Repository\UserRepository;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
+use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 
 class DefaultController extends AbstractController {
 
@@ -48,7 +49,7 @@ class DefaultController extends AbstractController {
     }
 
     /**
-     * @Route("/", name="homepage", methods={"GET"})
+     * @Route("/", name="homepage", methods={"GET"}, options: ['sitemap' => true]))
      */
     public function index(Inspector $inspector): Response {
 
