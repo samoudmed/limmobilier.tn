@@ -9,7 +9,7 @@ use App\Entity\Types;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 
-class AnnoncesRepository extends EntityRepository {
+class AnnoncesRepository extends ServiceEntityRepository {
 
     public function __construct(ManagerRegistry $registry)
     {
