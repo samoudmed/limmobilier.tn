@@ -53,7 +53,7 @@ class SitemapSubscriber implements EventSubscriberInterface
     public function registerAnnoncesUrls(UrlContainerInterface $urls, UrlGeneratorInterface $router): void
     {
         $annonces = $this->annoncesRepository->findAll();
-
+        $slugger = new AsciiSlugger();
         foreach ($annonces as $annonce) {
             $slug = $slugger->slug($annonce->getLabel())->lower();
             $urls->addUrl(
