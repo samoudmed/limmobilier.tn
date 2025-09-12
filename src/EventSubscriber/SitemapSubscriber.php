@@ -16,13 +16,15 @@ class SitemapSubscriber implements EventSubscriberInterface
      * @var AnnoncesRepository
      */
     private $annoncesRepository;
+    private $urlGenerator; // Assuming you also inject this
 
-    /**
-     * @param AnnoncesRepository $annoncesRepository
-     */
-    public function __construct(AnnoncesRepository $annoncesRepository)
-    {
+    // The type-hint here must match the class you imported with the 'use' statement
+    public function __construct(
+        AnnoncesRepository $annoncesRepository,
+        /* other dependencies */
+    ) {
         $this->annoncesRepository = $annoncesRepository;
+        // ...
     }
 
     /**
