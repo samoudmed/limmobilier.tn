@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Controller;
@@ -391,5 +392,32 @@ class AnnonceController extends AbstractController {
         }
 
         return $this->render('default/compte/profil.html.twig', ['form' => $form->createView(), 'setting' => $user]);
+    }
+
+    /**
+     * @Route("/annonce/pdf/{id}", name="annonce_pdf", methods={"GET"})
+     */
+    public function pdfAnnonce($id)
+    {
+        $annonce = $this->getDoctrine()
+            ->getRepository(Annonces::class)
+            ->findOneById($id);
+        if (!$annonce) {
+            throw $this->createNotFoundException('Annonce non trouvée');
+        }
+        $photosEntities = $this->getDoctrine()
+            ->getRepository(Photos::class)
+            ->findByAnnonce($annonce);
+        $photos = [];
+        foreach ($photosEntities as $photo) {
+            $photos[] = $this->getParameter('photo_directory_web') . '/263x175/' . $photo->getNom();
+        }
+        $pdfGenerator = $this->get('App\\Service\\PdfAnnonceGenerator');
+        $pdfContent = $pdfGenerator->generate($annonce, $photos);
+        
+        return new \Symfony\Component\HttpFoundation\Response($pdfContent, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="annonce_' . $annonce->getId() . '.pdf"'
+        ]);
     }
 }
