@@ -43,45 +43,6 @@
                                                 {{ annonce.kind }} à {{ annonce.delegation }} — 
                                                 <strong>{{ annonce.prix|number_format(0, '.', ' ') }} TND</strong>
                                             </p>
-                                            <p class="text-muted small mb-0">
-                                                Publiée jusqu'au : {{ annonce.expiredAt|date('Y-m-d') }}
-                                            </p>
-                                        </div>
-
-                                        <!-- Ligne actions -->
-                                        <div class="d-flex justify-content-between align-items-center flex-wrap mt-2">
-                                            {% if annonce.archived == 0 %}
-                                                <div class="btn-group mb-2" role="group">
-                                                    <a href="{{ path('annonce_pdf', { 'id' : annonce.id }) }}" class="btn btn-outline-secondary btn-sm" target="_blank" title="Télécharger PDF">
-                                                        <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" style="width:1.25em; height:1em; vertical-align:-0.125em; margin-right:0.2em;"><path fill="currentColor" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm121.9 31.5L247.5 39c-3.8-3.8-8.8-5.9-14.1-5.9H240v128c0 8.8 7.2 16 16 16h128v-6.5c0-5.3-2.1-10.4-5.9-14zM96 400c0 8.8 7.2 16 16 16h160c8.8 0 16-7.2 16-16v-16c0-8.8-7.2-16-16-16H112c-8.8 0-16 7.2-16 16v16zm0-96c0 8.8 7.2 16 16 16h160c8.8 0 16-7.2 16-16v-16c0-8.8-7.2-16-16-16H112c-8.8 0-16 7.2-16 16v16zm0-96c0 8.8 7.2 16 16 16h160c8.8 0 16-7.2 16-16v-16c0-8.8-7.2-16-16-16H112c-8.8 0-16 7.2-16 16v16z"></path></svg>
-                                                        PDF
-                                                    </a>
-                                                    <a href="{{ path('annonce_update', { 'id' : annonce.id }) }}" class="btn btn-outline-primary btn-sm">
-                                                        {# fa-pencil #}
-                                                        <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:1.25em; height:1em; vertical-align:-0.125em; margin-right:0.2em;"><path fill="currentColor" d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0z"></path></svg> Modifier
-                                                    </a>
-                                                    <a href="{{ path('annonce_published', { 'id' : annonce.id, 'statut' : annonce.isPublished ? 1 : 0 }) }}" class="btn btn-outline-warning btn-sm">
-                                                        {% if annonce.isPublished == 0 %}
-                                                            {# fa-folder-open #}
-                                                            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="width:1.25em; height:1em; vertical-align:-0.125em; margin-right:0.2em;"><path fill="currentColor" d="M569.2 201.8L445.5 158.2l-32.1-131.5c-4-16.3-19.3-27.5-35.8-23.5s-27.5 19.3-23.5 35.8l26.9 110.1L248.1 39.5c-11-12.4-28.9-15.3-43.1-7.8s-21 24.3-16.2 40.2l73.3 246.3-149.6-33.8C96.8 281.3 81 288.5 73.2 302s-5.4 30.5 5.1 42.5L288 512l267.9-166.1c11.9-7.3 16.6-22.1 11.2-35.9s-19.5-22.2-33.9-18.2z"></path></svg> Activer
-                                                        {% else %}
-                                                            {# fa-folder #}
-                                                            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:1.25em; height:1em; vertical-align:-0.125em; margin-right:0.2em;"><path fill="currentColor" d="M464 128H272l-64-64H48C21.5 64 0 85.5 0 112v288c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V176c0-26.5-21.5-48-48-48z"></path></svg> Désactiver
-                                                        {% endif %}
-                                                    </a>
-                                                    <a href="{{ path('annonce_delete', { 'id' : annonce.id }) }}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?');">
-                                                        {# fa-trash #}
-                                                        <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width:1.25em; height:1em; vertical-align:-0.125em; margin-right:0.2em;"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.7 23.7 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32l21.2 339z"></path></svg> Supprimer
-                                                    </a>
-                                                </div>
-                                            {% else %}
-                                                <span class="badge badge-secondary">Archivé</span>
-                                            {% endif %}
-
-                                            <span class="text-muted small mb-2">
-                                                {# fa-eye #}
-                                                <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="width:1.25em; height:1em; vertical-align:-0.125em; margin-right:0.2em;"><path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg> {{ annonce.view }} vues
-                                            </span>
                                         </div>
                                     </div>
                                 </li>
