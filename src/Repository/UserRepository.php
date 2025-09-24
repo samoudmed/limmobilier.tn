@@ -23,6 +23,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
+    public function countNewSubscribersThisMonth(): int
+    {
+        $firstDayOfMonth = (new \DateTime('first day of this month'))->setTime(0,0,0);
+
+        return (int) $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->andWhere('u.registredAt >= :firstDayOfMonth')
+            ->setParameter('firstDayOfMonth', $firstDayOfMonth)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function add(User $entity, bool $flush = false): void {
         $this->getEntityManager()->persist($entity);
 

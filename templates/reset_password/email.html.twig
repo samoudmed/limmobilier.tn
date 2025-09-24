@@ -1,70 +1,60 @@
-  
-    <section id="main-container" class="container inner">
-        <div class="row">
-            <div id="main-content" class="main-content col-xs-12 col-md-12">
-                <div id="primary" class="content-area">
-                    <div id="content" class="site-content" role="main">
-                        <article id="post-8780" class="post-8780 page type-page status-publish hentry">
-                            <div class="entry-content-page clearfix">
-                                <div class="wpb-container vc_row ">
-                                    <div class="wpb-container-inner">
-                                        <div class="container">
-                                            <div class="vc_row wpb_row vc_row-fluid row ">
-                                                <div class="vc_ col-sm-3"><div class="vc_column-inner"><div class="wpb_wrapper"></div></div></div>
-                                                <div class="vc_ col-sm-6">
-                                                    <div class="vc_column-inner">
-                                                        <div class="wpb_wrapper">
-                                                            <div class="panel opalmembership-login-form-wrapper">
-                                                                <div class="panel-body">
-                                                                    <h3>Bonjour</h3>
+<section id="main-container" class="container inner">
+    <div class="row">
+        <div id="main-content" class="main-content col-xs-12 col-md-12">
+            <div id="primary" class="content-area">
+                <div id="content" class="site-content" role="main">
+                    <article id="post-8780" class="post-8780 page type-page status-publish hentry">
+                        <div class="entry-content-page clearfix">
 
-                                                                    <p>Pour réinitialiser votre mot de passe, veuillez visiter le lien suivant</p>
+                            <!-- Bloc message de réinitialisation -->
+                            <div class="vc_row wpb_row vc_row-fluid row">
+                                <div class="col-sm-3"></div>
 
-                                                                    <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+                                <div class="col-sm-6">
+                                    <div class="panel opalmembership-login-form-wrapper">
+                                        <div class="panel-body">
+                                            <h3>Bonjour</h3>
 
-                                                                    <p>Ce lien expirera dans une heure.</p>
+                                            <p>
+                                                Pour réinitialiser votre mot de passe, veuillez visiter le lien suivant :
+                                            </p>
 
-                                                                    <p>Cordialement!</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="wpb_text_column wpb_content_element ">
-                                                                <div class="wpb_wrapper">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="vc_ col-sm-3"><div class="vc_column-inner"><div class="wpb_wrapper"></div></div></div>
-                                            </div>
+                                            <p>
+                                                <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">
+                                                    {{ url('app_reset_password', {token: resetToken.token}) }}
+                                                </a>
+                                            </p>
+
+                                            <p>
+                                                ⚠️ Ce lien expirera dans une heure.
+                                            </p>
+
+                                            <p>
+                                                Cordialement,<br>
+                                                L’équipe support
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="wpb-container vc_row ">
-                                    <div class="wpb-container-inner">
-                                        <div class="container">
-                                            <div class="vc_row wpb_row vc_row-fluid row ">
-                                                <div class="vc_ col-sm-12">
-                                                    <div class="vc_column-inner">
-                                                        <div class="wpb_wrapper">
-                                                            <div class="vc_empty_space" style="height: 30px"><span class="vc_empty_space_inner"></span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
+                                <div class="col-sm-3"></div>
+                            </div>
+                            <!-- /Bloc message de réinitialisation -->
+
+                            <!-- Espace vide -->
+                            <div class="vc_row wpb_row vc_row-fluid row">
+                                <div class="col-sm-12">
+                                    <div class="vc_empty_space" style="height: 30px">
+                                        <span class="vc_empty_space_inner"></span>
                                     </div>
-                                </div>
-                                <div class="pag clearfix" style="clear: both">
                                 </div>
                             </div>
-                            <!-- .entry-content -->
-                        </article>
-                        <!-- #post-## -->
-                    </div>
-                    <!-- #content -->
-                </div>
-                <!-- #primary -->
-            </div>
-            <!-- #main-content -->
-        </div>
-    </section>
+
+                            <div class="pag clearfix" style="clear: both"></div>
+                        </div>
+                    </article>
+                </div><!-- #content -->
+            </div><!-- #primary -->
+        </div><!-- #main-content -->
+    </div>
+</section>

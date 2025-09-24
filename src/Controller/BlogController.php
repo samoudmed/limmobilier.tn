@@ -15,19 +15,22 @@ class BlogController extends AbstractController
     /**
      * @Route("/articles-{page}.html", name="blog")
      */
-    public function blog(Request $request, $page = 1, PaginatorInterface $paginator)
+    public function blog(Request $request, PaginatorInterface $paginator, EntityManagerInterface $em, $page = 1)
     {
-        $allArticles = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findBy(array(), array('id' => 'DESC'), 10);
-         
+        $query = $em->getRepository(Article::class)
+            ->createQueryBuilder('a')
+            ->orderBy('a.id', 'DESC')
+            ->getQuery();
+
         $articles = $paginator->paginate(
-                // Doctrine Query, not results
-                $allArticles,
-                // Define the page parameter
-                $page, 20);
-        
-        return $this->render('blog/blog.html.twig', ['articles' => $articles]);
+            $query, // Query, not array
+            $page,
+            20
+        );
+
+        return $this->render('blog/blog.html.twig', [
+            'articles' => $articles
+        ]);
     }
     
     /**

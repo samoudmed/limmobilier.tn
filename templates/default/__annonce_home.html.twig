@@ -4,7 +4,7 @@
         <a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">
             <picture>
                 <source data-srcset="{{ asset('uploads/photos/263x175/webp/' ~ annonce.photo ~ '.webp') }}" type="image/webp">
-                <img src="{{ asset('asset/images/lg.gif') }}" data-src="{{ asset('uploads/photos/263x175/' ~ annonce.photo) }}" alt="Image annonce" width="263" height="175" class="delayed-load">
+                <img src="{{ asset('asset/images/lg.gif') }}" data-src="{{ asset('uploads/photos/263x175/' ~ annonce.photo) }}" alt="{{annonce.label}}" width="263" height="175" class="delayed-load">
             </picture>
         </a>
     </div><!-- .item-grid__image-container -->

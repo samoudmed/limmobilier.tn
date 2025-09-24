@@ -21,14 +21,11 @@ class FirstVisitRefererListener implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event)
     {
         $request = $event->getRequest();
+        $session = $request->getSession(); // Symfony session
 
-        // Check if the referer is already stored in the session
-        $referer = $this->session->get('firstVisitReferer');
-
-        // If not, store the referer from the current request
-        if (!$referer) {
+        if (!$session->has('firstVisitReferer')) {
             $referer = $request->headers->get('referer');
-            $this->session->set('firstVisitReferer', $referer);
+            $session->set('firstVisitReferer', $referer);
         }
     }
 

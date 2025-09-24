@@ -238,10 +238,16 @@ class DefaultController extends AbstractController {
             $formMessage->handleRequest($request);
 
             // Render template with HTTP cache headers
-            return $this->render('default/details.html.twig', [
+            $response = $this->render('default/details.html.twig', [
                         'annonce' => $annonceData,
                         'formMessage' => $formMessage->createView(),
             ]);
+
+            $response->setPublic();            // mark as public cacheable
+            $response->setMaxAge(172800);       // browser cache 1 hour
+            $response->setSharedMaxAge(172800); // reverse proxy / CDN cache 1 hour
+
+            return $response;
         }
     }
 
@@ -290,7 +296,12 @@ class DefaultController extends AbstractController {
             return $this->redirectToRoute('annonce_liste', ['offre' => $offre, 'page' => 1]);
         }
 
-        return $this->render('default/list.html.twig', ['annoncesList' => $allAnnonces, 'annonces' => $annonces, 'offre' => $offre, 'page' => $page]);
+        $response = $this->render('default/list.html.twig', ['annoncesList' => $allAnnonces, 'annonces' => $annonces, 'offre' => $offre, 'page' => $page]);
+        $response->setPublic();            // mark as public cacheable
+        $response->setMaxAge(172800);       // browser cache 1 hour
+        $response->setSharedMaxAge(172800); // reverse proxy / CDN cache 1 hour
+
+        return $response;
     }
 
     /**

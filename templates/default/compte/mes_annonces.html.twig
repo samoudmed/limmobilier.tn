@@ -30,6 +30,18 @@
                                 </div>
                             {% endfor %}
                         {% endfor %}
+                        
+                            <form id="filtreForm" action="{{ path('mes_annonces') }}" class="g-3" method="POST">
+                                <div class="row padding-15">
+                                    <div class="col-md-10">
+                                        <input name="keyword" type="text" id="keyword" class="form-control" placeholder="Titre ou mot-clé">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-primary w-100" onclick="filtrer()">Filtrer</button>
+                                    </div>
+                                </div>
+                            </form>
+                         
                         <ul class="manage-list manage-list--my-property">
                             {% for annonce in annonces %}
                                 <li class="manage-list__item row mb-4 p-3 rounded">

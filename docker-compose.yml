@@ -6,7 +6,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/var/www/html
-      - "C:/xampp2/htdocs/winoo/www.winoo.com/annonces/immobilier:/mnt/html/winoo"
     ports:
       - "8080:80"
     environment:
@@ -29,7 +28,7 @@ services:
     environment:
       PMA_ARBITRARY: 1
     ports:
-      - "8081:80"
+      - "8083:80"
     depends_on:
       - mysql
 

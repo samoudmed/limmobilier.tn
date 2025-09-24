@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block meta %}
-    <title>Tunisie annonce immobilier Vente Location Immobilier Tunisie</title>
-    <meta name="description" content="Tunisie annonce immobilier découvrez les meilleures offres de vente et location immobilier Tunisie appartement, une maison, un terrain ou un fond de commerce" />
+    <title>Immobilier Tunisie Annonces Vendre Louer Maisons Appartements</title>
+    <meta name="description" content="écouvrez les meilleures annonces immobilières en Tunisie : maisons, appartements à vendre ou à louer. Trouvez votre bien idéal facilement et rapidement !" />
 {% endblock %}
 {% block open_graph %}<link rel="canonical" href="https://limmobilier.tn" />
     <meta property="og:url" content="https://limmobilier.tn" />
@@ -333,7 +333,7 @@
             <!-- .new-listing__parent -->
         </div><!-- .container -->
     </section>
-    {{ render(controller('App\\Controller\\DefaultController::topAgencies')) }}
+    {#{ render(controller('App\\Controller\\DefaultController::topAgencies')) }#}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

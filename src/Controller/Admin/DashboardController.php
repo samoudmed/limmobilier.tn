@@ -28,24 +28,25 @@ class DashboardController extends AbstractController {
      */
     public function index(Request $request, EntityManagerInterface $entityManager, PaginatorInterface $paginator, $page = 1): Response {
 
-        $countAdsCreatedThisMonth = $this->getDoctrine()
-                ->getRepository(Annonces::class)
-                ->countAdsCreatedThisMonth();   // Example data
-        $countAdsCreatedToday = $this->getDoctrine()
-                ->getRepository(Annonces::class)
-                ->countAdsCreatedToday();
-        $allAnnoncesCount = $this->getDoctrine()
-                ->getRepository(Annonces::class)
-                ->findAllAds();
-        $annonces = $this->getDoctrine()
-                ->getRepository(Annonces::class)
-                ->findAllActive();
+        $annoncesRepository = $this->getDoctrine()->getRepository(Annonces::class);
 
-        return $this->render('admin/dashborad/dashborad.html.twig', [
-            'countAdsCreatedThisMonth' => $countAdsCreatedThisMonth,
-            'countAdsCreatedToday' => $countAdsCreatedToday,
-            'allAnnoncesCount' => $allAnnoncesCount,
-            'annonces' => $annonces,
+        $countAdsCreatedThisMonth = $annoncesRepository->countAdsCreatedThisMonth();
+        $countAdsCreatedLastMonth = $annoncesRepository->countAdsCreatedLastMonth();
+        $countAdsCreatedToday = $annoncesRepository->countAdsCreatedToday();
+        $allAnnoncesCount = $this->getDoctrine() ->getRepository(Annonces::class) ->findAllAds();
+        $annonces = $annoncesRepository->findAnnonceOfDay();
+
+        $newSubscribers = $this->getDoctrine()
+                ->getRepository(User::class)
+                ->countNewSubscribersThisMonth(); // example for subscribers
+
+        return $this->render('admin/dashboard/dashboard.html.twig', [
+                'countAdsCreatedThisMonth' => $countAdsCreatedThisMonth,
+                'countAdsCreatedToday' => $countAdsCreatedToday,
+                'allAnnoncesCount' => $allAnnoncesCount,
+                'annonces' => $annonces,
+                'newSubscribers' => $newSubscribers,
+                'countAdsCreatedLastMonth' => $countAdsCreatedLastMonth
         ]);
     }
 }

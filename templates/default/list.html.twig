@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block meta %}
-    <title>{% if(type is defined) %}{{ type}} {%else%}Bien immobilier {% endif %}{% if(offre is defined and offre == 'vente') %}à vendre{%elseif(offre is defined and offre == 'location')%}à louer{%else%}vendre ou louer{% endif %} en Tunisie annonce immobilier page {{ page }}</title>
+    <title>{% if(type is defined) %}{{ type}} {%else%}Immobilier Tunisie {% endif %}{% if(offre is defined and offre == 'vente') %}à vendre{%elseif(offre is defined and offre == 'location')%}à louer{%else%}vendre ou louer{% endif %} en Tunisie annonce immobilier page {{ page }}</title>
     <meta name="description" content="Découvrez les meilleures annonces pour {% if offre is defined %}{{ offre|lower }}{% else %}acheter ou louer{% endif %} {% if type is defined %}{{ type|lower }}{% else %}une maison, un appartement ou un terrain{% endif %} en Tunisie. Trouvez votre bien idéal avec Limmobilier.tn – Page {{ page }}." />
 {% endblock %}
 {% block open_graph %}

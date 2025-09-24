@@ -510,4 +510,36 @@ class AnnoncesRepository extends ServiceEntityRepository {
                         ->getSingleScalarResult();
     }
 
+    public function countAdsCreatedLastMonth(): int {
+        $firstDayOfMonth = new \DateTime('first day of last month 00:00:00');
+        $firstDayNextMonth = (clone $firstDayOfMonth)->modify('+1 month');
+
+        return (int) $this->createQueryBuilder('a')
+                        ->select('COUNT(a.id)')
+                        ->andWhere('a.created_at >= :firstDay')
+                        ->andWhere('a.created_at < :firstDayNextMonth')
+                        ->andWhere('a.published = 1')
+                        ->andWhere('a.statut = 1')
+                        ->andWhere('a.deleted = 0')
+                        ->setParameter('firstDay', $firstDayOfMonth)
+                        ->setParameter('firstDayNextMonth', $firstDayNextMonth)
+                        ->getQuery()
+                        ->getSingleScalarResult();
+    }
+
+    public function findAnnonceOfDay(): array
+    {
+        $today = new \DateTime('today');
+
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.published = 1')
+            ->andWhere('a.statut = 1')
+            ->andWhere('a.deleted = 0')
+            ->andWhere('a.created_at >= :today')
+            ->setParameter('today', $today->format('Y-m-d'))
+            ->orderBy('a.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

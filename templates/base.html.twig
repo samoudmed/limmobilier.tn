@@ -55,6 +55,28 @@
                 h.appendChild(c);
             })(document);
             smartlook('init', 'b0e17f0adba09f80f474b0540ea8e431c4af5841', {region: 'eu'});
+            {% if app.user %}
+                smartlook('identify', '{{ app.user.id }}', {
+                    name: '{{ app.user.nom ~ ' ' ~ app.user.prenom }}',
+                    email: '{{ app.user.email }}'
+                });
+            {% endif %}
+        </script>
+        <script src="https://unpkg.com/web-vitals@3/dist/web-vitals.iife.js"></script>
+        <script>
+            function sendToSmartlook(metric) {
+                if (window.smartlook) {
+                    smartlook('track', metric.name, {
+                        value: metric.value,
+                        rating: metric.rating, // 'good' | 'needs-improvement' | 'poor'
+                        id: metric.id
+                    });
+                }
+            }
+
+            webVitals.getCLS(sendToSmartlook);
+            webVitals.getLCP(sendToSmartlook);
+            webVitals.getINP(sendToSmartlook);
         </script>
         <!--End of Tawk.to Script-->
         <script type="application/ld+json">

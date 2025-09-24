@@ -291,26 +291,6 @@ class AnnonceController extends AbstractController {
     }
 
     /**
-     * @Route("/compte/mes-annonces-{page}.html", name="mes_annonces", methods={"GET"})
-     */
-    public function mesAnnonces(Request $request, PaginatorInterface $paginator, ManagePhoto $managePhoto, $page = 1) {
-
-        $allAnnonces = $this->getDoctrine()
-                ->getRepository(Annonces::class)
-                ->findBy(array('user' => $this->getUser(), 'deleted' => 0), array('id' => 'DESC'));
-
-        $annoncesList = $managePhoto->getFeaturedPhoto($allAnnonces);
-
-        $annonces = $paginator->paginate(
-                $annoncesList, /* query NOT result */
-                $request->query->getInt('page', $page), /* page number */
-                10 /* limit per page */
-        );
-
-        return $this->render('default/compte/mes_annonces.html.twig', ['annonces' => $annonces]);
-    }
-
-    /**
      * @Route("/compte/delete-photo/{id}", name="photo_delete")
      */
     public function photoDelete(Request $request, $id) {

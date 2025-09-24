@@ -383,19 +383,21 @@ class CompteController extends AbstractController {
      */
     public function mesAnnonces(Request $request, PaginatorInterface $paginator, ManagePhoto $managePhoto, $page = 1) {
 
-        $key = $request->request->get('key');
+        $keyword = $request->request->get('keyword');
 
-        if ($key) {
+        if ($keyword) {
             $allAnnonces = $this->getDoctrine()
-                    ->getRepository(Annonces::class)
-                    ->searchMyAds($this->getUser(), $key);
+                ->getRepository(Annonces::class)
+                ->searchMyAds($this->getUser(), $keyword);
         } else {
             $allAnnonces = $this->getDoctrine()
-                    ->getRepository(Annonces::class)
-                    ->findBy(array('user' => $this->getUser(), 'deleted' => 0), array('id' => 'DESC'));
-        }
+                ->getRepository(Annonces::class)
+                ->findBy(array('user' => $this->getUser(), 'deleted' => 0), array('id' => 'DESC'));
 
+        }
+        
         $annoncesList = $managePhoto->getFeaturedPhoto($allAnnonces);
+
         $annonces = $paginator->paginate(
                 $annoncesList, /* query NOT result */
                 $request->query->getInt('page', $page), /* page number */

@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Entity\Favorite;
+use App\Entity\Annonces;
 use Symfony\Component\Finder\SplFileInfo;
 use App\Repository\VillesRepository;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -16,6 +17,36 @@ use Cocur\Slugify\Slugify;
 use Knp\Component\Pager\PaginatorInterface;
 
 class FavoriteController extends AbstractController {
+
+    /**
+     * @Route("/favorite/toggle/{id}", name="favorite_toggle", methods={"POST"})
+     */
+    public function toggleFavorite($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->json(['error' => 'Non authentifié'], 403);
+        }
+        $annonce = $em->getRepository(Annonces::class)->find($id);
+        if (!$annonce) {
+            return $this->json(['error' => 'Annonce introuvable'], 404);
+        }
+        $favoriteRepo = $em->getRepository(Favorite::class);
+        $favorite = $favoriteRepo->findOneBy(['user' => $user, 'annonce' => $annonce]);
+        if ($favorite) {
+            $em->remove($favorite);
+            $em->flush();
+            return $this->json(['status' => 'removed']);
+        } else {
+            $favorite = new \App\Entity\Favorite();
+            $favorite->setUser($user);
+            $favorite->setAnnonce($annonce);
+            $em->persist($favorite);
+            $em->flush();
+            return $this->json(['status' => 'added']);
+        }
+    }
 
     /**
      * @Route("/favorite", name="favorite")

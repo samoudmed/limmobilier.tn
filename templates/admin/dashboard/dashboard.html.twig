@@ -82,37 +82,40 @@
                         <h3>Annonces ce mois</h3>
                         <p class="stat" style="font-size:36px; font-weight:700; color:#ffc107;">{{ countAdsCreatedThisMonth|default(0) }}</p>
                         <small>Ajoutées ce mois</small>
-                    </div>
-                    <div class="widget" style="background: #fff; border-radius: 8px; padding: 25px 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                        <h3>Annonces actives</h3>
-                        <p class="stat" style="font-size:36px; font-weight:700; color:#17a2b8;">{{ annonces|default(0) }}</p>
-                        <small>actuellement en ligne</small>
-                    </div>    
+                    </div>  
+                    <div class="widget" style="background: #fff; border-radius: 8px; padding: 25px 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);margin-bottom: 20px;">
+                        <h3>Annonces le mois dernier</h3>
+                        <p class="stat" style="font-size:36px; font-weight:700; color:#1bc5bd;">{{ countAdsCreatedLastMonth|default(0) }}</p>
+                        <small>Le mois dernier</small>
+                    </div> 
                 </div>
                 <!-- Column 2: User Statistics -->
                 <div>
                     <div class="widget" style="background: #fff; border-radius: 8px; padding: 25px 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
                         <h3>Nouvel Abonné</h3>
-                        <p class="stat" style="font-size: 36px; font-weight: 700; color: #dc3545;">{{ newSubscribers|default(0) }}</p>
+                        <p class="stat" style="font-size: 36px; font-weight: 700; color: #dc3545;">
+                            {{ newSubscribers|default(0) }}
+                        </p>
                         <small>Abonnés récents</small>
                     </div>
-                    
                 </div>
 
-                <!-- Column 3: Ads Listing Placeholder -->
+                <!-- Column 3: Recent Ads -->
                 <div>
                     <div class="widget" style="background: #fff; border-radius: 8px; padding: 25px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); height: 100%;">
                         <h3 style="margin-bottom: 20px;">Annonces récentes</h3>
-                        <!-- Replace this part with your listing -->
                         <ul style="list-style: none; padding: 0; margin: 0;">
-                            <li style="padding: 10px 0; border-bottom: 1px solid #eee;">Annonce 1</li>
-                            <li style="padding: 10px 0; border-bottom: 1px solid #eee;">Annonce 2</li>
-                            <li style="padding: 10px 0;">Annonce 3</li>
+                            {% for annonce in annonces %}
+                                <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                                    {{ annonce.label }}
+                                </li>
+                            {% else %}
+                                <li style="padding: 10px 0;">Aucune annonce</li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
-            </section>
-
-        </main>
-    </div>
+                        </section>
+                    </main>
+                </div>
 {% endblock %}
