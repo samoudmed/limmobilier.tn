@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonce refusée{% endblock %}
+
+{% block body %}
+    <h2>Votre annonce a été refusée</h2>
+    <p>Bonjour {{ nom }},</p>
+    <p>Votre annonce <strong>{{ annonce.label }}</strong> n'a pas été acceptée pour les raisons suivantes :</p>
+    <ul>
+        {% for motif in motifs %}
+            <li>{{ motif }}</li>
+        {% endfor %}
+    </ul>
+    <p>Merci de vérifier et de corriger votre annonce si besoin.</p>
+    <p>L'équipe limmobilier.tn</p>
+{% endblock %}

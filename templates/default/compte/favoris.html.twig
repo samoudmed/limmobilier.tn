@@ -26,20 +26,27 @@
                             </span>
                         </li>
                         {% for annonce in annonces %}
-                            <li class="manage-list__item">
-                                <div class="manage-list__item-container">
-                                    <div class="manage-list__item-img col-md-9">
-                                        <a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">
-                                            <img src="{{ asset('uploads/photos/263x175/'~annonce.photo) }}" alt="{{annonce.label| capitalize}}" class="listing__img">
-                                        </a>
-                                    </div><!-- manage-list__item-img -->
-                                    <div class="manage-list__item-detail">
-                                        <h3 class="listing__title"><a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">{{annonce.label}}</a></h3>
-                                        <p class="listing__location"><span class="ion-ios-location-outline listing__location-icon"></span> {{annonce.adresse| capitalize}}</p>
-                                        <p class="listing__price">{{annonce.prix|number_format(3, '.', ' ')}} DT</p>
+                            <li class="manage-list__item row mb-4 p-3 rounded">
+                                    <!-- Colonne image -->
+                                    <div class="col-12 col-md-4  mb-2 mb-md-0">
+                                        <img src="{{ asset(annonce.photo is defined and annonce.photo ? '/uploads/photos/263x175/' ~ annonce.photo : 'images/default.jpg') }}"
+                                             alt="Photo de l'annonce"
+                                             class="img-fluid rounded w-100 h-100 object-fit-cover"
+                                             style="min-height: 200px; object-fit: cover;">
                                     </div>
-                                </div><!-- .manage-list__item-container -->
-                            </li><!-- .manage-list__item" -->
+                                    <!-- Colonne détails + actions -->
+                                    <div class="col-12 col-md-8 d-flex flex-column justify-content-between">
+                                        <!-- Ligne d'information -->
+                                        <div class="mb-3">
+                                            <h5 class="mb-1"><a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">{{ annonce.label }}</a></h5>
+                                            <p class="mb-1 text-muted">
+                                                {{ annonce.kind }} à {{ annonce.delegation }} — 
+                                                <strong>{{ annonce.prix|number_format(0, '.', ' ') }} TND</strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- .manage-list__item" -->
                         {% endfor %}
                         <div class="text-center">{{ knp_pagination_render(annonces) }}</div>
                     </ul>

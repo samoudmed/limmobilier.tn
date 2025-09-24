@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Finder\Finder;
 use Cocur\Slugify\Slugify;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Service\ManagePhoto;
 
 class FavoriteController extends AbstractController {
 
@@ -39,7 +40,11 @@ class FavoriteController extends AbstractController {
             $em->flush();
             return $this->json(['status' => 'removed']);
         } else {
+<<<<<<< HEAD
             $favorite = new \App\Entity\Favorite();
+=======
+            $favorite = new Favorite();
+>>>>>>> 07fb2a2889b3aa766a10ca5dba9fd335068dc11c
             $favorite->setUser($user);
             $favorite->setAnnonce($annonce);
             $em->persist($favorite);

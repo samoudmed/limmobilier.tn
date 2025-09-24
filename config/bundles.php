@@ -22,4 +22,5 @@ return [
     Symfony\UX\LazyImage\LazyImageBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     FOS\ElasticaBundle\FOSElasticaBundle::class => ['all' => true],
+    App\Entity\Favoris::class => ['all' => true],
 ];
