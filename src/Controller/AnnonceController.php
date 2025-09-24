@@ -17,6 +17,7 @@ use Symfony\Component\Finder\SplFileInfo;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Service\ResizePhoto;
 use App\Service\ManagePhoto;
+use App\Service\PdfAnnonceGenerator;
 
 class AnnonceController extends AbstractController {
 
