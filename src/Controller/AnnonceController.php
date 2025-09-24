@@ -397,8 +397,7 @@ class AnnonceController extends AbstractController {
     /**
      * @Route("/annonce/pdf/{id}", name="annonce_pdf", methods={"GET"})
      */
-    public function pdfAnnonce($id, PdfAnnonceGenerator $pdfGenerator)
-    {
+    public function pdfAnnonce($id, PdfAnnonceGenerator $pdfGenerator) {
         $annonce = $this->getDoctrine()
             ->getRepository(Annonces::class)
             ->findOneById($id);
