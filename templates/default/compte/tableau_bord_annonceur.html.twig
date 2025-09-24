@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block meta %}
+    <title>Tableau de bord annonceur | limmobilier.tn</title>
+    <meta name="description" content="Statistiques et suivi de vos annonces immobilières sur limmobilier.tn" />
+{% endblock %}
+
+{% block body %}
+<section class="my-dashboard py-5">
+    <div class="container">
+        <h2 class="mb-4">Tableau de bord annonceur</h2>
+        <div class="row mb-4">
+            <div class="col-6 col-lg-3 mb-2">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <div class="h2 mb-0 font-weight-bold text-primary">{{ stats.nbAnnonces }}</div>
+                        <div class="text-muted">Annonces publiées</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 mb-2">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <div class="h2 mb-0 font-weight-bold text-success">{{ stats.nbVues }}</div>
+                        <div class="text-muted">Nombre de vues</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 mb-2">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <div class="h2 mb-0 font-weight-bold text-info">{{ stats.nbMessages }}</div>
+                        <div class="text-muted">Messages reçus</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 mb-2">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <div class="h2 mb-0 font-weight-bold text-danger">{{ stats.nbClicksTel }}</div>
+                        <div class="text-muted">Clics téléphone</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-12 mb-2">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <div class="h2 mb-0 font-weight-bold text-warning">{{ stats.nbVisits }}</div>
+                        <div class="text-muted">Visites page listing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">Mes annonces</h4>
+                <ul class="manage-list manage-list--my-property">
+                    {% for annonce in annonces %}
+                        <li class="manage-list__item row mb-4 p-3 rounded">
+                            <div class="col-12 col-md-4 mb-2 mb-md-0">
+                                <img src="{{ asset(annonce.photo is defined and annonce.photo ? '/uploads/photos/263x175/' ~ annonce.photo : 'images/default.jpg') }}"
+                                     alt="Photo de l'annonce"
+                                     class="img-fluid rounded w-100 h-100 object-fit-cover"
+                                     style="min-height: 200px; object-fit: cover;">
+                            </div>
+                            <div class="col-12 col-md-8 d-flex flex-column justify-content-between">
+                                <div class="mb-3">
+                                    <h5 class="mb-1"><a href="{{ path('annonce_details', { 'label' : annonce.label|slugify, 'id' : annonce.id }) }}">{{ annonce.label }}</a></h5>
+                                    <p class="mb-1 text-muted">
+                                        {{ annonce.kind }} à {{ annonce.delegation }} — 
+                                        <strong>{{ annonce.prix|number_format(0, '.', ' ') }} TND</strong>
+                                    </p>
+                                    <p class="text-muted small mb-0">
+                                        Publiée jusqu'au : {{ annonce.expiredAt|date('Y-m-d') }}
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center flex-wrap mt-2">
+                                    <span class="text-muted small mb-2">
+                                        <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="width:1.25em; height:1em; vertical-align:-0.125em; margin-right:0.2em;"><path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg> {{ annonce.view }} vues
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="text-center mt-4">{{ knp_pagination_render(annonces) }}</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
