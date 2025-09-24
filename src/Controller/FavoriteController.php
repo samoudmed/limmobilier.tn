@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Finder\Finder;
 use Cocur\Slugify\Slugify;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Service\ManagePhoto;
 
 class FavoriteController extends AbstractController {
 
@@ -27,18 +28,18 @@ class FavoriteController extends AbstractController {
         if (!$user) {
             return $this->json(['error' => 'Non authentifié'], 403);
         }
-        $annonce = $em->getRepository('App:Annonces')->find($id);
+        $annonce = $em->getRepository(Annonces::class)->find($id);
         if (!$annonce) {
             return $this->json(['error' => 'Annonce introuvable'], 404);
         }
-        $favoriteRepo = $em->getRepository('App:Favorite');
+        $favoriteRepo = $em->getRepository(Favorite::class);
         $favorite = $favoriteRepo->findOneBy(['user' => $user, 'annonce' => $annonce]);
         if ($favorite) {
             $em->remove($favorite);
             $em->flush();
             return $this->json(['status' => 'removed']);
         } else {
-            $favorite = new \App\Entity\Favorite();
+            $favorite = new Favorite();
             $favorite->setUser($user);
             $favorite->setAnnonce($annonce);
             $em->persist($favorite);
