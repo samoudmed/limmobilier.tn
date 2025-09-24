@@ -397,7 +397,7 @@ class AnnonceController extends AbstractController {
     /**
      * @Route("/annonce/pdf/{id}", name="annonce_pdf", methods={"GET"})
      */
-    public function pdfAnnonce($id)
+    public function pdfAnnonce($id, PdfAnnonceGenerator $pdfGenerator)
     {
         $annonce = $this->getDoctrine()
             ->getRepository(Annonces::class)
@@ -412,7 +412,6 @@ class AnnonceController extends AbstractController {
         foreach ($photosEntities as $photo) {
             $photos[] = $this->getParameter('photo_directory_web') . '/263x175/' . $photo->getNom();
         }
-        $pdfGenerator = $this->get('App\\Service\\PdfAnnonceGenerator');
         $pdfContent = $pdfGenerator->generate($annonce, $photos);
 
         return new \Symfony\Component\HttpFoundation\Response($pdfContent, 200, [
