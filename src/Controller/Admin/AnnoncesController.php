@@ -166,21 +166,42 @@ class AnnoncesController extends AbstractController {
     public function refus(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response {
 
         $annonce = $entityManager
-                ->getRepository(Annonces::class)
-                ->findOneById($request->request->get('id'));
+            ->getRepository(Annonces::class)
+            ->findOneById($request->request->get('id'));
+
+        // Récupérer les motifs de refus envoyés depuis le formulaire (tableau)
+        $motifsIds = $request->request->get('motifRefus', []);
+        if (!is_array($motifsIds)) {
+            $motifsIds = [$motifsIds];
+        }
+
+        // Correspondance ID => texte
+        $motifsLibelles = [
+            '1' => 'Photos non réelles',
+            '2' => 'Annonce déjà publiée',
+            '3' => 'Annonce non immobilière',
+            '4' => 'Titre non conforme',
+            '5' => 'Description non conforme',
+            '6' => 'Prix non conforme',
+            '7' => 'Autre motif de refus',
+        ];
+        $motifs = [];
+        foreach ($motifsIds as $id) {
+            if (isset($motifsLibelles[$id])) {
+                $motifs[] = $motifsLibelles[$id];
+            }
+        }
 
         $email = (new TemplatedEmail())
-                ->from('contact@limmobilier.tn')
-                ->to($annonce->getUser()->getEmail())
-                ->subject('Votre annonce n\'a pas été acceptée')
-                // path of the Twig template to render
-                ->htmlTemplate('emails/refus.html.twig')
-
-                // pass variables (name => value) to the template
-                ->context([
-            'nom' => $annonce->getUser(),
-            'annonce' => $annonce,
-        ]);
+            ->from('contact@limmobilier.tn')
+            ->to($annonce->getUser()->getEmail())
+            ->subject('Votre annonce n\'a pas été acceptée')
+            ->htmlTemplate('emails/refus_motifs.html.twig')
+            ->context([
+                'nom' => $annonce->getUser(),
+                'annonce' => $annonce,
+                'motifs' => $motifs,
+            ]);
 
         $mailer->send($email);
 

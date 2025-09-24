@@ -135,7 +135,7 @@
                                                         {% endif %}
                                                     </td>
                                                     <td>
-                                                        <select name="motifRefus" id="motifRefus" class="select2-multiple2" multiple="multiple">
+                                                        <select name="motifRefus" class="select2-multiple2 motifRefus" multiple="multiple" data-id="{{ annonce.id }}">
                                                             <option>Refus</option>
                                                             <option value="1">Photos non réelles</option>
                                                             <option value="2">Annonce déjà publiée</option>
@@ -145,6 +145,7 @@
                                                             <option value="6">Prix non conforme</option>
                                                             <option value="7">Autre motif de refus</option>
                                                         </select>
+                                                        <button type="button" class="btn btn-danger btn-sm btn-refus" data-id="{{ annonce.id }}">Refuser</button>
                                                     </td>
                                                     <td>
                                                         {%  if annonce.deleted == 0  %}
@@ -208,26 +209,28 @@
         <!--end::Entry-->
     </div>
     <script>
-        function toggleWeather() {
-            alert("Checked Box select");
-        }
-        $("#switcher1609").click(function() {
-           alert("Checked Box select");
-        if($(this).prop('checked')) {
-            alert("Checked Box select");
-        } else {
-            alert("Checked Box deselect");
-        }
-        /*$.ajax({
-            type: 'POST', // Le type de la requête HTTP, ici devenu POST
-            data: 'id=' + $(this).data('id') + '&statut' + $(this).val('statut'),
-            url: "{# path('app_annonces_validate') #}",
-            dataType: 'json', // ** ensure you add this line **
-            success: function (data) { // code_html contient le HTML renvoyé
-
+        $(document).on('click', '.btn-refus', function() {
+            var id = $(this).data('id');
+            var motifs = $(this).closest('td').find('.motifRefus').val();
+            if (!motifs || motifs.length === 0) {
+                alert('Veuillez sélectionner au moins un motif de refus.');
+                return;
             }
-        });*/
-    });
+            $.ajax({
+                type: 'POST',
+                url: '/admin/annonces/refus',
+                data: {
+                    id: id,
+                    motifRefus: motifs
+                },
+                success: function(response) {
+                    alert('Le mail de refus a été envoyé avec les motifs sélectionnés.');
+                },
+                error: function() {
+                    alert('Erreur lors de l\'envoi du mail de refus.');
+                }
+            });
+        });
     </script>
 {% endblock %}
 
