@@ -30,15 +30,28 @@ class AnnoncesController extends AbstractController {
 
         $filters = array();
         if ($request->getMethod() == 'POST') {
-
-            $filters['statut'] =  $request->request->get('statut');
+            if ($request->request->get('statut') !== null && $request->request->get('statut') !== '') {
+                $filters['statut'] = $request->request->get('statut');
+            }
+            if ($request->request->get('label')) {
+                $filters['label'] = $request->request->get('label');
+            }
+            if ($request->request->get('ville')) {
+                $filters['ville'] = $request->request->get('ville');
+            }
+            if ($request->request->get('type')) {
+                $filters['type'] = $request->request->get('type');
+            }
+            if ($request->request->get('offre')) {
+                $filters['offre'] = $request->request->get('offre');
+            }
             $annoncesAll = $entityManager
-                    ->getRepository(Annonces::class)
-                    ->filter($filters);
+                ->getRepository(Annonces::class)
+                ->filter($filters);
         } else {
             $annoncesAll = $entityManager
-                    ->getRepository(Annonces::class)
-                    ->findAll();
+                ->getRepository(Annonces::class)
+                ->findAll();
         }
 
         $annonces = $paginator->paginate(

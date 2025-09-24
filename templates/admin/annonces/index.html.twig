@@ -44,21 +44,43 @@
                                     <form action="{{ path('app_annonces_index') }}" method="POST" class="form-example">
                                         <table class="table table-separate table-head-custom dataTable dtr-inline">
                                             <tr class="filter">
-                                                <th>
-                                                    <select name="statut" class="form-control form-control-sm form-filter datatable-input" title="Select" data-col-index="7" autocomplete="off">
-                                                        <option value="">Validé</option>
-                                                        <option value="1">Oui</option>
-                                                        <option value="0">Non</option>
-                                                    </select>
-                                                </th>
-                                                <th>
-                                                    <button type="submit" name="action" value="search" class="btn btn-primary kt-btn btn-sm kt-btn--icon d-block">
-                                                        <span>
-                                                            <i class="la la-search"></i>
-                                                            <span>Recherche</span>
-                                                        </span>
-                                                    </button>
-                                                    <button type="submit" name="action" value="cancel"  class="btn btn-secondary kt-btn btn-sm kt-btn--icon">
+                                                    <th>
+                                                        <input type="text" name="label" class="form-control form-control-sm" placeholder="Titre" value="{{ app.request.get('label') }}" />
+                                                    </th>
+                                                    <th>
+                                                        <input type="text" name="ville" class="form-control form-control-sm" placeholder="Ville" value="{{ app.request.get('ville') }}" />
+                                                    </th>
+                                                    <th>
+                                                        <select name="type" class="form-control form-control-sm">
+                                                            <option value="">Type</option>
+                                                            <option value="Appartement">Appartement</option>
+                                                            <option value="Maison">Maison</option>
+                                                            <option value="Terrain">Terrain</option>
+                                                            <!-- Ajoutez d'autres types si besoin -->
+                                                        </select>
+                                                    </th>
+                                                    <th>
+                                                        <select name="offre" class="form-control form-control-sm">
+                                                            <option value="">Offre</option>
+                                                            <option value="Vente">Vente</option>
+                                                            <option value="Location">Location</option>
+                                                        </select>
+                                                    </th>
+                                                    <th>
+                                                        <select name="statut" class="form-control form-control-sm form-filter datatable-input" title="Select" data-col-index="7" autocomplete="off">
+                                                            <option value="">Validé</option>
+                                                            <option value="1">Oui</option>
+                                                            <option value="0">Non</option>
+                                                        </select>
+                                                    </th>
+                                                    <th>
+                                                        <button type="submit" name="action" value="search" class="btn btn-primary kt-btn btn-sm kt-btn--icon d-block">
+                                                            <span>
+                                                                <i class="la la-search"></i>
+                                                                <span>Recherche</span>
+                                                            </span>
+                                                        </button>
+                                                        <button type="submit" name="action" value="cancel"  class="btn btn-secondary kt-btn btn-sm kt-btn--icon">
                                                         <span>
                                                             <i class="la la-close"></i>
                                                             <span>Annuler</span>
