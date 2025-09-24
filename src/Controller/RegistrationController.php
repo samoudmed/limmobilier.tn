@@ -76,16 +76,26 @@ class RegistrationController extends AbstractController {
             
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                    (new TemplatedEmail())
-                            ->from(new Address('contact@limmobilier.tn', 'limmobilier.tn'))
-                            ->to($user->getEmail())
-                            ->subject('Veuillez confirmer votre email')
-                            ->htmlTemplate('emails/confirmation_email.html.twig')
-                            ->context([
-                                'nom' => $user->getNom() . ' ' . $user->getPrenom(),
-                            ])
+                (new TemplatedEmail())
+                    ->from(new Address('contact@limmobilier.tn', 'limmobilier.tn'))
+                    ->to($user->getEmail())
+                    ->subject('Veuillez confirmer votre email')
+                    ->htmlTemplate('emails/confirmation_email.html.twig')
+                    ->context([
+                        'nom' => $user->getNom() . ' ' . $user->getPrenom(),
+                    ])
             );
-            // do anything else you need here, like send an email
+
+            // Envoi d'un mail de bienvenue pour informer que l'utilisateur peut publier des annonces
+            $emailBienvenue = (new TemplatedEmail())
+                ->from(new Address('contact@limmobilier.tn', 'limmobilier.tn'))
+                ->to($user->getEmail())
+                ->subject('Bienvenue ! Vous pouvez publier vos annonces')
+                ->htmlTemplate('emails/bienvenue_publication.html.twig')
+                ->context([
+                    'nom' => $user->getNom() . ' ' . $user->getPrenom(),
+                ]);
+            $this->get('mailer')->send($emailBienvenue);
 
             return $this->redirectToRoute('app_login');
         }
