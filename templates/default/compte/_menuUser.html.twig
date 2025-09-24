@@ -2,6 +2,12 @@
     <h2 class="bookmarked-listing__headline">Bonjour, <strong>{{ app.user.prenom }}!</strong></h2>
     <ul class="settings">
         <li class="setting">
+            <a href="{{ path('tableau_bord_annonceur') }}" class="setting__link">
+                <!-- List icon SVG -->
+                Tableau de bord
+            </a>
+        </li>
+        <li class="setting">
             <a href="{{ path('mes_annonces') }}" class="setting__link">
                 <!-- List icon SVG -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
