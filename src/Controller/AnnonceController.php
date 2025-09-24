@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Controller;
@@ -414,7 +413,7 @@ class AnnonceController extends AbstractController {
         }
         $pdfGenerator = $this->get('App\\Service\\PdfAnnonceGenerator');
         $pdfContent = $pdfGenerator->generate($annonce, $photos);
-        
+
         return new \Symfony\Component\HttpFoundation\Response($pdfContent, 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'attachment; filename="annonce_' . $annonce->getId() . '.pdf"'
