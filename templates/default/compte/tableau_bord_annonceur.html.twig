@@ -6,51 +6,66 @@
 {% endblock %}
 
 {% block body %}
-<section class="my-dashboard py-5">
-    <div class="container">
-        <h2 class="mb-4">Tableau de bord annonceur</h2>
-        <div class="row mb-4">
-            <div class="col-6 col-lg-3 mb-2">
-                <div class="card shadow-sm text-center">
-                    <div class="card-body">
-                        <div class="h2 mb-0 font-weight-bold text-primary">{{ stats.nbAnnonces }}</div>
-                        <div class="text-muted">Annonces publiées</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-3 mb-2">
-                <div class="card shadow-sm text-center">
-                    <div class="card-body">
-                        <div class="h2 mb-0 font-weight-bold text-success">{{ stats.nbVues }}</div>
-                        <div class="text-muted">Nombre de vues</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-3 mb-2">
-                <div class="card shadow-sm text-center">
-                    <div class="card-body">
-                        <div class="h2 mb-0 font-weight-bold text-info">{{ stats.nbMessages }}</div>
-                        <div class="text-muted">Messages reçus</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-3 mb-2">
-                <div class="card shadow-sm text-center">
-                    <div class="card-body">
-                        <div class="h2 mb-0 font-weight-bold text-danger">{{ stats.nbClicksTel }}</div>
-                        <div class="text-muted">Clics téléphone</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-12 mb-2">
-                <div class="card shadow-sm text-center">
-                    <div class="card-body">
-                        <div class="h2 mb-0 font-weight-bold text-warning">{{ stats.nbVisits }}</div>
-                        <div class="text-muted">Visites page listing</div>
-                    </div>
-                </div>
-            </div>
+<section class="my-property">
+        <div class="container">
+            <ul class="ht-breadcrumbs ht-breadcrumbs--y-padding ht-breadcrumbs--b-border">
+                <li class="ht-breadcrumbs__item"><a href="{{ path('homepage') }}" class="ht-breadcrumbs__link"><span class="ht-breadcrumbs__title">Accueil</span></a></li>
+                <li class="ht-breadcrumbs__item"><span class="ht-breadcrumbs__page">Mes annonces</span></li>
+            </ul><!-- ht-breadcrumb -->
         </div>
-    </div>
+        <div class="container">
+            <div class="my-property__container">
+                <div class="row">
+                    <div class="col-md-3">
+                        {{ include("default/compte/_menuUser.html.twig") }}
+                    </div>
+                    <div class="col-md-9">
+                        <h2 class="mb-4">Tableau de bord annonceur</h2>
+                        <div class="row mb-4">
+                            <div class="col-6 col-lg-3 mb-2">
+                                <div class="card shadow-sm text-center">
+                                    <div class="card-body">
+                                        <div class="h2 mb-0 font-weight-bold text-primary">{{ stats.nbAnnonces }}</div>
+                                        <div class="text-muted">Annonces publiées</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3 mb-2">
+                                <div class="card shadow-sm text-center">
+                                    <div class="card-body">
+                                        <div class="h2 mb-0 font-weight-bold text-success">{{ stats.nbVues }}</div>
+                                        <div class="text-muted">Nombre de vues</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3 mb-2">
+                                <div class="card shadow-sm text-center">
+                                    <div class="card-body">
+                                        <div class="h2 mb-0 font-weight-bold text-info">{{ stats.nbMessages }}</div>
+                                        <div class="text-muted">Messages reçus</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3 mb-2">
+                                <div class="card shadow-sm text-center">
+                                    <div class="card-body">
+                                        <div class="h2 mb-0 font-weight-bold text-danger">{{ stats.nbClicksTel }}</div>
+                                        <div class="text-muted">Clics téléphone</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-12 mb-2">
+                                <div class="card shadow-sm text-center">
+                                    <div class="card-body">
+                                        <div class="h2 mb-0 font-weight-bold text-warning">{{ stats.nbVisits }}</div>
+                                        <div class="text-muted">Visites page listing</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
 </section>
 {% endblock %}
