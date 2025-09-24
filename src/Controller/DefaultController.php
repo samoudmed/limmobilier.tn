@@ -567,16 +567,35 @@ class DefaultController extends AbstractController {
      * @Route("/favorite.html", name="favorite")
      */
     public function favorite(Request $request) {
-
         $id = $request->request->get('id');
+        
+        // Check if user is authenticated
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->json(['error' => 'Non authentifié'], 403);
+        }
 
+        // Find the annonce
         $annonce = $this->getDoctrine()
                 ->getRepository(Annonces::class)
                 ->findOneById($id);
+                
+        if (!$annonce) {
+            return $this->json(['error' => 'Annonce introuvable'], 404);
+        }
 
         $em = $this->getDoctrine()->getManager();
+        
+        // Check if favorite already exists
+        $existingFavorite = $this->getDoctrine()
+                ->getRepository(Favorite::class)
+                ->findOneBy(['user' => $user, 'annonce' => $annonce]);
+                
+        if ($existingFavorite) {
+            return $this->json(['error' => 'Annonce déjà dans vos favoris'], 409);
+        }
 
-        $user = $this->getUser();
+        // Create new favorite
         $favorite = new Favorite();
         $favorite->setAnnonce($annonce);
         $favorite->setUser($user);
