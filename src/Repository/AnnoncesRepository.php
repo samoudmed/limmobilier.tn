@@ -18,6 +18,10 @@ class AnnoncesRepository extends ServiceEntityRepository {
     }
 
     public function filter($filters) {
+        if (isset($filters['date']) && $filters['date'] !== '') {
+            $query->andWhere('DATE(r.createdAt) = :date')
+                ->setParameter('date', $filters['date']);
+        }
 
         $query = $this->createQueryBuilder('r')
             ->select('r');

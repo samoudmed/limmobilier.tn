@@ -27,6 +27,10 @@ class AnnoncesController extends AbstractController {
      * @Route("/{page}", name="app_annonces_index", methods={"GET", "POST"}, requirements={"page"="\d+"})
      */
     public function index(Request $request, EntityManagerInterface $entityManager, PaginatorInterface $paginator, $page = 1): Response {
+        // ...existing code...
+            if ($request->request->get('date')) {
+                $filters['date'] = $request->request->get('date');
+            }
 
         $filters = array();
         if ($request->getMethod() == 'POST') {
