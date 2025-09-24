@@ -29,38 +29,54 @@
                     {% include 'default/_flash_messages.html.twig' %}
                     {{ form_start(registrationForm) }}
                     <div class="form-group">
-                        <label for="username" class="form-label">Adresse e-mail</label>
-                        {# Using a generic input style class from your CSS #}
-                        <input type="text" name="_username" id="username" class="form-field" placeholder="votre@email.com" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="username" class="form-label">Nom</label>
+                        <label for="registration_form_nom" class="form-label">Nom</label>
                         {{ form_widget(registrationForm.nom, {'attr': {'class': 'sign-up__field'}}) }}
                     </div>
                     <div class="form-group">
-                        <label for="username" class="form-label">¨Prénom</label>
+                        <label for="registration_form_prenom" class="form-label">Prénom</label>
                         {{ form_widget(registrationForm.prenom, {'attr': {'class': 'sign-up__field'}}) }}
                     </div>
                     <div class="form-group">
-                        <label for="username" class="form-label">Email</label>
+                        <label for="registration_form_email" class="form-label">Email</label>
                         {{ form_widget(registrationForm.email, {'attr': {'class': 'sign-up__field'}}) }}
                     </div>
                     <div class="form-group">
-                        <label for="username" class="form-label">Mot de passe</label>
+                        <label for="registration_form_plainPassword" class="form-label">Mot de passe</label>
                         {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'sign-up__field'}}) }}
                     </div>
                     <div class="form-group">
-                        <label for="username" class="form-label">Téléphone</label>
+                        <label for="registration_form_telephone" class="form-label">Téléphone</label>
                         {{ form_widget(registrationForm.telephone, {'attr': {'class': 'sign-up__field'}}) }}
                     </div>
                     <div class="form-group">
-                        <label for="username" class="form-label">Agence</label>
+                        <label for="registration_form_type" class="form-label">Type de compte</label>
+                        <div class="form-check">
+                            {% for choice in registrationForm.type %}
+                                {# Récupérer l'ID et la valeur #}
+                                {% set id = choice.vars.id %}
+                                {% set value = choice.vars.value %}
+                                {% set checked = choice.vars.checked ? 'checked="checked"' : '' %}
+
+                                <input type="radio"
+                                    id="{{ id }}"
+                                    name="{{ choice.vars.full_name }}"
+                                    value="{{ value }}"
+                                    class="main-listing__form-radio type"
+                                    {{ checked }}>
+                                <label for="{{ id }}" class="main-listing__form-label">
+                                    {{ choice.vars.label }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registration_form_agence" class="form-label">Agence</label>
                         {{ form_widget(registrationForm.agence, {'attr': {'class': 'sign-up__field'}}) }}
                     </div>
 
                     {# Custom rendering for the file upload field #}
                     <div class="form-group">
-                        <label for="logo" class="form-label">Logo</label>
+                        <label for="registration_form_logo" class="form-label">Logo</label>
                         <div class="submit-property__upload">
                             {{ form_widget(registrationForm.logo) }}
                             <div class="submit-property__upload-inner">
@@ -73,15 +89,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="sign-up__label" for="registration_form_agreeTerms">{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'opalmembership-input text input-text'}}) }} J'accepte les conditions générales et <a href="{{ path('confidentialites') }}" target="_blank">la politique de confidentialité</a></label>
+                        <label  class="sign-up__label" for="registration_form_agreeTerms">{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'opalmembership-input text input-text'}}) }} J'accepte les conditions générales et <a href="{{ path('confidentialites') }}" target="_blank">la politique de confidentialité</a></label>
                         <span class="help-block">{{ form_errors(registrationForm.agreeTerms) }}</span>
                     </div>
 
                     <div class="form-group text-center">
+                         <input type="hidden" 
+                            id="{{ registrationForm._token.vars.id }}" 
+                            name="{{ registrationForm._token.vars.full_name }}" 
+                            value="{{ registrationForm._token.vars.value }}">
                         <button type="submit" class="sign-up__submit">Inscription</button>
                     </div>
-
-                    {{ form_end(registrationForm) }}
+                   {{ form_end(registrationForm, {'render_rest': false}) }}
                 </div>
             </div>
         </div>

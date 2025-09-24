@@ -1,4 +1,4 @@
-name: Deploy Symfony App (Zero Downtime)
+name: Partial Symfony Deploy (Templates & Assets)
 
 on:
   push:
@@ -7,66 +7,30 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+
+    env:
+      APP_PATH: /home/test/public_html
 
     steps:
-      # 1. Checkout code
+      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Upload build to timestamped release folder
-      - name: Upload files via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./                  
-          server-dir: ${{ secrets.FTP_PATH }}/releases/${{ github.run_id }}
-          dangerous-clean-slate: false   
+      # 2️⃣ Rsync only modified directories
+      - name: Sync modified files
+        run: |
+          rsync -a --delete ./templates/ $APP_PATH/templates/
+          rsync -a --delete ./src/ $APP_PATH/src/
+          rsync -a --delete ./public/asset/ $APP_PATH/public/asset/
 
-      # 3. SSH into server and finalize deployment
-      - name: SSH finalize deployment
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            APP_PATH=${{ secrets.FTP_PATH }}
-            RELEASE_DIR=$APP_PATH/releases/${{ github.run_id }}
-            CURRENT_DIR=$APP_PATH/current
-            BACKUP_DIR=$APP_PATH/backups
+      # 3️⃣ Clear Symfony cache
+      - name: Clear Symfony cache
+        run: |
+          cd $APP_PATH
+          php bin/console cache:clear --env=prod --no-debug || true
+          php bin/console cache:warmup --env=prod --no-debug
 
-            mkdir -p $BACKUP_DIR
-
-            # --- 🛡️ 1. Database Backup ---
-            TIMESTAMP=$(date +%F-%H-%M-%S)
-            mysqldump -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} ${{ secrets.DB_NAME }} > $BACKUP_DIR/db-$TIMESTAMP.sql || true
-
-            # --- 🛠️ 2. Install dependencies ---
-            cd $RELEASE_DIR
-            composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
-
-            # Ensure Symfony cache folder exists
-            mkdir -p var/http_cache
-            chown -R www-data:www-data var
-            chmod -R 775 var
-
-            # Run migrations (safe because we did a backup)
-            php bin/console doctrine:migrations:migrate --no-interaction || true
-
-            # Clear & warmup cache
-            php bin/console cache:clear --env=prod
-            php bin/console cache:warmup --env=prod
-
-            # --- 🔗 3. Update symlink atomically ---
-            ln -sfn $RELEASE_DIR $CURRENT_DIR
-
-            # Reload services if needed
-            sudo systemctl reload php8.2-fpm || true
-            sudo systemctl reload nginx || true
-
-            # --- 🧹 4. Cleanup old releases (keep last 3) ---
-            cd $APP_PATH/releases
-            ls -1tr | head -n -3 | xargs -d '\n' rm -rf --
+      # 4️⃣ Deployment finished
+      - name: Done
+        run: echo "✅ Partial deploy finished"

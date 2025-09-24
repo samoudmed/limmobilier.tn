@@ -41,7 +41,7 @@ class UserType extends AbstractType
                     array('choices' => array(
                     'Particulier' => '0',
                     'Professionnel' => '1'),
-                    'label' => 'Rubrique',
+                    'label' => 'Type de compte',
                     'multiple' => false, 'expanded' => true))
             ->add('active')    
             ->add('logo', FileType::class, [

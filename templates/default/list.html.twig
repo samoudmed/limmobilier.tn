@@ -74,6 +74,7 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('asset/js/load.js') }}"></script>
     <script type="text/javascript">
         $(":input").on("change", function () {
             $(".main-listing-list").empty();
@@ -82,7 +83,7 @@
             $.ajax({
                 type: 'POST', // Le type de la requête HTTP, ici devenu POST
                 data: 'offre={% if(offre is defined) %}{{offre}}{% endif %}&type=' + $('input[name$="property-type"]:checked').val() + '&gouvernorat=' + $('#listing-gouvernorat').val() + '&delegation=' + $('#listing-delegation').val() + '&ville=' + $('#listing-city').val() + '&chambres=' + $('#listing-bedroom').val() + '&prixMin=' + $('#min-prix').val() + '&prixMax=' + $('#max-prix').val() + '&surfaceMin=' + $('#min-area').val() + '&surfaceMax=' + $('#max-area').val() + '&keyWord=' + $('#main-listing-keyword').val() + '&sort=' + $('#sort-type').val(),
-                url: "{{ path('search_list') }}",
+                url: "/recherche-annonce.html",
                 dataType: 'json', // ** ensure you add this line **
                 success: function (data) { // code_html contient le HTML renvoyé
                     var result = jQuery.parseJSON(JSON.stringify(data));
@@ -100,22 +101,6 @@
 
                         $(".main-listing-list").prepend(html);
                     });
-                }
-            });
-        });
-    </script>
-    <script>
-        window.addEventListener("load", function () {
-            document.querySelectorAll("picture").forEach(picture => {
-                const source = picture.querySelector("source");
-                const img = picture.querySelector("img");
-
-                if (source && source.dataset.srcset) {
-                    source.srcset = source.dataset.srcset;
-                }
-
-                if (img && img.dataset.src) {
-                    img.src = img.dataset.src;
                 }
             });
         });

@@ -4,20 +4,47 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Annonces;
 use App\Entity\Types;
 use App\Entity\User;
+use Doctrine\Persistence\ManagerRegistry;
 
-class AnnoncesRepository extends EntityRepository {
+class AnnoncesRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Annonces::class);
+    }
 
     public function filter($filters) {
+        if (isset($filters['date']) && $filters['date'] !== '') {
+            $query->andWhere('DATE(r.createdAt) = :date')
+                ->setParameter('date', $filters['date']);
+        }
 
         $query = $this->createQueryBuilder('r')
-                ->select('r');
+            ->select('r');
 
-        if (isset($filters['statut'])) {
+        if (isset($filters['statut']) && $filters['statut'] !== '') {
             $query->andWhere('r.statut = :statut')
-                    ->setParameter(':statut', $filters['statut']);
+                ->setParameter('statut', $filters['statut']);
+        }
+        if (isset($filters['label']) && $filters['label'] !== '') {
+            $query->andWhere('r.label LIKE :label')
+                ->setParameter('label', '%' . $filters['label'] . '%');
+        }
+        if (isset($filters['ville']) && $filters['ville'] !== '') {
+            $query->andWhere('r.ville = :ville')
+                ->setParameter('ville', $filters['ville']);
+        }
+        if (isset($filters['type']) && $filters['type'] !== '') {
+            $query->andWhere('r.kind = :type')
+                ->setParameter('type', $filters['type']);
+        }
+        if (isset($filters['offre']) && $filters['offre'] !== '') {
+            $query->andWhere('r.offre = :offre')
+                ->setParameter('offre', $filters['offre']);
         }
 
         $query->orderBy('r.id', 'DESC');

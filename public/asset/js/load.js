@@ -1,0 +1,1 @@
+window.addEventListener("load",(function(){document.querySelectorAll("picture").forEach((e=>{const t=e.querySelector("source"),r=e.querySelector("img");t&&t.dataset.srcset&&(t.srcset=t.dataset.srcset),r&&r.dataset.src&&(r.src=r.dataset.src)}))}));
