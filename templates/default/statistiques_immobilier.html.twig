@@ -1,31 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container mt-5">
-    <h1 class="mb-4">Statistiques immobilières par gouvernorat et type de bien</h1>
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Gouvernorat</th>
-                <th>Type de bien</th>
-                <th>Prix moyen (TND)</th>
-                <th>Prix moyen au m² (TND)</th>
-                <th>Nombre d'annonces</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for stat in stats %}
-                <tr>
-                    <td>{{ stat.gouvernorat }}</td>
-                    <td>{{ stat.type }}</td>
-                    <td>{{ stat.prix_moyen|number_format(0, '.', ' ') }}</td>
-                    <td>{{ stat.prix_m2|number_format(0, '.', ' ') }}</td>
-                    <td>{{ stat.nb_annonces }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div class="mt-5">
+<div class="container py-5">
+    <h1 class="mb-4 text-center fw-bold" style="font-size:2.2rem;">Statistiques immobilières</h1>
+    <div class="row g-4 mb-5">
+        {% for stat in stats %}
+            <div class="col-md-4">
+                <div class="card shadow border-0 h-100 animate__animated animate__fadeInUp">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="me-2" style="font-size:2rem;">
+                                {% if stat.type == 'Appartement' %}<i class="fa fa-building text-primary"></i>{% endif %}
+                                {% if stat.type == 'Villa' %}<i class="fa fa-home text-success"></i>{% endif %}
+                                {% if stat.type == 'Terrain' %}<i class="fa fa-tree text-warning"></i>{% endif %}
+                            </span>
+                            <span class="badge bg-info text-dark">{{ stat.gouvernorat }}</span>
+                        </div>
+                        <h5 class="card-title mb-1">{{ stat.type }}</h5>
+                        <p class="mb-2"><span class="fw-bold">Prix moyen :</span> <span class="text-primary">{{ stat.prix_moyen|number_format(0, '.', ' ') }} TND</span></p>
+                        <p class="mb-2"><span class="fw-bold">Prix moyen au m² :</span> <span class="text-success">{{ stat.prix_m2|number_format(0, '.', ' ') }} TND</span></p>
+                        <p class="mb-2"><span class="fw-bold">Référence au m² :</span> <span class="text-warning">{{ stat.ref_m2|default('N/A')|number_format(0, '.', ' ') }} TND</span></p>
+                        <p class="mb-0"><span class="fw-bold">Annonces analysées :</span> {{ stat.nb_annonces }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="bg-white rounded shadow p-4 mb-5">
         <canvas id="chartPrixM2" height="120"></canvas>
     </div>
 </div>
@@ -33,7 +34,9 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.4.0/js/all.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const ctx = document.getElementById('chartPrixM2').getContext('2d');
@@ -52,6 +55,14 @@
                 data: data,
                 options: {
                     responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: 'Prix moyen au m² par gouvernorat et type de bien',
+                            font: { size: 18 }
+                        }
+                    },
                     scales: {
                         y: {
                             beginAtZero: true
