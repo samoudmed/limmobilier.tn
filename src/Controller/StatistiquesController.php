@@ -46,7 +46,7 @@ class StatistiquesController extends AbstractController {
 
         $stats = [];
         foreach ($annonces as $annonce) {
-            $gouv = $annonce->getGouvernorat() ? $annonce->getGouvernorat()->getNom() : 'Inconnu';
+            $gouv = $annonce->getGouvernorat() ? $annonce->getGouvernorat()->getLabel() : 'Inconnu';
             $type = $annonce->getKind();
             $surface = $annonce->getSurface() ?: 1;
             $prix = $annonce->getPrix() ?: 0;
