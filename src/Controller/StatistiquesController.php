@@ -1,80 +1,3 @@
-    /**
-     * @Route("/estimation-bien.html", name="estimation_bien", methods={"GET", "POST"})
-     */
-    public function estimationBien(Request $request)
-    {
-        // Gouvernorats et types pour le formulaire
-        $gouvernorats = array_keys($this->getPrixReference());
-        $types = [];
-        foreach ($this->getPrixReference() as $gouv => $typeArr) {
-            foreach (array_keys($typeArr) as $type) {
-                if (!in_array($type, $types)) {
-                    $types[] = $type;
-                }
-            }
-        }
-
-        $resultat = null;
-        if ($request->isMethod('POST')) {
-            $gouv = $request->request->get('gouvernorat');
-            $type = $request->request->get('type');
-            $surfaceTotale = (float)$request->request->get('surface_totale');
-            $surfaceBat = (float)$request->request->get('surface_batie');
-            $chambres = (int)$request->request->get('chambres');
-            $options = $request->request->get('options', []);
-
-            $prixRef = $this->getPrixReference();
-            $prixM2 = isset($prixRef[$gouv][$type]) ? $prixRef[$gouv][$type] : 0;
-            $prixBase = $surfaceTotale * $prixM2;
-
-            // Bonus options (exemple simple)
-            $bonus = 0;
-            if (is_array($options)) {
-                foreach ($options as $opt) {
-                    if ($opt === 'jardin') $bonus += 0.05 * $prixBase;
-                    if ($opt === 'garage') $bonus += 0.03 * $prixBase;
-                    if ($opt === 'piscine') $bonus += 0.08 * $prixBase;
-                    if ($opt === 'terrasse') $bonus += 0.02 * $prixBase;
-                }
-            }
-            $prixEstime = $prixBase + $bonus;
-
-            $resultat = [
-                'prix_estime' => round($prixEstime, 0),
-                'prix_m2' => $prixM2,
-                'gouvernorat' => $gouv,
-                'type' => $type,
-                'surface_totale' => $surfaceTotale,
-                'surface_batie' => $surfaceBat,
-                'chambres' => $chambres,
-                'options' => $options
-            ];
-        }
-
-        return $this->render('default/estimation_bien.html.twig', [
-            'gouvernorats' => $gouvernorats,
-            'types' => $types,
-            'resultat' => $resultat
-        ]);
-    }
-
-    // Méthode utilitaire pour accéder au tableau de référence
-    private function getPrixReference()
-    {
-        return [
-            'Tunis' => [
-                'Appartement' => 2500,
-                'Villa' => 3500,
-                'Terrain' => 800
-            ],
-            'Ariana' => [
-                'Appartement' => 2200,
-                'Villa' => 3200,
-                'Terrain' => 700
-            ],
-            // ... autres gouvernorats et types
-        ];
-    }
 <?php
 
 namespace App\Controller;
@@ -180,5 +103,83 @@ class StatistiquesController extends AbstractController {
             'stats' => $resultats,
             'prixReference' => $prixReference
         ]);
+    }
+
+        /**
+     * @Route("/estimation-bien.html", name="estimation_bien", methods={"GET", "POST"})
+     */
+    public function estimationBien(Request $request)
+    {
+        // Gouvernorats et types pour le formulaire
+        $gouvernorats = array_keys($this->getPrixReference());
+        $types = [];
+        foreach ($this->getPrixReference() as $gouv => $typeArr) {
+            foreach (array_keys($typeArr) as $type) {
+                if (!in_array($type, $types)) {
+                    $types[] = $type;
+                }
+            }
+        }
+
+        $resultat = null;
+        if ($request->isMethod('POST')) {
+            $gouv = $request->request->get('gouvernorat');
+            $type = $request->request->get('type');
+            $surfaceTotale = (float)$request->request->get('surface_totale');
+            $surfaceBat = (float)$request->request->get('surface_batie');
+            $chambres = (int)$request->request->get('chambres');
+            $options = $request->request->get('options', []);
+
+            $prixRef = $this->getPrixReference();
+            $prixM2 = isset($prixRef[$gouv][$type]) ? $prixRef[$gouv][$type] : 0;
+            $prixBase = $surfaceTotale * $prixM2;
+
+            // Bonus options (exemple simple)
+            $bonus = 0;
+            if (is_array($options)) {
+                foreach ($options as $opt) {
+                    if ($opt === 'jardin') $bonus += 0.05 * $prixBase;
+                    if ($opt === 'garage') $bonus += 0.03 * $prixBase;
+                    if ($opt === 'piscine') $bonus += 0.08 * $prixBase;
+                    if ($opt === 'terrasse') $bonus += 0.02 * $prixBase;
+                }
+            }
+            $prixEstime = $prixBase + $bonus;
+
+            $resultat = [
+                'prix_estime' => round($prixEstime, 0),
+                'prix_m2' => $prixM2,
+                'gouvernorat' => $gouv,
+                'type' => $type,
+                'surface_totale' => $surfaceTotale,
+                'surface_batie' => $surfaceBat,
+                'chambres' => $chambres,
+                'options' => $options
+            ];
+        }
+
+        return $this->render('default/estimation_bien.html.twig', [
+            'gouvernorats' => $gouvernorats,
+            'types' => $types,
+            'resultat' => $resultat
+        ]);
+    }
+
+    // Méthode utilitaire pour accéder au tableau de référence
+    private function getPrixReference()
+    {
+        return [
+            'Tunis' => [
+                'Appartement' => 2500,
+                'Villa' => 3500,
+                'Terrain' => 800
+            ],
+            'Ariana' => [
+                'Appartement' => 2200,
+                'Villa' => 3200,
+                'Terrain' => 700
+            ],
+            // ... autres gouvernorats et types
+        ];
     }
 }
