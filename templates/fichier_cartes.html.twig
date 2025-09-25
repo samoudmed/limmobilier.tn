@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carte des prix par m² en Tunisie{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2>Carte interactive des prix par m² en Tunisie</h2>
+    <div id="map" style="height: 600px;"></div>
+</div>
+<!-- Leaflet.js -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- Plugin Choropleth (simple) -->
+<script src="https://unpkg.com/leaflet-choropleth/dist/choropleth.js"></script>
+<script>
+    // Charger les prix et le GeoJSON des gouvernorats
+    Promise.all([
+        fetch('/assets/js/prix_m2_tunisie.json').then(r => r.json()),
+        fetch('/asset/geojson/gouvernorats_tunisie.geojson').then(r => r.json())
+    ]).then(([prixData, geojson]) => {
+        geojson.features.forEach(function(feature) {
+            var prix = prixData.find(p => p.region === feature.properties.name);
+            feature.properties.prix_m2 = prix ? prix.prix_m2 : null;
+        });
+        var map = L.map('map').setView([34, 9], 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+        function getColor(d) {
+            return d > 2000 ? '#d73027' : d > 1500 ? '#fc8d59' : d > 1000 ? '#fee08b' : '#d9ef8b';
+        }
+        function style(feature) {
+            return {
+                fillColor: getColor(feature.properties.prix_m2),
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.7
+            };
+        }
+        L.geoJson(geojson, {
+            style: style,
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup('<b>' + feature.properties.name + '</b><br>Prix moyen: ' + (feature.properties.prix_m2 ? feature.properties.prix_m2 + ' DT/m²' : 'Non disponible'));
+            }
+        }).addTo(map);
+    });
+</script>
+{% endblock %}

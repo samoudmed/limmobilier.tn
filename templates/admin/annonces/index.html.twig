@@ -54,6 +54,22 @@
                                                         <input type="text" name="ville" class="form-control form-control-sm" placeholder="Ville" value="{{ app.request.get('ville') }}" />
                                                     </th>
                                                     <th>
+                                                        <input type="text" name="type" class="form-control form-control-sm" placeholder="Type" value="{{ app.request.get('type') }}" />
+                                                    </th>
+                                                    <th>
+                                                        <input type="text" name="offre" class="form-control form-control-sm" placeholder="Offre" value="{{ app.request.get('offre') }}" />
+                                                    </th>
+                                                    <th>
+                                                        <select name="statut" class="form-control form-control-sm">
+                                                            <option value="">Statut</option>
+                                                            <option value="1" {% if app.request.get('statut') == '1' %}selected{% endif %}>Active</option>
+                                                            <option value="0" {% if app.request.get('statut') == '0' %}selected{% endif %}>Inactive</option>
+                                                        </select>
+                                                    </th>
+                                                    <th>
+                                                        <input type="text" name="ville" class="form-control form-control-sm" placeholder="Ville" value="{{ app.request.get('ville') }}" />
+                                                    </th>
+                                                    <th>
                                                         <select name="type" class="form-control form-control-sm">
                                                             <option value="">Type</option>
                                                             <option value="Appartement">Appartement</option>
