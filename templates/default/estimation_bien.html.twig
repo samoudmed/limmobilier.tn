@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Estimation de votre bien immobilier</h1>
+    <form method="post" class="mb-4">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="gouvernorat">Gouvernorat</label>
+                <select name="gouvernorat" id="gouvernorat" class="form-control" required>
+                    <option value="">Sélectionner</option>
+                    {% for gouv in gouvernorats %}
+                        <option value="{{ gouv }}" {% if resultat and resultat.gouvernorat == gouv %}selected{% endif %}>{{ gouv }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="type">Type de bien</label>
+                <select name="type" id="type" class="form-control" required>
+                    <option value="">Sélectionner</option>
+                    {% for t in types %}
+                        <option value="{{ t }}" {% if resultat and resultat.type == t %}selected{% endif %}>{{ t }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="surface_totale">Surface totale (m²)</label>
+                <input type="number" name="surface_totale" id="surface_totale" class="form-control" min="1" required value="{{ resultat.surface_totale if resultat else '' }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="surface_batie">Surface bâtie (m²)</label>
+                <input type="number" name="surface_batie" id="surface_batie" class="form-control" min="0" value="{{ resultat.surface_batie if resultat else '' }}">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="chambres">Nombre de chambres</label>
+                <input type="number" name="chambres" id="chambres" class="form-control" min="0" value="{{ resultat.chambres if resultat else '' }}">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label>Options / Caractéristiques</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="options[]" value="jardin" id="optJardin" {% if resultat and 'jardin' in resultat.options %}checked{% endif %}>
+                    <label class="form-check-label" for="optJardin">Jardin</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="options[]" value="garage" id="optGarage" {% if resultat and 'garage' in resultat.options %}checked{% endif %}>
+                    <label class="form-check-label" for="optGarage">Garage</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="options[]" value="piscine" id="optPiscine" {% if resultat and 'piscine' in resultat.options %}checked{% endif %}>
+                    <label class="form-check-label" for="optPiscine">Piscine</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="options[]" value="terrasse" id="optTerrasse" {% if resultat and 'terrasse' in resultat.options %}checked{% endif %}>
+                    <label class="form-check-label" for="optTerrasse">Terrasse</label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Estimer</button>
+    </form>
+
+    {% if resultat %}
+        <div class="alert alert-success">
+            <h4>Résultat de l'estimation</h4>
+            <ul>
+                <li><strong>Prix estimé :</strong> {{ resultat.prix_estime|number_format(0, '.', ' ') }} TND</li>
+                <li><strong>Prix de référence au m² :</strong> {{ resultat.prix_m2|number_format(0, '.', ' ') }} TND</li>
+                <li><strong>Surface totale :</strong> {{ resultat.surface_totale }} m²</li>
+                <li><strong>Surface bâtie :</strong> {{ resultat.surface_batie }} m²</li>
+                <li><strong>Nombre de chambres :</strong> {{ resultat.chambres }}</li>
+                <li><strong>Options :</strong> {{ resultat.options|join(', ') }}</li>
+            </ul>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
