@@ -11,6 +11,7 @@ use App\Entity\Villes;
 use App\Entity\Gouvernorat;
 use App\Entity\Delegation;
 use App\Entity\Favorite;
+use App\Entity\Message;
 use App\Form\UserType;
 use App\Form\AnnoncesType;
 use Symfony\Component\Finder\SplFileInfo;
