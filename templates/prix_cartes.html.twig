@@ -15,7 +15,7 @@
 <script>
     // Charger les prix et le GeoJSON des gouvernorats
     Promise.all([
-        fetch('/asset/js/prix_m2_tunisie.json').then(r => r.json()),
+    fetch('/asset/js/prix_m2_tunisie.json').then(r => r.json()),
         fetch('/asset/geojson/gouvernorats_tunisie.geojson').then(r => r.json())
     ]).then(([prixData, geojson]) => {
         // Associer les prix au GeoJSON
