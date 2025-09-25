@@ -25,17 +25,17 @@
             </div>
             <div class="col-md-4 mb-3">
                 <label for="surface_totale">Surface totale (m²)</label>
-                <input type="number" name="surface_totale" id="surface_totale" class="form-control" min="1" required value="{{ resultat.surface_totale if resultat else '' }}">
+                <input type="number" name="surface_totale" id="surface_totale" class="form-control" min="1" required value="{{ resultat.surface_totale|default('') }}">
             </div>
         </div>
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label for="surface_batie">Surface bâtie (m²)</label>
-                <input type="number" name="surface_batie" id="surface_batie" class="form-control" min="0" value="{{ resultat.surface_batie if resultat else '' }}">
+                <input type="number" name="surface_batie" id="surface_batie" class="form-control" min="0" value="{{ resultat.surface_batie|default('') }}">
             </div>
             <div class="col-md-4 mb-3">
                 <label for="chambres">Nombre de chambres</label>
-                <input type="number" name="chambres" id="chambres" class="form-control" min="0" value="{{ resultat.chambres if resultat else '' }}">
+                <input type="number" name="chambres" id="chambres" class="form-control" min="0" value="{{ resultat.chambres|default('') }}">
             </div>
             <div class="col-md-4 mb-3">
                 <label>Options / Caractéristiques</label><br>
