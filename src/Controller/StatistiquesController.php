@@ -31,50 +31,58 @@ use Knp\Component\Pager\PaginatorInterface;
 /**
  * Description of StatistiquesController
  *
- * @author Guillaume
+ * @author Mohamed
  */
 class StatistiquesController extends AbstractController {
 
     /**
-     * @Route("/compte/statistiques-{page}.html", name="statistiques")
+     * @Route("/statistiques-immobilier.html", name="statistiques_immobilier", methods={"GET"})
      */
-    public function statistiques(Request $request, $page = 1) {
-
-        $prixMoyenLocation = $prixMoyenVente = $totalPrixLocation = $totalPrixVente = $nbrVente = $nbrLocation = array();
+    public function index()
+    {
         $annonces = $this->getDoctrine()
-                    ->getRepository(Annonces::class)
-                    ->findForStatistique();
-        
-        foreach ($annonces as $k => $value) {
+            ->getRepository(Annonces::class)
+            ->findBy(['deleted' => 0, 'published' => 1]);
 
-            if (($value->getOffre() == 'Location') && ($value->getPrix() > 0) && ($value->getSurface() > 0)) {
-                if (array_key_exists($value->getDelegation()->getLabel(), $nbrLocation)) {
-                    $nbrLocation[$value->getDelegation()->getLabel()] =+  $value->getSurface();
-                    $totalPrixLocation[$value->getDelegation()->getLabel()] += $value->getPrix();
-                } else {
-                    $nbrLocation[$value->getDelegation()->getLabel()] = $value->getSurface();
-                    $totalPrixLocation[$value->getDelegation()->getLabel()] = $value->getPrix();
-                }
-                
-                $prixMoyenLocation[$value->getDelegation()->getLabel()] = $totalPrixLocation[$value->getDelegation()->getLabel()] / $nbrLocation[$value->getDelegation()->getLabel()];
+        $stats = [];
+        foreach ($annonces as $annonce) {
+            $gouv = $annonce->getGouvernorat() ? $annonce->getGouvernorat()->getNom() : 'Inconnu';
+            $type = $annonce->getKind();
+            $surface = $annonce->getSurface() ?: 1;
+            $prix = $annonce->getPrix() ?: 0;
+            if (!isset($stats[$gouv])) {
+                $stats[$gouv] = [];
             }
-
-            if (($value->getOffre() == 'Vente') && ($value->getPrix() > 0)  && ($value->getSurface() > 0)) {
-                if (array_key_exists($value->getDelegation()->getLabel(),$nbrVente)) {
-                    $nbrVente[$value->getDelegation()->getLabel()] =+ $value->getSurface();
-                    $totalPrixVente[$value->getDelegation()->getLabel()] += $value->getPrix();
-                } else {
-                    $nbrVente[$value->getDelegation()->getLabel()] = $value->getSurface();
-                    $totalPrixVente[$value->getDelegation()->getLabel()] = $value->getPrix();
-                }
-
-                $prixMoyenVente[$value->getDelegation()->getLabel()] = $totalPrixVente[$value->getDelegation()->getLabel()] / $nbrVente[$value->getDelegation()->getLabel()];
+            if (!isset($stats[$gouv][$type])) {
+                $stats[$gouv][$type] = [
+                    'totalPrix' => 0,
+                    'totalSurface' => 0,
+                    'count' => 0
+                ];
             }
-            //
-            $ville = $value->getVille();
+            $stats[$gouv][$type]['totalPrix'] += $prix;
+            $stats[$gouv][$type]['totalSurface'] += $surface;
+            $stats[$gouv][$type]['count']++;
         }
 
-        return $this->render('default/compte/statistiques.html.twig', ['prixMoyenLocation' => $prixMoyenLocation, 'prixMoyenVente' => $prixMoyenVente, 'ville' => $ville]);
-    }
+        // Calcul des moyennes
+        $resultats = [];
+        foreach ($stats as $gouv => $types) {
+            foreach ($types as $type => $data) {
+                $moyennePrix = $data['count'] ? round($data['totalPrix'] / $data['count'], 2) : 0;
+                $moyenneM2 = $data['totalSurface'] ? round($data['totalPrix'] / $data['totalSurface'], 2) : 0;
+                $resultats[] = [
+                    'gouvernorat' => $gouv,
+                    'type' => $type,
+                    'prix_moyen' => $moyennePrix,
+                    'prix_m2' => $moyenneM2,
+                    'nb_annonces' => $data['count']
+                ];
+            }
+        }
 
+        return $this->render('default/statistiques_immobilier.html.twig', [
+            'stats' => $resultats
+        ]);
+    }
 }
