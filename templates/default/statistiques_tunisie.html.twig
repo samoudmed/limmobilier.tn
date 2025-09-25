@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container py-5">
+    <h1 class="mb-4 text-center fw-bold" style="font-size:2.2rem;">Prix immobilier en Tunisie</h1>
+    <div class="row mb-4 justify-content-center">
+        <div class="col-md-10">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                <div class="stat-block bg-primary text-white p-4 rounded shadow-sm mb-2">
+                    <div class="fs-5">Prix moyen au m²</div>
+                    <div class="fs-2 fw-bold">{{ prix_moyen|number_format(0, '.', ' ') }} TND</div>
+                </div>
+                <div class="stat-block bg-success text-white p-4 rounded shadow-sm mb-2">
+                    <div class="fs-5">Prix médian au m²</div>
+                    <div class="fs-2 fw-bold">{{ prix_median|number_format(0, '.', ' ') }} TND</div>
+                </div>
+                <div class="stat-block bg-info text-dark p-4 rounded shadow-sm mb-2">
+                    <div class="fs-5">Nombre d'annonces</div>
+                    <div class="fs-2 fw-bold">{{ nb_annonces }}</div>
+                </div>
+            </div>
+            <div class="bg-white rounded shadow p-4 mb-4">
+                <canvas id="chartEvolution" height="120"></canvas>
+            </div>
+            <div class="bg-white rounded shadow p-4 mb-4">
+                <h4 class="mb-3">Carte des prix moyens par gouvernorat</h4>
+                <div class="svg-map-tunisie">
+                    <!-- SVG simplifié, à remplacer par une carte plus détaillée si besoin -->
+                    <svg viewBox="0 0 400 600" width="100%" height="300">
+                        {% for gouv in gouvernorats %}
+                            <rect x="{{ loop.index0 * 30 + 20 }}" y="100" width="28" height="180" fill="{{ gouv_colors[gouv] }}" stroke="#333" />
+                            <text x="{{ loop.index0 * 30 + 34 }}" y="300" font-size="12" text-anchor="middle">{{ gouv }}</text>
+                        {% endfor %}
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('chartEvolution').getContext('2d');
+            const data = {
+                labels: {{ evolution_labels|json_encode|raw }},
+                datasets: [{
+                    label: 'Prix moyen au m²',
+                    data: {{ evolution_data|json_encode|raw }},
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }]
+            };
+            new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: 'Evolution des prix moyens au m²',
+                            font: { size: 18 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

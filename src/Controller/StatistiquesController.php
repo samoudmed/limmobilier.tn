@@ -1,59 +1,60 @@
     /**
-     * @Route("/estimation-bien-tunisie.html", name="estimation_bien_tunisie", methods={"GET", "POST"})
+     * @Route("/statistiques-tunisie.html", name="statistiques_tunisie", methods={"GET"})
      */
-    public function estimationBienTunisie(Request $request)
+    public function statistiquesTunisie()
     {
-        $gouvernorats = array_keys($this->getPrixReference());
-        $types = [];
-        foreach ($this->getPrixReference() as $gouv => $typeArr) {
-            foreach (array_keys($typeArr) as $type) {
-                if (!in_array($type, $types)) {
-                    $types[] = $type;
-                }
+        $annonces = $this->getDoctrine()
+            ->getRepository(Annonces::class)
+            ->findBy(['deleted' => 0, 'published' => 1]);
+
+        $prixM2List = [];
+        $prixList = [];
+        $gouvStats = [];
+        $gouvernorats = [];
+        foreach ($annonces as $annonce) {
+            $gouv = $annonce->getGouvernorat() ? $annonce->getGouvernorat()->getLabel() : 'Inconnu';
+            $type = $annonce->getKind()->getLabel();
+            $surface = $annonce->getSurface() ?: 1;
+            $prix = $annonce->getPrix() ?: 0;
+            $prixM2 = $surface ? $prix / $surface : 0;
+            $prixM2List[] = $prixM2;
+            $prixList[] = $prix;
+            if (!in_array($gouv, $gouvernorats)) {
+                $gouvernorats[] = $gouv;
             }
+            if (!isset($gouvStats[$gouv])) {
+                $gouvStats[$gouv] = [];
+            }
+            $gouvStats[$gouv][] = $prixM2;
         }
 
-        $resultat = null;
-        if ($request->isMethod('POST')) {
-            $gouv = $request->request->get('gouvernorat');
-            $type = $request->request->get('type');
-            $surfaceTotale = (float)$request->request->get('surface_totale');
-            $surfaceBat = (float)$request->request->get('surface_batie');
-            $chambres = (int)$request->request->get('chambres');
-            $options = $request->request->get('options', []);
+        $prix_moyen = count($prixM2List) ? round(array_sum($prixM2List) / count($prixM2List), 0) : 0;
+        sort($prixM2List);
+        $count = count($prixM2List);
+        $prix_median = $count ? ($count % 2 ? $prixM2List[floor($count/2)] : ($prixM2List[$count/2-1]+$prixM2List[$count/2])/2) : 0;
+        $nb_annonces = count($annonces);
 
-            $prixRef = $this->getPrixReference();
-            $prixM2 = isset($prixRef[$gouv][$type]) ? $prixRef[$gouv][$type] : 0;
-            $prixBase = $surfaceTotale * $prixM2;
+        // Evolution fictive (à remplacer par vos vraies données temporelles)
+        $evolution_labels = ['2021','2022','2023','2024','2025'];
+        $evolution_data = [1200, 1350, 1500, 1700, $prix_moyen];
 
-            // Bonus options (exemple simple)
-            $bonus = 0;
-            if (is_array($options)) {
-                foreach ($options as $opt) {
-                    if ($opt === 'jardin') $bonus += 0.05 * $prixBase;
-                    if ($opt === 'garage') $bonus += 0.03 * $prixBase;
-                    if ($opt === 'piscine') $bonus += 0.08 * $prixBase;
-                    if ($opt === 'terrasse') $bonus += 0.02 * $prixBase;
-                }
-            }
-            $prixEstime = $prixBase + $bonus;
-
-            $resultat = [
-                'prix_estime' => round($prixEstime, 0),
-                'prix_m2' => $prixM2,
-                'gouvernorat' => $gouv,
-                'type' => $type,
-                'surface_totale' => $surfaceTotale,
-                'surface_batie' => $surfaceBat,
-                'chambres' => $chambres,
-                'options' => $options
-            ];
+        // Couleurs gouvernorat selon prix moyen
+        $gouv_colors = [];
+        foreach ($gouvStats as $gouv => $prixArr) {
+            $moy = count($prixArr) ? array_sum($prixArr)/count($prixArr) : 0;
+            // Gradient bleu-rouge selon prix
+            $color = $moy < 1000 ? '#4fc3f7' : ($moy < 2000 ? '#81c784' : '#e57373');
+            $gouv_colors[$gouv] = $color;
         }
 
-        return $this->render('default/estimation_bien_tunisie.html.twig', [
+        return $this->render('default/statistiques_tunisie.html.twig', [
+            'prix_moyen' => $prix_moyen,
+            'prix_median' => $prix_median,
+            'nb_annonces' => $nb_annonces,
+            'evolution_labels' => $evolution_labels,
+            'evolution_data' => $evolution_data,
             'gouvernorats' => $gouvernorats,
-            'types' => $types,
-            'resultat' => $resultat
+            'gouv_colors' => $gouv_colors
         ]);
     }
 <?php
@@ -163,12 +164,29 @@ class StatistiquesController extends AbstractController {
         ]);
     }
 
-        /**
-     * @Route("/estimation-bien.html", name="estimation_bien", methods={"GET", "POST"})
-     */
-    public function estimationBien(Request $request)
+    // Méthode utilitaire pour accéder au tableau de référence
+    private function getPrixReference()
     {
-        // Gouvernorats et types pour le formulaire
+        return [
+            'Tunis' => [
+                'Appartement' => 2500,
+                'Villa' => 3500,
+                'Terrain' => 800
+            ],
+            'Ariana' => [
+                'Appartement' => 2200,
+                'Villa' => 3200,
+                'Terrain' => 700
+            ],
+            // ... autres gouvernorats et types
+        ];
+    }
+
+        /**
+     * @Route("/estimation-bien-tunisie.html", name="estimation_bien_tunisie", methods={"GET", "POST"})
+     */
+    public function estimationBienTunisie(Request $request)
+    {
         $gouvernorats = array_keys($this->getPrixReference());
         $types = [];
         foreach ($this->getPrixReference() as $gouv => $typeArr) {
@@ -216,28 +234,10 @@ class StatistiquesController extends AbstractController {
             ];
         }
 
-        return $this->render('default/estimation_bien.html.twig', [
+        return $this->render('default/estimation_bien_tunisie.html.twig', [
             'gouvernorats' => $gouvernorats,
             'types' => $types,
             'resultat' => $resultat
         ]);
-    }
-
-    // Méthode utilitaire pour accéder au tableau de référence
-    private function getPrixReference()
-    {
-        return [
-            'Tunis' => [
-                'Appartement' => 2500,
-                'Villa' => 3500,
-                'Terrain' => 800
-            ],
-            'Ariana' => [
-                'Appartement' => 2200,
-                'Villa' => 3200,
-                'Terrain' => 700
-            ],
-            // ... autres gouvernorats et types
-        ];
     }
 }
