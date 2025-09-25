@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container py-5">
+    <h1 class="mb-4 text-center fw-bold" style="font-size:2.2rem;">Prix au m² par gouvernorat en Tunisie</h1>
+    <div class="price-map-table bg-white rounded shadow p-4 mb-4">
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Gouvernorat</th>
+                    <th>Appartement<br><small>Prix moyen au m²</small></th>
+                    <th>Villa<br><small>Prix moyen au m²</small></th>
+                    <th>Terrain<br><small>Prix moyen au m²</small></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for gouv in gouvernorats %}
+                    <tr>
+                        <td><span class="fw-bold">{{ gouv }}</span></td>
+                        <td>{{ prix_appart[gouv]|default('N/A')|number_format(0, '.', ' ') }} TND</td>
+                        <td>{{ prix_villa[gouv]|default('N/A')|number_format(0, '.', ' ') }} TND</td>
+                        <td>{{ prix_terrain[gouv]|default('N/A')|number_format(0, '.', ' ') }} TND</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="field__annotation-text price-map-table__footer mt-3"><span>Estimation de prix au m² basée sur les annonces publiées au {{ "now"|date("d/m/Y") }}. Prix nets demandés par les vendeurs.</span></p>
+    </div>
+</div>
+{% endblock %}

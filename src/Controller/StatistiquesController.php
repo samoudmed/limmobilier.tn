@@ -182,4 +182,60 @@ class StatistiquesController extends AbstractController {
             'gouv_colors' => $gouv_colors
         ]);
     }    
+
+        /**
+     * @Route("/prix-map-tunisie.html", name="prix_map_tunisie", methods={"GET"})
+     */
+    public function prixMapTunisie()
+    {
+        $annonces = $this->getDoctrine()
+            ->getRepository(Annonces::class)
+            ->findBy(['deleted' => 0, 'published' => 1]);
+
+        $gouvernorats = [];
+        $prix_appart = [];
+        $prix_villa = [];
+        $prix_terrain = [];
+        $stats = [];
+        foreach ($annonces as $annonce) {
+            $gouv = $annonce->getGouvernorat() ? $annonce->getGouvernorat()->getLabel() : 'Inconnu';
+            $type = $annonce->getKind()->getLabel();
+            $surface = $annonce->getSurface() ?: 1;
+            $prix = $annonce->getPrix() ?: 0;
+            if (!in_array($gouv, $gouvernorats)) {
+                $gouvernorats[] = $gouv;
+            }
+            if (!isset($stats[$gouv])) {
+                $stats[$gouv] = [
+                    'Appartement' => ['totalPrix' => 0, 'totalSurface' => 0, 'count' => 0],
+                    'Villa' => ['totalPrix' => 0, 'totalSurface' => 0, 'count' => 0],
+                    'Terrain' => ['totalPrix' => 0, 'totalSurface' => 0, 'count' => 0]
+                ];
+            }
+            if (isset($stats[$gouv][$type])) {
+                $stats[$gouv][$type]['totalPrix'] += $prix;
+                $stats[$gouv][$type]['totalSurface'] += $surface;
+                $stats[$gouv][$type]['count']++;
+            }
+        }
+
+        foreach ($gouvernorats as $gouv) {
+            // Appartement
+            $dataA = $stats[$gouv]['Appartement'];
+            $prix_appart[$gouv] = $dataA['count'] ? round($dataA['totalPrix'] / $dataA['totalSurface'], 0) : null;
+            // Villa
+            $dataV = $stats[$gouv]['Villa'];
+            $prix_villa[$gouv] = $dataV['count'] ? round($dataV['totalPrix'] / $dataV['totalSurface'], 0) : null;
+            // Terrain
+            $dataT = $stats[$gouv]['Terrain'];
+            $prix_terrain[$gouv] = $dataT['count'] ? round($dataT['totalPrix'] / $dataT['totalSurface'], 0) : null;
+        }
+
+        return $this->render('default/prix_map_tunisie.html.twig', [
+            'gouvernorats' => $gouvernorats,
+            'prix_appart' => $prix_appart,
+            'prix_villa' => $prix_villa,
+            'prix_terrain' => $prix_terrain
+        ]);
+    }
 }
