@@ -61,15 +61,39 @@
     </section><!-- .property -->
     <script>
         $("#favorite").on("click", function () {
+            var $btn = $(this);
+            var originalText = $btn.html();
+            
+            // Disable button and show loading state
+            $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Ajout...');
+            
             $.ajax({
-                type: 'POST', // Le type de la requête HTTP, ici devenu POST
+                type: 'POST',
                 data: 'id=' + {{annonce.id}},
                 url: "{{ path('favorite') }}",
-                dataType: 'json', // ** ensure you add this line **
-                success: function (data) { // code_html contient le HTML renvoyé
+                dataType: 'json',
+                success: function (data) {
                     if (data == 'succes') {
-                        $.growl.notice({message: "Annonce ajouté a votre liste"});
+                        $.growl.notice({message: "Annonce ajoutée à votre liste de favoris"});
+                        $btn.removeClass('btn-outline-danger').addClass('btn-success').html('<i class="fa fa-heart"></i> Ajouté aux favoris');
+                    } else if (data.error) {
+                        $.growl.error({message: data.error});
+                        $btn.prop('disabled', false).html(originalText);
                     }
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = "Erreur lors de l'ajout aux favoris";
+                    
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                        errorMessage = xhr.responseJSON.error;
+                    } else if (xhr.status === 403) {
+                        errorMessage = "Vous devez être connecté pour ajouter aux favoris";
+                    } else if (xhr.status === 404) {
+                        errorMessage = "Annonce introuvable";
+                    }
+                    
+                    $.growl.error({message: errorMessage});
+                    $btn.prop('disabled', false).html(originalText);
                 }
             });
         });
