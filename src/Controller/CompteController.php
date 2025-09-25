@@ -23,6 +23,40 @@ use Cocur\Slugify\Slugify;
 class CompteController extends AbstractController {
 
     /**
+     * @Route("/compte/dashboard", name="tableau_bord_annonceur")
+     */
+    public function Dashboard()
+    {
+            $user = $this->getUser();
+            $annonces = $this->getDoctrine()
+                ->getRepository(Annonces::class)
+                ->findBy(['user' => $user, 'deleted' => 0]);
+
+            $nbAnnonces = count($annonces);
+            $nbVues = 0;
+            foreach ($annonces as $annonce) {
+                $nbVues += $annonce->getView();
+            }
+
+            // Nombre de messages reçus (receiver = user)
+            $nbMessages = $this->getDoctrine()
+                ->getRepository(Message::class)
+                ->count(['receiver' => $user]);
+
+            $stats = [
+                'nbAnnonces' => $nbAnnonces,
+                'nbVues' => $nbVues,
+                'nbMessages' => $nbMessages,
+                'nbClicksTel' => 15,
+                'nbVisits' => 120
+            ];
+
+            return $this->render('default/compte/tableau_bord_annonceur.html.twig', [
+                'stats' => $stats
+            ]);
+    }
+
+    /**
      * @Route("/compte/ajouter-annonce.html", name="ajouter_annonce", methods={"POST", "GET"})
      */
     public function newAnnonce(Request $request) {
