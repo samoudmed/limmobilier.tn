@@ -2,11 +2,44 @@
 
 {% block body %}
 <div class="container py-5">
-    <h1 class="mb-4 text-center fw-bold" style="font-size:2.2rem;">Statistiques immobilières</h1>
-    <div class="row g-4 mb-5">
+    <h1 class="mb-4 text-center fw-bold" style="font-size:2.2rem;">Dashboard Immobilier</h1>
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="tile-dashboard bg-primary text-white p-4 rounded shadow-sm mb-3">
+                <div class="fs-1 mb-2"><i class="fa fa-building"></i></div>
+                <div class="fw-bold">Appartements</div>
+                <div class="fs-4">{{ stats|filter(s => s.type == 'Appartement')|map(s => s.nb_annonces)|reduce((a, b) => a + b, 0) }}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="tile-dashboard bg-success text-white p-4 rounded shadow-sm mb-3">
+                <div class="fs-1 mb-2"><i class="fa fa-home"></i></div>
+                <div class="fw-bold">Villas</div>
+                <div class="fs-4">{{ stats|filter(s => s.type == 'Villa')|map(s => s.nb_annonces)|reduce((a, b) => a + b, 0) }}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="tile-dashboard bg-warning text-dark p-4 rounded shadow-sm mb-3">
+                <div class="fs-1 mb-2"><i class="fa fa-tree"></i></div>
+                <div class="fw-bold">Terrains</div>
+                <div class="fs-4">{{ stats|filter(s => s.type == 'Terrain')|map(s => s.nb_annonces)|reduce((a, b) => a + b, 0) }}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="tile-dashboard bg-info text-dark p-4 rounded shadow-sm mb-3">
+                <div class="fs-1 mb-2"><i class="fa fa-chart-bar"></i></div>
+                <div class="fw-bold">Total annonces</div>
+                <div class="fs-4">{{ stats|map(s => s.nb_annonces)|reduce((a, b) => a + b, 0) }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white rounded shadow p-4 mb-5">
+        <canvas id="chartPrixM2" height="120"></canvas>
+    </div>
+    <div class="row g-4">
         {% for stat in stats %}
             <div class="col-md-4">
-                <div class="card shadow border-0 h-100 animate__animated animate__fadeInUp">
+                <div class="card border-0 h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
                             <span class="me-2" style="font-size:2rem;">
@@ -25,9 +58,6 @@
                 </div>
             </div>
         {% endfor %}
-    </div>
-    <div class="bg-white rounded shadow p-4 mb-5">
-        <canvas id="chartPrixM2" height="120"></canvas>
     </div>
 </div>
 {% endblock %}
