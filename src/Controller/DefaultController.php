@@ -606,4 +606,11 @@ class DefaultController extends AbstractController {
         return $this->render('default/__topAgencies.html.twig', ['topAgenciesByAds' => $topAgenciesByAds]);
     }
 
+        /**
+         * @Route("/prix-cartes", name="prix_cartes", methods={"GET"})
+         */
+        public function prixCartes(): Response {
+            return $this->render('prix_cartes.html.twig');
+        }
+
 }

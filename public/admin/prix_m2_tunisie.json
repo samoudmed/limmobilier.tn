@@ -1,0 +1,17 @@
+[
+  {"region": "Tunis", "prix_m2": 2500},
+  {"region": "Sfax", "prix_m2": 1800},
+  {"region": "Sousse", "prix_m2": 2200},
+  {"region": "Ariana", "prix_m2": 2100},
+  {"region": "Ben Arous", "prix_m2": 2000},
+  {"region": "Manouba", "prix_m2": 1700},
+  {"region": "Nabeul", "prix_m2": 1900},
+  {"region": "Monastir", "prix_m2": 1600},
+  {"region": "Bizerte", "prix_m2": 1500},
+  {"region": "Gabès", "prix_m2": 1200},
+  {"region": "Kairouan", "prix_m2": 1100},
+  {"region": "Médenine", "prix_m2": 1000},
+  {"region": "Gafsa", "prix_m2": 900},
+  {"region": "Tozeur", "prix_m2": 800},
+  {"region": "Kasserine", "prix_m2": 700}
+]

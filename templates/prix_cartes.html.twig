@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carte des prix par m² en Tunisie{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2>Carte interactive des prix par m² en Tunisie</h2>
+    <div id="map" style="height: 600px;"></div>
+</div>
+<!-- Leaflet.js -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- Plugin Choropleth (simple) -->
+<script src="https://unpkg.com/leaflet-choropleth/dist/choropleth.js"></script>
+<script>
+    // Charger les données JSON
+    fetch('/admin/prix_m2_tunisie.json')
+        .then(response => response.json())
+        .then(data => {
+            // Exemple de GeoJSON simplifié pour la démonstration
+            var regionsGeoJSON = {
+                "type": "FeatureCollection",
+                "features": data.map(function(region, i) {
+                    return {
+                        "type": "Feature",
+                        "properties": {
+                            "name": region.region,
+                            "prix_m2": region.prix_m2
+                        },
+                        // Pour la démo, on place chaque région sur un point fictif
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [10 + i, 36 - i]
+                        }
+                    }
+                })
+            };
+            var map = L.map('map').setView([34, 9], 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+            // Ajout des points colorés selon le prix
+            regionsGeoJSON.features.forEach(function(feature) {
+                var color = feature.properties.prix_m2 > 2000 ? '#d73027' : feature.properties.prix_m2 > 1500 ? '#fc8d59' : '#fee08b';
+                var marker = L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {
+                    radius: 15,
+                    fillColor: color,
+                    color: '#333',
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.7
+                }).addTo(map);
+                marker.bindPopup('<b>' + feature.properties.name + '</b><br>Prix moyen: ' + feature.properties.prix_m2 + ' DT/m²');
+            });
+        });
+</script>
+{% endblock %}
